@@ -1,0 +1,63 @@
+.profile-header {
+  display: flex;
+  align-items: center;       /* vertically center all three blocks */
+  justify-content: space-between;  /* spread out left, center, right */
+  padding: 20px;
+  gap: 20px;
+  background-color: #000; /* black background, optional */
+  color: #fff;
+  flex-wrap: nowrap;
+}
+
+/* Profile picture container keeps image left */
+.profile-pic-container {
+  flex: 0 0 auto; /* don't grow or shrink */
+}
+
+/* Profile picture styling */
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Center name and subtitle block */
+.profile-name {
+  flex: 1 1 auto; /* grow to fill available space */
+  text-align: center;
+}
+
+/* Contact links aligned right and spaced horizontally */
+.profile-contact {
+  flex: 0 0 auto; /* keep its width */
+  display: flex;
+  gap: 20px;
+}
+
+/* Links style */
+.profile-contact a {
+  color: #1abc9c;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-contact a:hover {
+  color: #16a085;
+  text-decoration: underline;
+}
+
+body {
+  background-color: #000;  /* black background for whole page */
+  color: #fff;             /* white text for whole page */
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+main.main-content {
+  background-color: #000;  /* black background for main content */
+  color: #fff;             /* white text in main */
+  padding: 20px;           /* some padding inside main */
+}
