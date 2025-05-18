@@ -4,14 +4,13 @@
   justify-content: space-between;  /* spread out left, center, right */
   padding: 20px;
   gap: 20px;
-  background-color: #000; /* black background, optional */
+  background-color: #ca2c2c; /* black background, optional */
   color: #fff;
   flex-wrap: nowrap;
 }
 
-/* Profile picture container keeps image left */
 .profile-pic-container {
-  flex: 0 0 auto; /* don't grow or shrink */
+  flex: 0 0 auto; /* will not grow or shrink (userful for profile pictures) */
 }
 
 /* Profile picture styling */
@@ -35,9 +34,8 @@
   gap: 20px;
 }
 
-/* Links style */
 .profile-contact a {
-  color: #1abc9c;
+  color: #ffffff; /* white text color for links */
   font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -60,4 +58,26 @@ main.main-content {
   background-color: #000;  /* black background for main content */
   color: #fff;             /* white text in main */
   padding: 20px;           /* some padding inside main */
+}
+
+.section-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  background-color: #007BFF;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.section-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
