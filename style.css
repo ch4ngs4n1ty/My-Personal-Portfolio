@@ -60,24 +60,22 @@ main.main-content {
   padding: 20px;           /* some padding inside main */
 }
 
-.section-button {
-  display: block;
+.section-button { /* button layout for About Me, Experiences, Projects, and Education */
+    display: block;
   width: 100%;
-  max-width: 300px;
-  margin: 20px auto;
-  padding: 15px 20px;
+  padding: 25px 0;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   text-decoration: none;
   color: white;
   background-color: #007BFF;
-  border-radius: 10px;
+  border-top: 1px solid #0056b3;
+  border-bottom: 1px solid #0056b3;
   transition: background-color 0.2s ease, transform 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .section-button:hover {
   background-color: #0056b3;
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
