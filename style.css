@@ -1,4 +1,4 @@
-.profile-header {
+.profile-header { /* header layout for profile picture, name, and contact links */
   display: flex;
   align-items: center;       /* vertically center all three blocks */
   justify-content: space-between;  /* spread out left, center, right */
@@ -27,11 +27,12 @@
   text-align: center;
 }
 
-/* Contact links aligned right and spaced horizontally */
 .profile-contact {
-  flex: 0 0 auto; /* keep its width */
+  flex: 0 0 auto;
   display: flex;
-  gap: 20px;
+  flex-direction: column;    /* default: horizontal */
+  gap: 10px;
+  align-items: flex-start;   /* vertically center links */
 }
 
 .profile-contact a {
@@ -60,9 +61,17 @@ main.main-content {
   padding: 20px;           /* some padding inside main */
 }
 
-.section-button { /* button layout for About Me, Experiences, Projects, and Education */
-    display: block;
-  width: 100%;
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px;
+  max-width: 600px;
+  margin: 40px auto; /* center grid horizontally and space from top */
+  padding: 0 20px;
+}
+
+.blue-button {
+  display: block;
   padding: 25px 0;
   text-align: center;
   font-size: 20px;
@@ -72,10 +81,11 @@ main.main-content {
   background-color: #007BFF;
   border-top: 1px solid #0056b3;
   border-bottom: 1px solid #0056b3;
+  border-radius: 10px;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.section-button:hover {
+.blue-button:hover {
   background-color: #0056b3;
   transform: scale(1.01);
 }
