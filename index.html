@@ -8,11 +8,20 @@
 </head>
 
 <body>
+    <!-- Pulsing red background circles -->
+    <div id="circle-container">
+        <div class="circle circle-small"></div>
+        <div class="circle circle-medium"></div>
+        <div class="circle circle-large"></div>
+        <div class="circle circle-xlarge"></div>
+        <div class="circle circle-xxlarge"></div>
+    </div>
+
     <div class="container">
         <aside class="sidebar">
             <div class="profile-header">
                 <div class="profile-pic-container">
-                    <img src="profile.jpg" alt="Profile Photo" class="profile-pic">
+                    <img src="Index Images/profile.jpg" alt="Profile Photo" class="profile-pic">
                 </div>
                 <div class="profile-name">
                     <h1>Hello! I'm Ethan Chang</h1>
@@ -28,7 +37,6 @@
         </aside>
 
         <main class="main-content">
-
             <section>
                 <h2>Current Status</h2>
                 <p>📌 Currently working on <strong>my personal portfolio</strong> to strengthen my front-end development
@@ -39,14 +47,17 @@
             </section>
 
             <div class="button-grid" style="margin-top: 40px;">
-                <a href="about.html" class="blue-button">About Me</a>
-                <a href="experiences.html" class="blue-button">Experiences</a>
-                <a href="projects.html" class="blue-button">Projects</a>
-                <a href="education.html" class="blue-button">Education</a>
+                <a href="about.html" class="red-button">About Me</a>
+                <a href="experiences.html" class="red-button">Experiences</a>
+                <a href="projects.html" class="red-button">Projects</a>
+                <a href="education.html" class="red-button">Education</a>
             </div>
 
-            <footer style="text-align: center; padding: 20px; font-size: 14px;">
+            <footer>
                 © 2025 Ethan Chang. Built with HTML & CSS.
             </footer>
-
         </main>
+    </div>
+</body>
+
+</html>

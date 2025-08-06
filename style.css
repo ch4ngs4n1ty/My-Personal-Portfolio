@@ -1,19 +1,87 @@
-.profile-header { /* header layout for profile picture, name, and contact links */
+/* Full-page pulsing red circles background */
+#circle-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 3000px; /* extra large so circles go off screen */
+    height: 3000px;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    z-index: 0; /* behind everything */
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    animation: circle-scale 3s ease-in-out infinite alternate;
+    animation-timing-function: cubic-bezier(.6, 0, .4, 1);
+}
+
+/* Red shades from bright to faint */
+.circle-small {
+    top: 200px;
+    left: -150px;
+    background: rgba(202, 44, 44, 0.4);
+    width: 300px;
+    height: 300px;
+    animation-delay: 0s;
+}
+.circle-medium {
+    top: 50px;
+    left: -300px;
+    background: rgba(202, 44, 44, 0.3);
+    width: 600px;
+    height: 600px;
+    animation-delay: 0.3s;
+}
+.circle-large {
+    top: -100px;
+    left: -450px;
+    background: rgba(202, 44, 44, 0.2);
+    width: 900px;
+    height: 900px;
+    animation-delay: 0.6s;
+}
+.circle-xlarge {
+    top: -250px;
+    left: -600px;
+    background: rgba(202, 44, 44, 0.1);
+    width: 1200px;
+    height: 1200px;
+    animation-delay: 0.9s;
+}
+.circle-xxlarge {
+    top: -400px;
+    left: -750px;
+    background: rgba(202, 44, 44, 0.05);
+    width: 1500px;
+    height: 1500px;
+    animation-delay: 1.2s;
+}
+
+/* Pulse animation */
+@keyframes circle-scale {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.1); }
+}
+
+/* Keep all main content above background */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Profile Header Layout */
+.profile-header {
   display: flex;
-  align-items: center;       /* vertically center all three blocks */
-  justify-content: space-between;  /* spread out left, center, right */
+  align-items: center;
+  justify-content: space-between;
   padding: 20px;
   gap: 20px;
-  background-color: #ca2c2c; /* black background, optional */
+  background-color: #ca2c2c;
   color: #fff;
-  flex-wrap: nowrap;
 }
 
-.profile-pic-container {
-  flex: 0 0 auto; /* will not grow or shrink (userful for profile pictures) */
-}
-
-/* Profile picture styling */
 .profile-pic {
   width: 90px;
   height: 90px;
@@ -21,71 +89,97 @@
   object-fit: cover;
 }
 
-/* Center name and subtitle block */
 .profile-name {
-  flex: 1 1 auto; /* grow to fill available space */
+  flex: 1 1 auto;
   text-align: center;
 }
 
 .profile-contact {
-  flex: 0 0 auto;
   display: flex;
-  flex-direction: column;    /* default: horizontal */
+  flex-direction: column;
   gap: 10px;
-  align-items: flex-start;   /* vertically center links */
 }
 
 .profile-contact a {
-  color: #ffffff; /* white text color for links */
+  color: #ffffff;
   font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;
-  cursor: pointer;
 }
 
 .profile-contact a:hover {
   color: #16a085;
-  text-decoration: underline;
 }
 
+/* Global Body & Main */
 body {
-  background-color: #000;  /* black background for whole page */
-  color: #fff;             /* white text for whole page */
+  background-color: #000; /* black background */
+  color: #fff;
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
 main.main-content {
-  background-color: #000;  /* black background for main content */
-  color: #fff;             /* white text in main */
-  padding: 20px;           /* some padding inside main */
+  padding: 20px;
 }
 
+/* Button Grid Layout */
 .button-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   max-width: 600px;
-  margin: 40px auto; /* center grid horizontally and space from top */
-  padding: 0 20px;
+  margin: 40px auto;
 }
 
-.blue-button {
-  display: block;
-  padding: 25px 0;
-  text-align: center;
-  font-size: 20px;
+/* Red Neon Lightsaber Buttons */
+.red-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 150px;
+  font-size: 22px;
   font-weight: bold;
   text-decoration: none;
   color: white;
-  background-color: #007BFF;
-  border-top: 1px solid #0056b3;
-  border-bottom: 1px solid #0056b3;
-  border-radius: 10px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  background-color: #ca2c2c;
+  border-radius: 12px;
+  overflow: hidden;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.blue-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.01);
+.red-button:hover {
+  transform: scaleX(1.05);
+  box-shadow: 0 0 15px #ff4d4d, 0 0 30px #ff4d4d, 0 0 45px #ff4d4d;
+}
+
+.red-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 77, 77, 0.6) 50%,
+    transparent 100%
+  );
+  transition: left 0.4s ease;
+}
+
+.red-button:hover::before {
+  left: 100%;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
 }
