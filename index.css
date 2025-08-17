@@ -741,7 +741,7 @@
             text-align: center;
         }
 
-        /* Divider between Skills and Interests */
+        /* Divider Icon between Skills and Interests (Lightning Bolt) */
         .divider {
             display: flex;
             flex-direction: column;
