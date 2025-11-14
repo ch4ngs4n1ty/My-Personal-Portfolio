@@ -186,6 +186,46 @@ body {
     transition: 0.3s;
 }
 
+.experience-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.experience-logo img {
+    width: 72px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    border-radius: 6px;
+}
+
+/* Center job title and employer above the logo */
+.experience-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.experience-card h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin: 0 0 6px 0;
+}
+
+.experience-card .company {
+    font-size: 1.05rem;
+    color: #ffb3b3;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+}
+
+.experience-card .duration {
+    margin-top: 12px;
+}
+
 .experience-card:hover {
     background-color: rgba(26, 0, 0, 0.8);
     border-color: rgba(255, 102, 102, 0.7);
