@@ -241,6 +241,181 @@
     </div>
     </div>
 
+    <script>
+        let savedScrollPosition = 0;
+        let previousActiveElement = null;
+        let modalElement = null;
+
+        // Create modal element and append to body (portal approach for viewport centering)
+        function createModal() {
+            if (modalElement) {
+                return modalElement;
+            }
+            
+            modalElement = document.createElement('div');
+            modalElement.id = 'imageModal';
+            modalElement.className = 'image-modal';
+            modalElement.setAttribute('aria-modal', 'true');
+            modalElement.setAttribute('role', 'dialog');
+            modalElement.setAttribute('aria-labelledby', 'modalCaption');
+            modalElement.style.display = 'none';
+            
+            modalElement.innerHTML = `
+                <button class="modal-close" aria-label="Close image modal">&times;</button>
+                <div class="modal-content-wrapper">
+                    <img class="modal-content" id="modalImage" alt="">
+                    <div class="modal-caption" id="modalCaption"></div>
+                </div>
+            `;
+            
+            // Portal: Append directly to body to avoid any parent container issues
+            document.body.appendChild(modalElement);
+            
+            return modalElement;
+        }
+
+        function openImageModal(src, alt, event) {
+            // Prevent any default behavior
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            // Ensure modal exists and is attached to body
+            const modal = createModal();
+            const modalImg = document.getElementById('modalImage');
+            const captionText = document.getElementById('modalCaption');
+            const closeBtn = modal.querySelector('.modal-close');
+            
+            if (!modal || !modalImg) {
+                return;
+            }
+            
+            // Save scroll position BEFORE any changes
+            savedScrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+            
+            // Store the previously focused element for accessibility
+            previousActiveElement = document.activeElement;
+            
+            // Set image source and caption
+            modalImg.src = src;
+            modalImg.alt = alt || '';
+            if (captionText) {
+                captionText.textContent = alt || '';
+            }
+            
+            // Lock scroll without moving the page
+            document.body.dataset.scrollY = String(savedScrollPosition);
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${savedScrollPosition}px`;
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+            
+            // Show the modal - use grid for centering
+            modal.style.display = 'grid';
+            
+            // Focus management: focus the close button for accessibility
+            if (closeBtn) {
+                closeBtn.focus();
+            }
+        }
+
+        function closeImageModal(event) {
+            // Prevent any default behavior
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const modal = modalElement || document.getElementById('imageModal');
+            
+            if (!modal) return;
+            
+            // If event is provided, check if click was on backdrop (not on content)
+            if (event) {
+                if (event.target.id === 'imageModal') {
+                    // User clicked on backdrop - proceed to close
+                } else if (event.target.classList.contains('modal-close')) {
+                    // User clicked close button - proceed to close
+                } else {
+                    // User clicked on content - don't close
+                    return;
+                }
+            }
+            
+            // Read saved scroll position
+            const y = parseInt(document.body.dataset.scrollY || '0', 10);
+            
+            // Hide modal first
+            modal.style.display = 'none';
+            
+            // Unlock scroll - clear all the styles we set
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            
+            // Delete the dataset property
+            delete document.body.dataset.scrollY;
+            
+            // Restore scroll position
+            window.scrollTo(0, y);
+            
+            // Restore focus to previous element for accessibility
+            if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+                previousActiveElement.focus({ preventScroll: true });
+            }
+        }
+
+        // Wait for DOM to be ready before setting up event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create modal on DOM ready
+            createModal();
+            
+            // Add click handlers to all artifact images
+            const artifactImages = document.querySelectorAll('.artifact-image');
+            artifactImages.forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    openImageModal(this.src, this.alt, e);
+                });
+            });
+            
+            // Set up modal event listeners (using event delegation)
+            document.addEventListener('click', function(e) {
+                const modal = modalElement || document.getElementById('imageModal');
+                if (!modal || modal.style.display !== 'grid') return;
+                
+                // Close modal when clicking the close button
+                if (e.target.classList.contains('modal-close')) {
+                    e.stopPropagation();
+                    closeImageModal(e);
+                    return;
+                }
+                
+                // Close modal when clicking on backdrop (the modal itself, not the content)
+                if (e.target === modal) {
+                    closeImageModal(e);
+                }
+            });
+        });
+
+        // Close modal when pressing ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = modalElement || document.getElementById('imageModal');
+                if (modal && modal.style.display === 'grid') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeImageModal(e);
+                }
+            }
+        });
+    </script>
+
 </body>
 
 </html>
