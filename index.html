@@ -10,7 +10,7 @@
 <body>
 
     <div class="container">
-        <h1>Hello, I'm Ethan Chang!</h1>
+        <h1 id="typing-text"></h1>
         <p>Welcome To My Personal Website</p>
     </div>
 
@@ -133,14 +133,14 @@
                     <p class="project-description">Brief description of your project and what problem it solves.
                         Highlight key technologies and achievements.</p>
                     <div class="project-links">
-                        <a href="#" target="_blank" class="project-link">Live Demo</a>
-                        <a href="#" target="_blank" class="project-link">GitHub</a>
+                        <button type="button" class="project-link">Live Demo</button>
+                        <button type="button" class="project-link">GitHub</button>
                     </div>
                 </div>
                 <details class="project-details">
                     <summary>View Artifacts</summary>
                     <div class="project-artifacts">
-                        <a href="#" class="artifact-link">Architecture Diagram</a>
+                        <button type="button" class="artifact-link">Architecture Diagram</button>
                     </div>
                 </details>
             </div>
@@ -152,14 +152,14 @@
                     <p class="project-description">Brief description of your project and what problem it solves.
                         Highlight key technologies and achievements.</p>
                     <div class="project-links">
-                        <a href="#" target="_blank" class="project-link">Live Demo</a>
-                        <a href="#" target="_blank" class="project-link">GitHub</a>
+                        <button type="button" class="project-link">Live Demo</button>
+                        <button type="button" class="project-link">GitHub</button>
                     </div>
                 </div>
                 <details class="project-details">
                     <summary>View Artifacts</summary>
                     <div class="project-artifacts">
-                        <a href="#" class="artifact-link">Analysis Report</a>
+                        <button type="button" class="artifact-link">Analysis Report</button>
                     </div>
                 </details>
             </div>
@@ -171,14 +171,14 @@
                     <p class="project-description">Brief description of your project and what problem it solves.
                         Highlight key technologies and achievements.</p>
                     <div class="project-links">
-                        <a href="#" target="_blank" class="project-link">Live Demo</a>
-                        <a href="#" target="_blank" class="project-link">GitHub</a>
+                        <button type="button" class="project-link">Live Demo</button>
+                        <button type="button" class="project-link">GitHub</button>
                     </div>
                 </div>
                 <details class="project-details">
                     <summary>View Artifacts</summary>
                     <div class="project-artifacts">
-                        <a href="#" class="artifact-link">Wireframes</a>
+                        <button type="button" class="artifact-link">Wireframes</button>
                     </div>
                 </details>
             </div>
@@ -241,178 +241,100 @@
     </div>
     </div>
 
+    <!-- Image Modal for Viewing Artifacts -->
+    <div id="imageModal" class="image-modal">
+        <span class="modal-close" onclick="closeImageModal()">&times;</span>
+        <div class="modal-content-wrapper">
+            <img id="modalImage" class="modal-content" src="" alt="">
+        </div>
+    </div>
+
     <script>
-        let savedScrollPosition = 0;
-        let previousActiveElement = null;
-        let modalElement = null;
+        // ===== TYPING ANIMATION =====
+        const greetings = [
+            "Hello, I'm Ethan Chang!",
+            "Hi, I'm Ethan Chang!",
+            "Hey there, I'm Ethan Chang!",
+            "Welcome! I'm Ethan Chang",
+            "Greetings! I'm Ethan Chang",
+            "Hi Ethan Chang here!",
+            "Hey! Ethan Chang speaking",
+            "Nice to meet you! I'm Ethan",
+            "Hello World! I'm Ethan Chang",
+            "What's up? I'm Ethan Chang"
+        ];
 
-        // Create modal element and append to body (portal approach for viewport centering)
-        function createModal() {
-            if (modalElement) {
-                return modalElement;
-            }
+        function typeWriter(text, element, speed = 100) {
+            let i = 0;
+            element.textContent = '';
             
-            modalElement = document.createElement('div');
-            modalElement.id = 'imageModal';
-            modalElement.className = 'image-modal';
-            modalElement.setAttribute('aria-modal', 'true');
-            modalElement.setAttribute('role', 'dialog');
-            modalElement.setAttribute('aria-labelledby', 'modalCaption');
-            modalElement.style.display = 'none';
-            
-            modalElement.innerHTML = `
-                <button class="modal-close" aria-label="Close image modal">&times;</button>
-                <div class="modal-content-wrapper">
-                    <img class="modal-content" id="modalImage" alt="">
-                    <div class="modal-caption" id="modalCaption"></div>
-                </div>
-            `;
-            
-            // Portal: Append directly to body to avoid any parent container issues
-            document.body.appendChild(modalElement);
-            
-            return modalElement;
-        }
-
-        function openImageModal(src, alt, event) {
-            // Prevent any default behavior
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            
-            // Ensure modal exists and is attached to body
-            const modal = createModal();
-            const modalImg = document.getElementById('modalImage');
-            const captionText = document.getElementById('modalCaption');
-            const closeBtn = modal.querySelector('.modal-close');
-            
-            if (!modal || !modalImg) {
-                return;
-            }
-            
-            // Save scroll position BEFORE any changes
-            savedScrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
-            
-            // Store the previously focused element for accessibility
-            previousActiveElement = document.activeElement;
-            
-            // Set image source and caption
-            modalImg.src = src;
-            modalImg.alt = alt || '';
-            if (captionText) {
-                captionText.textContent = alt || '';
-            }
-            
-            // Lock scroll without moving the page
-            document.body.dataset.scrollY = String(savedScrollPosition);
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${savedScrollPosition}px`;
-            document.body.style.left = '0';
-            document.body.style.right = '0';
-            document.body.style.width = '100%';
-            document.body.style.overflow = 'hidden';
-            
-            // Show the modal - use grid for centering
-            modal.style.display = 'grid';
-            
-            // Focus management: focus the close button for accessibility
-            if (closeBtn) {
-                closeBtn.focus();
-            }
-        }
-
-        function closeImageModal(event) {
-            // Prevent any default behavior
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            
-            const modal = modalElement || document.getElementById('imageModal');
-            
-            if (!modal) return;
-            
-            // If event is provided, check if click was on backdrop (not on content)
-            if (event) {
-                if (event.target.id === 'imageModal') {
-                    // User clicked on backdrop - proceed to close
-                } else if (event.target.classList.contains('modal-close')) {
-                    // User clicked close button - proceed to close
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
                 } else {
-                    // User clicked on content - don't close
-                    return;
+                    // Add blinking cursor after typing is done
+                    element.classList.add('typing-complete');
                 }
             }
             
-            // Read saved scroll position
-            const y = parseInt(document.body.dataset.scrollY || '0', 10);
-            
-            // Hide modal first
-            modal.style.display = 'none';
-            
-            // Unlock scroll - clear all the styles we set
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.left = '';
-            document.body.style.right = '';
-            document.body.style.width = '';
-            document.body.style.overflow = '';
-            
-            // Delete the dataset property
-            delete document.body.dataset.scrollY;
-            
-            // Restore scroll position
-            window.scrollTo(0, y);
-            
-            // Restore focus to previous element for accessibility
-            if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
-                previousActiveElement.focus({ preventScroll: true });
-            }
+            type();
         }
 
-        // Wait for DOM to be ready before setting up event listeners
+        // Initialize typing animation on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const typingElement = document.getElementById('typing-text');
+            if (typingElement) {
+                const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+                
+                // Small delay before starting the animation
+                setTimeout(() => {
+                    typeWriter(randomGreeting, typingElement, 80);
+                }, 300);
+            }
+        });
+
+        // ===== IMAGE MODAL / VIEWING MODE =====
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Initialize artifact image viewing mode
         document.addEventListener('DOMContentLoaded', function() {
-            // Create modal on DOM ready
-            createModal();
-            
-            // Add click handlers to all artifact images
             const artifactImages = document.querySelectorAll('.artifact-image');
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // Add click handler to each artifact image
             artifactImages.forEach(function(img) {
                 img.addEventListener('click', function(e) {
-                    openImageModal(this.src, this.alt, e);
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Enter viewing mode
+                    modal.style.display = 'grid';
+                    modalImg.src = this.src;
+                    modalImg.alt = this.alt;
+                    document.body.style.overflow = 'hidden';
                 });
             });
             
-            // Set up modal event listeners (using event delegation)
-            document.addEventListener('click', function(e) {
-                const modal = modalElement || document.getElementById('imageModal');
-                if (!modal || modal.style.display !== 'grid') return;
-                
-                // Close modal when clicking the close button
-                if (e.target.classList.contains('modal-close')) {
-                    e.stopPropagation();
-                    closeImageModal(e);
-                    return;
-                }
-                
-                // Close modal when clicking on backdrop (the modal itself, not the content)
-                if (e.target === modal) {
-                    closeImageModal(e);
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal || e.target.classList.contains('modal-content-wrapper')) {
+                    closeImageModal();
                 }
             });
-        });
-
-        // Close modal when pressing ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modal = modalElement || document.getElementById('imageModal');
-                if (modal && modal.style.display === 'grid') {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeImageModal(e);
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'grid') {
+                    closeImageModal();
                 }
-            }
+            });
         });
     </script>
 
