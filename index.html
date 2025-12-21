@@ -57,46 +57,47 @@
     <div class="experiences-section">
         <h2>Experiences</h2>
         <div class="experience-container">
-            <div class="experience-card">
-                <h3>Data Science Research Intern</h3>
-                <p class="company">Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) -
-                    University of Pittsburgh</p>
-
-                <a href="https://www.aibids.org/home" target="_blank" class="experience-logo-link">
-                    <div class="experience-logo">
-                        <!-- Place the University of Pittsburgh logo file at 'Index Images/pitt.png' -->
-                        <img src="Index Images/pitt.png" alt="University of Pittsburgh logo">
-                    </div>
-                </a>
-
-                <p class="duration">May 2025 - July 2025 (10 Week Program)</p>
-                <ul class="experience-bullets">
-                    <li>Performed data analysis and exploratory research using Python and R</li>
-                    <li>Developed cleaned data pipelines for processing patient and clinical datasets</li>
-                    <li>Designed visual dashboards and communicated analytical insights to the research team</li>
-                </ul>
-            </div>
-            <!-- Experience Card 2-->
+            <!-- Experience Card 1 - Most Recent -->
             <div class="experience-card">
                 <h3>Software Development Tutor</h3>
-                <p class="company">
-                    NTID Learning Center - Rochester Institute of Technology
-                </p>
+                <p class="company">NTID Learning Center - Rochester Institute of Technology</p>
 
                 <a href="https://www.rit.edu/ntid/learningcenter/instructors-tutors" target="_blank"
                     class="experience-logo-link">
                     <div class="experience-logo">
-                        <img src="Index Images/rit.png" alt="University of Pittsburgh logo">
+                        <img src="Index Images/rit.png" alt="Rochester Institute of Technology logo">
                     </div>
                 </a>
 
-                <p class="duration">September 2025 - Present (Part Time)</p>
+                <p class="duration">September 2025 - Present • Rochester, NY - Onsite</p>
 
-                <ul class="experience-bullets">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                <p class="experience-summary">
+                    Provide individualized and group tutoring on programming concepts across Python, Java, and Excel. 
+                    Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support 
+                    Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.
+                </p>
+                <p class="experience-skills"><strong>Skills:</strong> Bilingual Communication, Accessible Teaching, Instructional Adaptability, Active Listening, Confidence-Building</p>
+            </div>
+            
+            <!-- Experience Card 2 -->
+            <div class="experience-card">
+                <h3>Data Science Intern</h3>
+                <p class="company">Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program - University of Pittsburgh</p>
+
+                <a href="https://www.aibids.org/home" target="_blank" class="experience-logo-link">
+                    <div class="experience-logo">
+                        <img src="Index Images/pitt.png" alt="University of Pittsburgh logo">
+                    </div>
+                </a>
+
+                <p class="duration">May 2025 - July 2025 • Pittsburgh, PA - Hybrid</p>
+                
+                <p class="experience-summary">
+                    Collaborated with faculty and peers on data-driven projects addressing healthcare and informatics challenges. 
+                    Analyzed complex patient data to generate actionable insights supporting predictive modeling initiatives, 
+                    and presented findings to stakeholders with practical recommendations.
+                </p>
+                <p class="experience-skills"><strong>Skills:</strong> Collaboration, Communication, Data Cleaning, Data Analysis, Data Storytelling, Data Security, Adaptability</p>
             </div>
         </div>
     </div>
@@ -108,20 +109,24 @@
         <div class="projects-grid">
             <div class="project-card" style="background-image: url('Index Images/movie-db-bg.png');">
                 <div class="project-overlay">
-                    <h3>Movie Database Management Systems</h3>
-                    <p class="project-tech">Python • PostgreSQL • SSH Tunnel</p>
-                    <p class="project-description">Built and deployed a PostgreSQL movie database with a Python
-                        application featuring SSH tunneling for secure remote access. Collaborated with a 5-person team
-                        to design database schema and develop full-stack features.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/ch4ngs4n1ty/Movie-Database-Project" target="_blank"
-                            class="project-link">GitHub</a>
+                    <div class="project-preview">
+                        <h3>Movie Database Management Systems</h3>
+                        <p class="click-hint">Click to view details</p>
+                    </div>
+                    <div class="project-details-content">
+                        <p class="project-duration">January 2025 - May 2025</p>
+                        <p class="project-description">Built and deployed a PostgreSQL movie database and application using Python and SQL. Collaborated with a group of 5 to design and develop the database and application features. Developed a Python application with SSH tunneling for secure remote database access and management.</p>
+                        <p class="project-tools"><strong>Tools:</strong> Python, SQL, PostgreSQL, SSH Tunnel, Faker, GitHub, DataGrip, Kaggle, psycopg2</p>
+                        <div class="project-links">
+                            <a href="https://github.com/ch4ngs4n1ty/Movie-Database-Project" target="_blank"
+                                class="project-link" onclick="event.stopPropagation()">View on GitHub</a>
+                        </div>
                     </div>
                 </div>
                 <details class="project-details">
                     <summary>View Artifacts</summary>
                     <div class="project-artifacts">
-                        <img src="Index Images/eer-diagram.png" alt="EER Diagram" class="artifact-image">
+                        <img src="Index Images/eer-diagram.png" alt="EER Diagram - Movie Database Schema" class="artifact-image">
                     </div>
                 </details>
             </div>
@@ -293,6 +298,26 @@
                     typeWriter(randomGreeting, typingElement, 80);
                 }, 300);
             }
+        });
+
+        // ===== PROJECT CARD EXPAND/COLLAPSE =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            projectCards.forEach(function(card) {
+                const overlay = card.querySelector('.project-overlay');
+                
+                if (overlay) {
+                    overlay.addEventListener('click', function(e) {
+                        // Don't toggle if clicking on links or details element
+                        if (e.target.closest('.project-link') || e.target.closest('.project-details')) {
+                            return;
+                        }
+                        
+                        card.classList.toggle('expanded');
+                    });
+                }
+            });
         });
 
         // ===== IMAGE MODAL / VIEWING MODE =====
