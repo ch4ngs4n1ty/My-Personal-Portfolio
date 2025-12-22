@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Chroma",
+    "tech": ["Angular", "Spring Boot", "Java", "REST API"],
+    "duration": "August 2025 - December 2025",
+    "description": "Collaborated within a team to design and implement a full-stack web app for interactive color-based data visualization. Developed a responsive front-end using Angular and integrated RESTful APIs with a Spring-based Java backend. Applied object-oriented design, unit testing, and refactoring to ensure maintainable and scalable client-server code.",
+    "tools": ["Angular", "Spring Boot", "Java", "REST API", "TypeScript", "JUnit", "Swing", "GitHub", "Agile/Scrum methodologies"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Chroma",
+    "backgroundImage": "/images/chroma-bg.png",
+    "artifacts": [{
+      
+    }]
+  },
+  {
+    "id": 2,
+    "title": "ACL Unplanned Surgery Predictive Model",
+    "tech": ["Python", "SQL", "Pandas", "Scikit-learn"],
+    "duration": "June 2025 - September 2025",
+    "program": "AIBIDS Program",
+    "description": "Accessed UPMC database of de-identified ACLR patients (2013-2021) for predictive modeling. Executed complex SQL queries with CTEs and LEFT JOINs to aggregate clinical datasets. Built logistic regression models using Social Determinants of Health (SDoH) factors to predict unplanned surgery needs.",
+    "tools": ["Python", "SQL", "Pandas", "Jupyter Notebook", "LLMs", "Prompt Engineering", "Scikit-learn", "PostgreSQL", "Matplotlib"],
+    "githubUrl": null,
+    "backgroundImage": "/images/aclr-bg.png",
+    "artifacts": [
+      {
+        "type": "image",
+        "src": "/images/aclr-diagram.png",
+        "alt": "ACL Unplanned Surgery Predictive Model Diagram"
+      }]
+  },
+  {
+    "id": 3,
+    "title": "Movie Database Management Systems",
+    "tech": ["Python", "PostgreSQL", "SSH Tunnel", "SQL"],
+    "duration": "January 2025 - May 2025",
+    "description": "Built and deployed a PostgreSQL movie database and application using Python and SQL. Collaborated with a group of 5 to design and develop the database and application features. Developed a Python application with SSH tunneling for secure remote database access and management.",
+    "tools": ["Python", "SQL", "PostgreSQL", "SSH Tunnel", "Faker", "GitHub", "DataGrip", "Kaggle", "psycopg2"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Movie-Database-Project",
+    "backgroundImage": "/images/movie-db-bg.png",
+    "artifacts": [
+      {
+        "type": "image",
+        "src": "/images/eer-diagram.png",
+        "alt": "EER Diagram - Movie Database Schema"
+      }
+    ]
+  }
+]
+
