@@ -55,7 +55,9 @@
     "tools": ["C", "GCC", "Makefile", "Unix/Linux CLI", "MobaXterm", "VS Code", "GitHub", "Valgrind"],
     "githubUrl": "",
     "backgroundImage": "/images/wildfire-bg.png",
-    "artifacts": []
+    "artifacts": [{
+      
+    }]
   }
 ]
 
