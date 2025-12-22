@@ -45,6 +45,17 @@
         "alt": "EER Diagram - Movie Database Schema"
       }
     ]
+  },
+  {
+    "id": 4,
+    "title": "Wildfire Simulation",
+    "tech": ["C"],
+    "duration": "Sep 2024 - Oct 2024",
+    "description": "Designed and implemented a C-based wildfire simulation modeling probabilistic fire propagation across a grid-based forest. Developed probabilistic fire spread algorithms incorporating neighbor states, tree density, and burn probability with Fisher–Yates random initialization. Enhanced simulation performance and accuracy through iterative debugging, modular refactoring, and thorough documentation.",
+    "tools": ["C", "GCC", "Makefile", "Unix/Linux CLI", "MobaXterm", "VS Code", "GitHub", "Valgrind"],
+    "githubUrl": "",
+    "backgroundImage": "/images/wildfire-bg.png",
+    "artifacts": []
   }
 ]
 
