@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "title": "Software Development Tutor",
+    "company": "NTID Learning Center - Rochester Institute of Technology",
+    "duration": "September 2025 - Present",
+    "location": "Rochester, NY - Onsite",
+    "summary": "Provide individualized and group tutoring on programming concepts across Python, Java, and Excel. Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.",
+    "skills": ["Bilingual Communication", "Accessible Teaching", "Instructional Adaptability", "Active Listening", "Confidence-Building"],
+    "logo": "/images/rit.png",
+    "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"
+  },
+  {
+    "id": 2,
+    "title": "Data Science Intern",
+    "company": "Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program - University of Pittsburgh",
+    "duration": "May 2025 - July 2025",
+    "location": "Pittsburgh, PA - Hybrid",
+    "summary": "Collaborated with faculty and peers on data-driven projects addressing healthcare and informatics challenges. Analyzed complex patient data to generate actionable insights supporting predictive modeling initiatives, and presented findings to stakeholders with practical recommendations.",
+    "skills": ["Collaboration", "Communication", "Data Cleaning", "Data Analysis", "Data Storytelling", "Data Security", "Adaptability"],
+    "logo": "/images/pitt.png",
+    "url": "https://www.aibids.org/home"
+  }
+]
+
