@@ -40,6 +40,12 @@
     "name": "Git",
     "logo": "/images/git.png",
     "url": null
+  },
+  {
+    "id": 8,
+    "name": "MobaXterm",
+    "logo": "/images/mobaxterm.png",
+    "url": null
   }
 ]
 
