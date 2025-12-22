@@ -1,24 +1,11 @@
-import { useState } from 'react';
 import experiencesData from '../data/experiences.json';
 
 function ExperienceCard({ experience, index, isLast }) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const baseUrl = import.meta.env.BASE_URL;
-
-  const handleCardClick = (e) => {
-    // Don't toggle if clicking on logo link
-    if (e.target.closest('.experience-logo-link')) {
-      return;
-    }
-    setIsExpanded(!isExpanded);
-  };
   
   return (
     <div className="experience-item">
-      <div 
-        className={`experience-card ${isExpanded ? 'expanded' : ''}`}
-        onClick={handleCardClick}
-      >
+      <div className="experience-card">
         {experience.url ? (
           <a href={experience.url} target="_blank" rel="noopener noreferrer" className="experience-logo-link">
             <div className="experience-logo">
@@ -33,20 +20,13 @@ function ExperienceCard({ experience, index, isLast }) {
         
         <h3>{experience.title}</h3>
         <p className="company">{experience.company}</p>
+        <p className="duration">{experience.duration} • {experience.location}</p>
         
-        {!isExpanded && (
-          <p className="click-hint">Click to view details</p>
-        )}
+        <p className="experience-summary">{experience.summary}</p>
         
-        <div className="experience-details-content">
-          <p className="duration">{experience.duration} • {experience.location}</p>
-          
-          <p className="experience-summary">{experience.summary}</p>
-          
-          <p className="experience-skills">
-            <strong>Skills:</strong> {experience.skills.join(', ')}
-          </p>
-        </div>
+        <p className="experience-skills">
+          <strong>Skills:</strong> {experience.skills.join(', ')}
+        </p>
       </div>
       {!isLast && <div className="experience-connector"></div>}
     </div>

@@ -511,13 +511,6 @@ body {
     max-width: 700px;                    /* Constrain card width */
     width: 100%;                         /* Fill available space */
     position: relative;                  /* Enable positioning */
-    cursor: pointer;                     /* Show hand cursor - indicates clickable */
-    min-height: 250px;                   /* Minimum height for collapsed state */
-}
-
-/* Expanded state - card grows */
-.experience-card.expanded {
-    min-height: 400px;                   /* Taller when expanded */
 }
 
 /* Hover effect on experience card */
@@ -527,39 +520,6 @@ body {
     box-shadow: 
         0 20px 60px rgba(248, 250, 252, 0.15), /* White shadow */
         0 0 40px rgba(255, 255, 255, 0.1);    /* White glow effect */
-}
-
-/* "Click to view details" hint text */
-.experience-card .click-hint {
-    font-size: 0.9rem;                   /* Small text */
-    color: #cbd5e1;                      /* Light gray */
-    font-weight: 700;                    /* Bold */
-    font-style: italic;                  /* Slanted */
-    margin-top: 20px;                    /* Space above */
-    opacity: 0.9;                        /* Slightly transparent */
-    transition: all 0.3s ease;           /* Smooth transitions */
-}
-
-/* Hint text brightens on hover */
-.experience-card:hover .click-hint {
-    opacity: 1;                          /* Fully opaque */
-    color: #f8fafc;                      /* White */
-    transform: translateY(-2px);         /* Lift slightly */
-}
-
-/* Details content container - hidden when collapsed */
-.experience-details-content {
-    max-height: 0;                       /* Height of 0 hides content */
-    opacity: 0;                          /* Invisible */
-    overflow: hidden;                    /* Hide overflow */
-    transition: all 0.4s ease;           /* Smooth expand/collapse */
-}
-
-/* When expanded, show details */
-.experience-card.expanded .experience-details-content {
-    max-height: 1000px;                  /* Large enough to fit any content */
-    opacity: 1;                          /* Fully visible */
-    margin-top: 20px;                    /* Space above */
 }
 
 /* White glowing connector line between cards */
@@ -691,7 +651,6 @@ body {
     margin-bottom: 20px;                 /* Space below */
     font-style: italic;                  /* Slanted text */
     padding-bottom: 15px;                /* Extra space */
-    margin-top: 0;                       /* Remove top margin */
     border-bottom: 1px solid rgba(100, 116, 139, 0.3); /* Divider line */
 }
 
@@ -1227,11 +1186,6 @@ body {
     .experience-card {
         padding: 25px 20px;              /* Less padding on mobile */
         max-width: 100%;                 /* Full width */
-        min-height: 220px;               /* Smaller min height on mobile */
-    }
-
-    .experience-card.expanded {
-        min-height: 350px;               /* Smaller expanded height on mobile */
     }
 
     .experience-connector {
@@ -1240,10 +1194,6 @@ body {
 
     .experience-logo img {
         width: 60px;                     /* Smaller logo on mobile */
-    }
-
-    .experience-card .click-hint {
-        font-size: 0.85rem;              /* Smaller hint text on mobile */
     }
 
     /* Smaller tool grid on mobile */
