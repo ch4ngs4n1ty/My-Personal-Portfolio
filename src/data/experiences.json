@@ -20,6 +20,17 @@
     "skills": ["Collaboration", "Communication", "Data Cleaning", "Data Analysis", "Data Storytelling", "Data Security", "Adaptability"],
     "logo": "/images/pitt.png",
     "url": "https://www.aibids.org/home"
+  },
+  {
+    "id": 3,
+    "title": "Math Tutor",
+    "company": "NTID Learning Center - Rochester Institute of Technology",
+    "duration": "September 2024 - Present",
+    "location": "Rochester, NY - Onsite",
+    "summary": "Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.",
+    "skills": ["Bilingual Communication", "Accessible Teaching", "Instructional Adaptability", "Active Listening", "Confidence-Building"],
+    "logo": "/images/rit.png",
+    "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"
   }
 ]
 
