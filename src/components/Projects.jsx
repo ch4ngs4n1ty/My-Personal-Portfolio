@@ -5,6 +5,7 @@ import ImageModal from './ImageModal';
 function ProjectCard({ project }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const baseUrl = import.meta.env.BASE_URL;
 
   const handleCardClick = (e) => {
     // Don't toggle if clicking on links or details
@@ -18,7 +19,7 @@ function ProjectCard({ project }) {
     <>
       <div 
         className={`project-card ${isExpanded ? 'expanded' : ''}`}
-        style={{ backgroundImage: `url(${project.backgroundImage})` }}
+        style={{ backgroundImage: `url(${baseUrl}${project.backgroundImage})` }}
       >
         <div className="project-overlay" onClick={handleCardClick}>
           <div className="project-preview">
@@ -69,10 +70,10 @@ function ProjectCard({ project }) {
                 artifact.type === 'image' ? (
                   <img 
                     key={index}
-                    src={artifact.src} 
+                    src={`${baseUrl}${artifact.src}`} 
                     alt={artifact.alt} 
                     className="artifact-image"
-                    onClick={() => setSelectedImage(artifact)}
+                    onClick={() => setSelectedImage({ ...artifact, src: `${baseUrl}${artifact.src}` })}
                   />
                 ) : (
                   <button key={index} className="artifact-link">

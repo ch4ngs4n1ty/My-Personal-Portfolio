@@ -1,6 +1,8 @@
 import experiencesData from '../data/experiences.json';
 
 function ExperienceCard({ experience }) {
+  const baseUrl = import.meta.env.BASE_URL;
+  
   return (
     <div className="experience-card">
       <h3>{experience.title}</h3>
@@ -9,12 +11,12 @@ function ExperienceCard({ experience }) {
       {experience.url ? (
         <a href={experience.url} target="_blank" rel="noopener noreferrer" className="experience-logo-link">
           <div className="experience-logo">
-            <img src={experience.logo} alt={`${experience.company} logo`} />
+            <img src={`${baseUrl}${experience.logo}`} alt={`${experience.company} logo`} />
           </div>
         </a>
       ) : (
         <div className="experience-logo">
-          <img src={experience.logo} alt={`${experience.company} logo`} />
+          <img src={`${baseUrl}${experience.logo}`} alt={`${experience.company} logo`} />
         </div>
       )}
 

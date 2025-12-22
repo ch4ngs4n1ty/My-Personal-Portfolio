@@ -1,9 +1,11 @@
 import toolsData from '../data/tools.json';
 
 function ToolCard({ tool }) {
+  const baseUrl = import.meta.env.BASE_URL;
+  
   const content = (
     <>
-      <img src={tool.logo} alt={`${tool.name} logo`} className="tool-image" />
+      <img src={`${baseUrl}${tool.logo}`} alt={`${tool.name} logo`} className="tool-image" />
       <p className="tool-name">{tool.name}</p>
     </>
   );
