@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react'
 import './App.css'
+import ParticleIntro from './components/ParticleIntro'
 import ShootingStars from './components/ShootingStars'
 import Header from './components/Header'
 import Contact from './components/Contact'
@@ -9,36 +11,63 @@ import Projects from './components/Projects'
 import Tools from './components/Tools'
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    // Check if user has seen the intro in this session
+    const hasSeenIntro = sessionStorage.getItem('hasSeenParticleIntro');
+    
+    if (hasSeenIntro) {
+      // Skip intro if already seen in this session
+      setShowIntro(false);
+      setShowContent(true);
+    }
+  }, []);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    setShowContent(true);
+  };
+
   return (
     <>
-      {/* Shooting Stars Background */}
-      <ShootingStars />
+      {/* Particle Intro Animation */}
+      {showIntro && <ParticleIntro onComplete={handleIntroComplete} />}
 
-      {/* Header with Typing Animation */}
-      <Header />
+      {/* Main Content */}
+      {showContent && (
+        <>
+          {/* Shooting Stars Background */}
+          <ShootingStars />
 
-      {/* Social Media Contact Links */}
-      <Contact />
+          {/* Header with Typing Animation */}
+          <Header />
 
-      <Divider />
+          {/* Social Media Contact Links */}
+          <Contact />
 
-      {/* About Me Section */}
-      <About />
+          <Divider />
 
-      <Divider />
+          {/* About Me Section */}
+          <About />
 
-      {/* Work Experiences */}
-      <Experiences />
+          <Divider />
 
-      <Divider />
+          {/* Work Experiences */}
+          <Experiences />
 
-      {/* Projects Portfolio */}
-      <Projects />
+          <Divider />
 
-      <Divider />
+          {/* Projects Portfolio */}
+          <Projects />
 
-      {/* Tools & Technologies */}
-      <Tools />
+          <Divider />
+
+          {/* Tools & Technologies */}
+          <Tools />
+        </>
+      )}
     </>
   )
 }
