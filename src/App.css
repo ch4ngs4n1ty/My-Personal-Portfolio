@@ -308,6 +308,64 @@ body {
     to { opacity: 1; }                   /* End fully visible */
 }
 
+/* Resume button container */
+.resume-button-container {
+    margin-top: 30px;                    /* Space above button */
+    display: flex;                       /* Enable flexbox */
+    justify-content: center;             /* Center horizontally */
+}
+
+/* Download Resume Button */
+.resume-button {
+    display: inline-flex;                /* Inline flex for icon + text */
+    align-items: center;                 /* Center vertically */
+    gap: 12px;                           /* Space between icon and text */
+    padding: 16px 32px;                  /* Larger padding for prominence */
+    
+    /* Same gradient background as contact buttons */
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
+    
+    border: 2px solid rgba(100, 116, 139, 0.4); /* Same border as contact buttons */
+    border-radius: 14px;                 /* Slightly more rounded */
+    
+    color: #f8fafc;                      /* White text */
+    font-size: 1.05rem;                  /* Slightly larger text */
+    font-weight: 600;                    /* Semi-bold */
+    text-decoration: none;               /* Remove underline */
+    
+    transition: all 0.3s ease;           /* Smooth transitions */
+    backdrop-filter: blur(10px);         /* Frosted glass effect */
+    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Resume button hover effect - matches contact buttons */
+.resume-button:hover {
+    /* Same hover gradient as contact buttons */
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.2));
+    
+    border-color: rgba(96, 165, 250, 0.6); /* Same hover border */
+    
+    /* Same transform as contact buttons */
+    transform: translateY(-5px) scale(1.05);
+    
+    /* Same glow effect as contact buttons */
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+/* Resume download icon */
+.resume-icon {
+    width: 24px;                         /* Icon size */
+    height: 24px;
+    color: #f8fafc;                      /* White to match other icons */
+    transition: transform 0.3s ease;     /* Smooth animation */
+}
+
+/* Icon animation on hover */
+.resume-button:hover .resume-icon {
+    transform: translateY(2px);          /* Move icon down slightly (download motion) */
+}
+
 /* ===== DIVIDER ===== */
 /* Animated separator line between sections */
 .divider {
