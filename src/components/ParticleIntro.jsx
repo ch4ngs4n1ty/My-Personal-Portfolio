@@ -66,7 +66,8 @@ function ParticleIntro({ onComplete }) {
     }
 
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const positionAttribute = new THREE.BufferAttribute(positions, 3);
+    geometry.setAttribute('position', positionAttribute);
 
     // Create circular texture for particles (makes them round instead of square)
     const canvas = document.createElement('canvas');
@@ -99,8 +100,10 @@ function ParticleIntro({ onComplete }) {
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Add second layer of larger, more transparent particles for extra glow
-    const glowGeometry = geometry.clone();
+    // Add second layer - SHARE THE SAME POSITION BUFFER
+    const glowGeometry = new THREE.BufferGeometry();
+    glowGeometry.setAttribute('position', positionAttribute); // Use same position buffer!
+    
     const glowMaterial = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 0.5,                           // Larger for glow halo
@@ -116,13 +119,14 @@ function ParticleIntro({ onComplete }) {
     scene.add(glowParticles);
 
     // Animation state
-    let animationPhase = 'rotating'; // 'rotating' -> 'exploding' -> 'fading'
+    let animationPhase = 'rotating'; // 'rotating' -> 'imploding' -> 'ball' -> 'exploding' -> 'whiteFlash'
     let time = 0;
-    const rotationDuration = 1.3; // seconds
-    const explosionDuration = 1.5;
-    const fadeDuration = 0.5;
-    let explosionTime = 0;
-    let fadeTime = 0;
+    const rotationDuration = 1.0; // seconds
+    const implosionDuration = 0.8;
+    const ballPauseDuration = 0.6;
+    const explosionDuration = 0.5;
+    const flashDuration = 0.4;
+    let phaseTime = 0;
 
     // Animation loop
     function animate() {
@@ -146,59 +150,115 @@ function ParticleIntro({ onComplete }) {
         // Pulsing glow intensity
         glowMaterial.opacity = 0.3 + Math.sin(time * 3) * 0.15;
 
-        // Check if it's time to explode
+        // Check if it's time to implode
         if (time >= rotationDuration) {
-          animationPhase = 'exploding';
-          explosionTime = 0;
+          animationPhase = 'imploding';
+          phaseTime = 0;
         }
-      } else if (animationPhase === 'exploding') {
-        explosionTime += 0.016;
-        const explosionProgress = explosionTime / explosionDuration;
-        const easeOut = 1 - Math.pow(1 - explosionProgress, 3);
+      } else if (animationPhase === 'imploding') {
+        phaseTime += 0.016;
+        const implosionProgress = phaseTime / implosionDuration;
+        const easeIn = Math.pow(implosionProgress, 2.5); // Accelerating inward
 
-        // Update particle positions for both layers
+        // Pull particles toward center
         for (let i = 0; i < particleCount; i++) {
           const i3 = i * 3;
           
-          // Accelerating outward motion
-          const speed = easeOut * 30;
-          positions[i3] = originalPositions[i3] + velocities[i3] * speed;
-          positions[i3 + 1] = originalPositions[i3 + 1] + velocities[i3 + 1] * speed;
-          positions[i3 + 2] = originalPositions[i3 + 2] + velocities[i3 + 2] * speed;
+          // Move from original position to center (0,0,0)
+          positions[i3] = originalPositions[i3] * (1 - easeIn);
+          positions[i3 + 1] = originalPositions[i3 + 1] * (1 - easeIn);
+          positions[i3 + 2] = originalPositions[i3 + 2] * (1 - easeIn);
         }
 
         geometry.attributes.position.needsUpdate = true;
-        glowGeometry.attributes.position.needsUpdate = true;
 
-        // Start fading when explosion is 60% complete
-        if (explosionProgress >= 0.6 && animationPhase === 'exploding') {
-          animationPhase = 'fading';
-          fadeTime = 0;
+        // Increase glow as particles converge
+        glowMaterial.opacity = 0.4 + implosionProgress * 0.4;
+
+        // Transition to ball phase
+        if (implosionProgress >= 1) {
+          animationPhase = 'ball';
+          phaseTime = 0;
         }
-      } else if (animationPhase === 'fading') {
-        fadeTime += 0.016;
-        explosionTime += 0.016;
-        const explosionProgress = explosionTime / explosionDuration;
-        const easeOut = 1 - Math.pow(1 - explosionProgress, 3);
-        const fadeProgress = fadeTime / fadeDuration;
+      } else if (animationPhase === 'ball') {
+        phaseTime += 0.016;
+        
+        // Keep particles at center, pulsing
+        const pulse = 1 + Math.sin(phaseTime * 10) * 0.3;
+        
+        // Increase particle size to create solid ball effect
+        material.size = 0.4 * pulse;
+        glowMaterial.size = 0.8 * pulse;
+        
+        // Bright pulsing glow
+        glowMaterial.opacity = 0.6 + Math.sin(phaseTime * 8) * 0.3;
 
-        // Continue explosion movement for both layers
+        // Transition to explosion
+        if (phaseTime >= ballPauseDuration) {
+          animationPhase = 'exploding';
+          phaseTime = 0;
+        }
+      } else if (animationPhase === 'exploding') {
+        phaseTime += 0.016;
+        const explosionProgress = phaseTime / explosionDuration;
+        const easeOut = 1 - Math.pow(1 - explosionProgress, 2);
+
+        // Explosive outward motion
         for (let i = 0; i < particleCount; i++) {
           const i3 = i * 3;
-          const speed = easeOut * 30;
-          positions[i3] = originalPositions[i3] + velocities[i3] * speed;
-          positions[i3 + 1] = originalPositions[i3 + 1] + velocities[i3 + 1] * speed;
-          positions[i3 + 2] = originalPositions[i3 + 2] + velocities[i3 + 2] * speed;
+          
+          // Accelerating outward from center
+          const speed = easeOut * 50;
+          positions[i3] = velocities[i3] * speed;
+          positions[i3 + 1] = velocities[i3 + 1] * speed;
+          positions[i3 + 2] = velocities[i3 + 2] * speed;
+        }
+
+        geometry.attributes.position.needsUpdate = true;
+
+        // Increase brightness as explosion progresses
+        material.opacity = 1 + explosionProgress * 2;
+        glowMaterial.opacity = 0.8 + explosionProgress * 1.5;
+
+        // Transition to white flash
+        if (explosionProgress >= 1) {
+          animationPhase = 'whiteFlash';
+          phaseTime = 0;
+        }
+      } else if (animationPhase === 'whiteFlash') {
+        phaseTime += 0.016;
+        const flashProgress = phaseTime / flashDuration;
+
+        // Continue particle motion
+        for (let i = 0; i < particleCount; i++) {
+          const i3 = i * 3;
+          const speed = 50 + flashProgress * 20;
+          positions[i3] = velocities[i3] * speed;
+          positions[i3 + 1] = velocities[i3 + 1] * speed;
+          positions[i3 + 2] = velocities[i3 + 2] * speed;
         }
         geometry.attributes.position.needsUpdate = true;
-        glowGeometry.attributes.position.needsUpdate = true;
 
-        // Fade out both layers
-        material.opacity = Math.max(0, 1 - fadeProgress);
-        glowMaterial.opacity = Math.max(0, 0.4 * (1 - fadeProgress));
+        // Create white flash overlay effect
+        const flashIntensity = flashProgress < 0.2 
+          ? flashProgress / 0.2  // Quick flash up
+          : 1 - ((flashProgress - 0.2) / 0.8); // Slower fade out
+
+        // Update container background for white flash
+        if (containerRef.current) {
+          const bgAlpha = flashIntensity * 0.95;
+          containerRef.current.style.background = 
+            `linear-gradient(135deg, 
+              rgba(255, 255, 255, ${bgAlpha}), 
+              rgba(255, 255, 255, ${bgAlpha * 0.9}))`;
+        }
+
+        // Fade out particles during flash
+        material.opacity = Math.max(0, 3 * (1 - flashProgress));
+        glowMaterial.opacity = Math.max(0, 2 * (1 - flashProgress));
 
         // Animation complete
-        if (fadeProgress >= 1) {
+        if (flashProgress >= 1) {
           cancelAnimationFrame(animationId);
           cleanup();
           return;
