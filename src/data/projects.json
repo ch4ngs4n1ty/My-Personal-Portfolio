@@ -58,6 +58,19 @@
     "artifacts": [{
       
     }]
-  }
+  },
+  {
+    "id": 5,
+    "title": "Astros and Hoppers",
+    "tech": ["Java"],
+    "duration": "April 2024 - May 2024",
+    "description": "Developed Astros and Hoppers, an interactive Java puzzle game with custom mechanics and logic-driven challenges. Partnered to implement a BFS-based shortest-path system that powers core gameplay decisions and guarantees correct pathfinding behavior. Built the JavaFX game board UI and integrated department-provided image assets for a polished player experience, while supporting both GUI and PTUI (text-based) interaction via the command line.",
+    "tools": ["Java", "JavaFX", "IntelliJ", "GitHub", "Command Line Interface (CLI)", "PTUI"],
+    "githubUrl": "",
+    "backgroundImage": "/images/astro-and-hopper-bg.png",
+    "artifacts": [{
+      
+    }]
+    }
 ]
 

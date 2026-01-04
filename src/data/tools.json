@@ -46,6 +46,16 @@
     "name": "MobaXterm",
     "logo": "/images/mobaxterm.png",
     "url": null
-  }
+  },
+  { "id": 9, "name": "Pandas", "logo": "/images/pandas.png", "url": "https://pandas.pydata.org/" },
+  { "id": 10, "name": "scikit-learn", "logo": "/images/scikitlearn.png", "url": "https://scikit-learn.org/" },
+  { "id": 11, "name": "Matplotlib", "logo": "/images/matplotlib.png", "url": "https://matplotlib.org/" },
+  { "id": 12, "name": "Linux", "logo": "/images/linux.png", "url": "https://www.linux.org/" },
+  { "id": 13, "name": "Valgrind", "logo": "/images/valgrind.png", "url": "https://valgrind.org/" },
+  { "id": 14, "name": "DataGrip", "logo": "/images/datagrip.png", "url": "https://www.jetbrains.com/datagrip/" },
+  { "id": 15, "name": "Angular", "logo": "/images/angular.png", "url": "https://angular.dev/" },
+  { "id": 16, "name": "TypeScript", "logo": "/images/typescript.png", "url": "https://www.typescriptlang.org/" },
+  { "id": 17, "name": "Spring Boot", "logo": "/images/springboot.png", "url": "https://spring.io/projects/spring-boot" },
+  { "id": 18, "name": "JUnit", "logo": "/images/junit.png", "url": "https://junit.org/" }
 ]
 
