@@ -40,12 +40,19 @@ function Header() {
     return () => clearTimeout(startDelay);
   }, []);
 
+  const scrollToContact = () => {
+    document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="container">
       <h1 id="typing-text" className={isTypingComplete ? 'typing-complete' : ''}>
         {typedText}
       </h1>
       <p>Welcome To My Personal Website</p>
+      <button className="contact-me-button" onClick={scrollToContact}>
+        Contact Me
+      </button>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import ParticleIntro from './components/ParticleIntro'
 import ShootingStars from './components/ShootingStars'
 import Header from './components/Header'
 import Contact from './components/Contact'
+import ContactForm from './components/ContactForm'
 import Divider from './components/Divider'
 import About from './components/About'
 import Experiences from './components/Experiences'
@@ -66,6 +67,13 @@ function App() {
 
           {/* Tools & Technologies */}
           <Tools />
+
+          <Divider />
+
+          {/* Contact Section */}
+          <div id="contact-section">
+            <ContactForm />
+          </div>
         </>
       )}
     </>
