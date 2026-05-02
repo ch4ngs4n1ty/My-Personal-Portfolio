@@ -2,94 +2,108 @@ import { useState } from 'react';
 import projectsData from '../data/projects.json';
 import ImageModal from './ImageModal';
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, index }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const baseUrl = import.meta.env.BASE_URL;
 
-  const handleCardClick = (e) => {
-    // Don't toggle if clicking on links or details
-    if (e.target.closest('.project-link') || e.target.closest('.project-details')) {
-      return;
-    }
-    setIsExpanded(!isExpanded);
-  };
+  const num = String(index + 1).padStart(2, '0');
+  const validArtifacts = (project.artifacts || []).filter(
+    (a) => a && a.type === 'image' && a.src
+  );
+
+  const stopPropagation = (e) => e.stopPropagation();
 
   return (
     <>
-      <div 
-        className={`project-card ${isExpanded ? 'expanded' : ''}`}
-        style={{ backgroundImage: `url(${baseUrl}${project.backgroundImage})` }}
-      >
-        <div className="project-overlay" onClick={handleCardClick}>
-          <div className="project-preview">
-            <h3>{project.title}</h3>
-            <p className="click-hint">Click to view details</p>
+      <article className={`project-card reveal${isExpanded ? ' expanded' : ''}`}>
+        <div
+          className="project-bg"
+          style={{
+            backgroundImage: project.backgroundImage
+              ? `url(${baseUrl}${project.backgroundImage})`
+              : undefined,
+          }}
+          aria-hidden="true"
+        />
+        <div className="project-stripe" aria-hidden="true" />
+        <div
+          className="project-content"
+          role="button"
+          tabIndex={0}
+          onClick={() => setIsExpanded((v) => !v)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setIsExpanded((v) => !v);
+            }
+          }}
+        >
+          <div className="project-num">{num}</div>
+          <h3 className="project-title">{project.title}</h3>
+          <div className="project-meta">
+            {project.duration}
+            {project.program && ` · ${project.program}`}
           </div>
-          
-          <div className="project-details-content">
-            <p className="project-duration">
-              {project.duration}
-              {project.program && ` • ${project.program}`}
-            </p>
-            <p className="project-description">{project.description}</p>
-            <p className="project-tools">
-              <strong>Tools:</strong> {project.tools.join(', ')}
-            </p>
-            <div className="project-links">
-              {project.githubUrl ? (
-                <a 
-                  href={project.githubUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="project-link"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  View on GitHub
-                </a>
-              ) : (
-                <button 
-                  className="project-link"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    alert('Project repository coming soon!');
-                  }}
-                >
-                  View Details
-                </button>
-              )}
-            </div>
+          <p className="project-desc">{project.description}</p>
+          <div className="project-tags">
+            {project.tech.map((t) => (
+              <span key={t} className="project-tag">{t}</span>
+            ))}
           </div>
-        </div>
-
-        {project.artifacts && project.artifacts.length > 0 && (
-          <details className="project-details">
-            <summary>View Artifacts</summary>
-            <div className="project-artifacts">
-              {project.artifacts.map((artifact, index) => (
-                artifact.type === 'image' ? (
-                  <img 
-                    key={index}
-                    src={`${baseUrl}${artifact.src}`} 
-                    alt={artifact.alt} 
-                    className="artifact-image"
-                    onClick={() => setSelectedImage({ ...artifact, src: `${baseUrl}${artifact.src}` })}
-                  />
-                ) : (
-                  <button key={index} className="artifact-link">
-                    {artifact.name}
-                  </button>
-                )
+          <div className="project-actions" onClick={stopPropagation}>
+            {project.githubUrl ? (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-action"
+              >
+                View on GitHub →
+              </a>
+            ) : (
+              <span className="project-action" style={{ opacity: 0.6 }}>
+                Repo private
+              </span>
+            )}
+            {validArtifacts.length > 0 && (
+              <button
+                type="button"
+                className="project-action"
+                onClick={() =>
+                  setSelectedImage({
+                    ...validArtifacts[0],
+                    src: `${baseUrl}${validArtifacts[0].src}`,
+                  })
+                }
+              >
+                View Artifact
+              </button>
+            )}
+          </div>
+          {validArtifacts.length > 0 && (
+            <div className="project-artifacts" onClick={stopPropagation}>
+              {validArtifacts.map((art, i) => (
+                <img
+                  key={i}
+                  src={`${baseUrl}${art.src}`}
+                  alt={art.alt}
+                  className="artifact-thumb"
+                  onClick={() =>
+                    setSelectedImage({ ...art, src: `${baseUrl}${art.src}` })
+                  }
+                />
               ))}
             </div>
-          </details>
-        )}
-      </div>
+          )}
+        </div>
+        <div className="project-arrow" aria-hidden="true">→</div>
+      </article>
 
       {selectedImage && (
-        <ImageModal 
-          image={selectedImage} 
-          onClose={() => setSelectedImage(null)} 
+        <ImageModal
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
         />
       )}
     </>
@@ -98,16 +112,19 @@ function ProjectCard({ project }) {
 
 function Projects() {
   return (
-    <div className="projects-section">
-      <h2>Projects</h2>
+    <section id="projects">
+      <div className="section-header reveal">
+        <span className="section-num">03</span>
+        <h2 className="section-title">Projects</h2>
+        <div className="section-line"></div>
+      </div>
       <div className="projects-grid">
-        {projectsData.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {projectsData.map((project, i) => (
+          <ProjectCard key={project.id} project={project} index={i} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
 export default Projects;
-

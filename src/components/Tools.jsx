@@ -1,40 +1,50 @@
 import toolsData from '../data/tools.json';
 
-function ToolCard({ tool }) {
+function ToolItem({ tool }) {
   const baseUrl = import.meta.env.BASE_URL;
-  
-  const content = (
+
+  const inner = (
     <>
-      <img src={`${baseUrl}${tool.logo}`} alt={`${tool.name} logo`} className="tool-image" />
-      <p className="tool-name">{tool.name}</p>
+      <img
+        src={`${baseUrl}${tool.logo}`}
+        alt=""
+        className="tool-image"
+        aria-hidden="true"
+      />
+      <span className="tool-name">{tool.name}</span>
     </>
   );
 
-  return (
-    <div className="tool-card">
-      {tool.url ? (
-        <a href={tool.url} target="_blank" rel="noopener noreferrer" className="tool-link">
-          {content}
-        </a>
-      ) : (
-        content
-      )}
-    </div>
-  );
+  if (tool.url) {
+    return (
+      <a
+        href={tool.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="tool-item reveal"
+      >
+        {inner}
+      </a>
+    );
+  }
+  return <div className="tool-item reveal">{inner}</div>;
 }
 
 function Tools() {
   return (
-    <div className="tools-section">
-      <h2>Tools & Technologies</h2>
+    <section id="tools">
+      <div className="section-header reveal">
+        <span className="section-num">04</span>
+        <h2 className="section-title">Tech Stack</h2>
+        <div className="section-line"></div>
+      </div>
       <div className="tools-grid">
         {toolsData.map((tool) => (
-          <ToolCard key={tool.id} tool={tool} />
+          <ToolItem key={tool.id} tool={tool} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
 export default Tools;
-

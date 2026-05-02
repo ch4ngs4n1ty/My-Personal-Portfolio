@@ -1,61 +1,34 @@
-import { useState, useEffect } from 'react';
-
 function Header() {
-  const [typedText, setTypedText] = useState('');
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-  
-  const greetings = [
-    "Hello, I'm Ethan Chang!",
-    "Hi, I'm Ethan Chang!",
-    "Hey there, I'm Ethan Chang!",
-    "Welcome! I'm Ethan Chang",
-    "Greetings! I'm Ethan Chang",
-    "Hi Ethan Chang here!",
-    "Hey! Ethan Chang speaking",
-    "Nice to meet you! I'm Ethan",
-    "Hello World! I'm Ethan Chang",
-    "What's up? I'm Ethan Chang"
-  ];
-
-  useEffect(() => {
-    // Pick random greeting
-    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-    let currentIndex = 0;
-
-    // Small delay before starting
-    const startDelay = setTimeout(() => {
-      const typingInterval = setInterval(() => {
-        if (currentIndex < randomGreeting.length) {
-          setTypedText(randomGreeting.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          clearInterval(typingInterval);
-          setIsTypingComplete(true);
-        }
-      }, 80);
-
-      return () => clearInterval(typingInterval);
-    }, 300);
-
-    return () => clearTimeout(startDelay);
-  }, []);
-
   const scrollToContact = () => {
-    document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="container">
-      <h1 id="typing-text" className={isTypingComplete ? 'typing-complete' : ''}>
-        {typedText}
-      </h1>
-      <p>Welcome To My Personal Website</p>
-      <button className="contact-me-button" onClick={scrollToContact}>
-        Contact Me
-      </button>
-    </div>
+    <section id="hero">
+      <div className="hero-content">
+        <div className="hero-label">Computer Science · RIT · Class of 2026</div>
+        <h1 className="hero-name">Ethan<br /><span>Chang</span></h1>
+        <p className="hero-sub">
+          Data Science &nbsp;·&nbsp; Machine Learning &nbsp;·&nbsp; <em>Software Engineering</em>
+        </p>
+        <p className="hero-hint">Drag to rotate &nbsp;·&nbsp; Click any node to explore ↓</p>
+
+        <div className="hero-legend-wrap">
+          <div className="hero-legend-rule"></div>
+          <div className="hero-legend">
+            <span><span className="legend-dot" style={{ background: '#c9a84c' }}></span>Projects</span>
+            <span><span className="legend-dot" style={{ background: '#f0b450' }}></span>Experience</span>
+            <span><span className="legend-dot" style={{ background: '#c0392b' }}></span>ML &amp; Tools</span>
+            <span><span className="legend-dot" style={{ background: '#dc7840' }}></span>DevOps</span>
+          </div>
+        </div>
+
+        <button type="button" className="hero-cta" onClick={scrollToContact}>
+          Contact Me
+        </button>
+      </div>
+    </section>
   );
 }
 
 export default Header;
-

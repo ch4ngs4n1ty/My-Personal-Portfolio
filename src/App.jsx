@@ -1,83 +1,81 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import ParticleIntro from './components/ParticleIntro'
-import ShootingStars from './components/ShootingStars'
-import Header from './components/Header'
-import Contact from './components/Contact'
-import ContactForm from './components/ContactForm'
-import Divider from './components/Divider'
-import About from './components/About'
-import Experiences from './components/Experiences'
-import Projects from './components/Projects'
-import Tools from './components/Tools'
+import { useEffect, useState } from 'react';
+import './App.css';
+import IntroOverlay from './components/IntroOverlay';
+import CustomCursor from './components/CustomCursor';
+import BackgroundCanvas from './components/BackgroundCanvas';
+import Navigation from './components/Navigation';
+import Header from './components/Header';
+import Constellation from './components/Constellation';
+import Divider from './components/Divider';
+import About from './components/About';
+import Experiences from './components/Experiences';
+import Projects from './components/Projects';
+import Tools from './components/Tools';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+
+function useReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    const elements = document.querySelectorAll('.reveal, .timeline-item, .project-card, .tool-item');
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  });
+}
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [showContent, setShowContent] = useState(false);
+  const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('intro_done'));
 
   useEffect(() => {
-    // Check if user has seen the intro in this session
-    const hasSeenIntro = sessionStorage.getItem('hasSeenParticleIntro');
-    
-    if (hasSeenIntro) {
-      // Skip intro if already seen in this session
-      setShowIntro(false);
-      setShowContent(true);
-    }
-  }, []);
+    if (!showIntro) return;
+    const timer = setTimeout(() => sessionStorage.setItem('intro_done', '1'), 2400);
+    return () => clearTimeout(timer);
+  }, [showIntro]);
 
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    setShowContent(true);
-  };
+  useReveal();
 
   return (
     <>
-      {/* Particle Intro Animation */}
-      {showIntro && <ParticleIntro onComplete={handleIntroComplete} />}
+      {showIntro && <IntroOverlay onComplete={() => setShowIntro(false)} />}
 
-      {/* Main Content */}
-      {showContent && (
-        <>
-          {/* Shooting Stars Background */}
-          <ShootingStars />
+      <CustomCursor />
+      <BackgroundCanvas />
+      <Navigation />
 
-          {/* Header with Typing Animation */}
-          <Header />
+      <main>
+        <Header />
+        <Constellation />
 
-          {/* Social Media Contact Links */}
-          <Contact />
+        <Divider label="// 01 — Identity" />
+        <About />
 
-          <Divider />
+        <Divider label="// 02 — History" />
+        <Experiences />
 
-          {/* About Me Section */}
-          <About />
+        <Divider label="// 03 — Work" />
+        <Projects />
 
-          <Divider />
+        <Divider label="// 04 — Arsenal" />
+        <Tools />
 
-          {/* Work Experiences */}
-          <Experiences />
+        <Divider label="// 05 — Contact" />
+        <Contact />
+      </main>
 
-          <Divider />
-
-          {/* Projects Portfolio */}
-          <Projects />
-
-          <Divider />
-
-          {/* Tools & Technologies */}
-          <Tools />
-
-          <Divider />
-
-          {/* Contact Section */}
-          <div id="contact-section">
-            <ContactForm />
-          </div>
-        </>
-      )}
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
