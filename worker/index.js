@@ -72,6 +72,20 @@ ${buildPortfolioContext()}
 
 const SYSTEM_PROMPT = buildSystemPrompt();
 
+// ALLOWED_ORIGIN may be "*", or a comma-separated list of exact origins.
+// We echo back the request's origin only if it's on the list, so the live
+// site and localhost can both be allowed at once.
+function resolveOrigin(request, env) {
+  const allowed = (env.ALLOWED_ORIGIN || '*')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (allowed.includes('*')) return '*';
+  const reqOrigin = request.headers.get('Origin');
+  if (reqOrigin && allowed.includes(reqOrigin)) return reqOrigin;
+  return allowed[0] || '*';
+}
+
 function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': origin,
@@ -90,7 +104,7 @@ function json(body, status, origin) {
 
 export default {
   async fetch(request, env) {
-    const origin = env.ALLOWED_ORIGIN || '*';
+    const origin = resolveOrigin(request, env);
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });

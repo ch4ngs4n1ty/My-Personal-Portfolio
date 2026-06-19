@@ -2,10 +2,10 @@ name = "portfolio-chat"
 main = "index.js"
 compatibility_date = "2026-01-01"
 
-# The origin allowed to call this Worker. Lock this to your live site before
-# going public — e.g. "https://ch4ngs4n1ty.github.io". "*" is fine for local dev.
+# Origins allowed to call this Worker (comma-separated). Your live GitHub Pages
+# site plus localhost for testing. Use "*" to allow any origin.
 [vars]
-ALLOWED_ORIGIN = "*"
+ALLOWED_ORIGIN = "https://ch4ngs4n1ty.github.io,http://localhost:5173"
 
 # The Claude model the chatbot uses. claude-opus-4-8 is the most capable.
 # For a cheaper / faster portfolio Q&A bot, set this to "claude-haiku-4-5".
