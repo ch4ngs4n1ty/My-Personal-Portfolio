@@ -17,16 +17,10 @@ function ProjectCard({ project, index }) {
   return (
     <>
       <article className={`project-card reveal${isExpanded ? ' expanded' : ''}`}>
-        <div
-          className="project-bg"
-          style={{
-            backgroundImage: project.backgroundImage
-              ? `url(${baseUrl}${project.backgroundImage})`
-              : undefined,
-          }}
-          aria-hidden="true"
-        />
+        <div className="project-bg" aria-hidden="true" />
         <div className="project-stripe" aria-hidden="true" />
+        <div className="project-watermark" aria-hidden="true">{num}</div>
+        <div className="project-edge" aria-hidden="true" />
         <div
           className="project-content"
           role="button"

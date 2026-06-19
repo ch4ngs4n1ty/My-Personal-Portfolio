@@ -33,7 +33,9 @@ function Contact() {
       <div className="contact-grid">
         <div>
           <h3 className="contact-heading reveal">
-            Let's<br /><em>build</em><br />together
+            <span>Let's</span>
+            <em>build</em>
+            <span>together</span>
           </h3>
           <p className="contact-sub reveal">
             Open to internships, research roles, and interesting problems. If you're working on something hard — reach out.

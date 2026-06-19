@@ -6,6 +6,7 @@ import BackgroundCanvas from './components/BackgroundCanvas';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import Constellation from './components/Constellation';
+import PortfolioChat from './components/PortfolioChat';
 import Divider from './components/Divider';
 import About from './components/About';
 import Experiences from './components/Experiences';
@@ -56,6 +57,7 @@ function App() {
       <main>
         <Header />
         <Constellation />
+        <PortfolioChat />
 
         <Divider label="// 01 — Identity" />
         <About />
