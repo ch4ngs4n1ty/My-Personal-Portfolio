@@ -5,7 +5,8 @@
   "description": "Cloudflare Worker backend for the portfolio chat assistant",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "secret:push": "grep '^ANTHROPIC_API_KEY=' .dev.vars | cut -d '=' -f2- | tr -d '\\r\\n' | wrangler secret put ANTHROPIC_API_KEY"
   },
   "devDependencies": {
     "wrangler": "^3.90.0"
