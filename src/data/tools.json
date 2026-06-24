@@ -1,61 +1,20 @@
 [
-  {
-    "id": 1,
-    "name": "Python",
-    "logo": "/images/python.png",
-    "url": "https://www.python.org/"
-  },
-  {
-    "id": 2,
-    "name": "Java",
-    "logo": "/images/java.png",
-    "url": null
-  },
-  {
-    "id": 3,
-    "name": "C",
-    "logo": "/images/c.png",
-    "url": null
-  },
-  {
-    "id": 4,
-    "name": "SQL",
-    "logo": "/images/sql.png",
-    "url": null
-  },
-  {
-    "id": 5,
-    "name": "JavaScript",
-    "logo": "/images/javascript.png",
-    "url": null
-  },
-  {
-    "id": 6,
-    "name": "Jupyter",
-    "logo": "/images/jupyter.png",
-    "url": null
-  },
-  {
-    "id": 7,
-    "name": "Git",
-    "logo": "/images/git.png",
-    "url": null
-  },
-  {
-    "id": 8,
-    "name": "MobaXterm",
-    "logo": "/images/mobaxterm.png",
-    "url": null
-  },
-  { "id": 9, "name": "Pandas", "logo": "/images/pandas.png", "url": "https://pandas.pydata.org/" },
-  { "id": 10, "name": "scikit-learn", "logo": "/images/scikitlearn.png", "url": "https://scikit-learn.org/" },
-  { "id": 11, "name": "Matplotlib", "logo": "/images/matplotlib.png", "url": "https://matplotlib.org/" },
-  { "id": 12, "name": "Linux", "logo": "/images/linux.png", "url": "https://www.linux.org/" },
-  { "id": 13, "name": "Valgrind", "logo": "/images/valgrind.png", "url": "https://valgrind.org/" },
-  { "id": 14, "name": "DataGrip", "logo": "/images/datagrip.png", "url": "https://www.jetbrains.com/datagrip/" },
-  { "id": 15, "name": "Angular", "logo": "/images/angular.png", "url": "https://angular.dev/" },
-  { "id": 16, "name": "TypeScript", "logo": "/images/typescript.png", "url": "https://www.typescriptlang.org/" },
-  { "id": 17, "name": "Spring Boot", "logo": "/images/springboot.png", "url": "https://spring.io/projects/spring-boot" },
-  { "id": 18, "name": "JUnit", "logo": "/images/junit.png", "url": "https://junit.org/" }
+  { "id": 1, "name": "Python", "icon": "python", "url": "https://www.python.org/" },
+  { "id": 2, "name": "Java", "icon": "openjdk", "url": null },
+  { "id": 3, "name": "C", "icon": "c", "url": null },
+  { "id": 4, "name": "SQL", "icon": null, "url": null },
+  { "id": 5, "name": "JavaScript", "icon": "javascript", "url": null },
+  { "id": 6, "name": "Jupyter", "icon": "jupyter", "url": null },
+  { "id": 7, "name": "Git", "icon": "git", "url": null },
+  { "id": 8, "name": "MobaXterm", "icon": null, "url": null },
+  { "id": 9, "name": "Pandas", "icon": "pandas", "url": "https://pandas.pydata.org/" },
+  { "id": 10, "name": "scikit-learn", "icon": "scikitlearn", "url": "https://scikit-learn.org/" },
+  { "id": 11, "name": "Matplotlib", "icon": null, "url": "https://matplotlib.org/" },
+  { "id": 12, "name": "Linux", "icon": "linux", "url": "https://www.linux.org/" },
+  { "id": 13, "name": "Valgrind", "icon": null, "url": "https://valgrind.org/" },
+  { "id": 14, "name": "DataGrip", "icon": "datagrip", "url": "https://www.jetbrains.com/datagrip/" },
+  { "id": 15, "name": "Angular", "icon": "angular", "url": "https://angular.dev/" },
+  { "id": 16, "name": "TypeScript", "icon": "typescript", "url": "https://www.typescriptlang.org/" },
+  { "id": 17, "name": "Spring Boot", "icon": "springboot", "url": "https://spring.io/projects/spring-boot" },
+  { "id": 18, "name": "JUnit", "icon": "junit5", "url": "https://junit.org/" }
 ]
-

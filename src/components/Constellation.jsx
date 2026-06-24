@@ -10,6 +10,26 @@ const TOOL_TYPES = {
   Git: 'devops', Linux: 'devops', MobaXterm: 'devops', Valgrind: 'devops', DataGrip: 'devops',
 };
 
+// Refined warm "ember" duotone — gold → amber → copper → crimson over deep black.
+const COLORS = {
+  core: [255, 241, 214],
+  project: [214, 178, 92],
+  exp: [226, 168, 80],
+  ml: [226, 96, 72],
+  skill: [198, 64, 48],
+  devops: [206, 130, 70],
+};
+
+// What part of the portfolio each node represents (shown on hover/select).
+const CATEGORY = {
+  core: 'Portfolio Hub',
+  project: 'Project',
+  exp: 'Experience',
+  skill: 'Language',
+  ml: 'ML & Data',
+  devops: 'DevOps & Tools',
+};
+
 function buildNodes() {
   const nodes = [{ label: 'Ethan Chang', type: 'core', link: null }];
   projectsData.forEach((p) => nodes.push({ label: p.title, type: 'project', link: 'projects' }));
@@ -38,17 +58,21 @@ function Constellation() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    let W = 0, H = 0;
+    let W = 0, H = 0, dpr = 1;
     const resize = () => {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.offsetWidth;
+      H = canvas.offsetHeight;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener('resize', resize);
 
     const nodeData = buildNodes();
     const nonCoreCount = nodeData.length - 1;
-    const sphere = fibSphere(nonCoreCount, 300);
+    const sphere = fibSphere(nonCoreCount, 320);
     const nodes = nodeData.map((d, i) => {
       if (i === 0) return { ...d, x: 0, y: 0, z: 0 };
       const [x, y, z] = sphere[i - 1];
@@ -76,19 +100,27 @@ function Constellation() {
     }
     crossLinks.forEach((c) => edges.push(c));
 
-    const packets = edges.slice(0, 28).map(([a, b]) => ({
+    // Adjacency + cross-link lookup for hover-focus + edge styling.
+    const adjacency = nodes.map(() => new Set());
+    edges.forEach(([a, b]) => { adjacency[a].add(b); adjacency[b].add(a); });
+    const key = (a, b) => (a < b ? `${a}-${b}` : `${b}-${a}`);
+    const crossSet = new Set(crossLinks.map(([a, b]) => key(a, b)));
+
+    const packets = edges.slice(0, 18).map(([a, b]) => ({
       from: a, to: b,
       t: Math.random(),
       speed: 0.003 + Math.random() * 0.005,
       isGold: nodes[b] && (nodes[b].type === 'project' || nodes[b].type === 'exp'),
     }));
 
-    const dust = Array.from({ length: 140 }, () => ({
+    const dust = Array.from({ length: 150 }, () => ({
       x: (Math.random() - 0.5) * 1100,
       y: (Math.random() - 0.5) * 900,
       z: (Math.random() - 0.5) * 1100,
-      r: Math.random() * 1.5 + 0.3,
-      isGold: Math.random() < 0.15,
+      r: Math.random() * 1.4 + 0.3,
+      isGold: Math.random() < 0.22,
+      tw: Math.random() * Math.PI * 2,
+      sp: 0.4 + Math.random() * 1.6,
     }));
 
     let mouseX = 0, mouseY = 0;
@@ -105,14 +137,14 @@ function Constellation() {
     const flashParticles = [];
 
     const spawnFlash = (sx, sy, isGold) => {
-      for (let i = 0; i < 18; i++) {
-        const angle = (i / 18) * Math.PI * 2 + Math.random() * 0.3;
-        const speed = 1.5 + Math.random() * 3;
+      for (let i = 0; i < 22; i++) {
+        const angle = (i / 22) * Math.PI * 2 + Math.random() * 0.3;
+        const speed = 1.6 + Math.random() * 3.4;
         flashParticles.push({
           x: sx, y: sy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          life: 0, maxLife: 30 + Math.random() * 20,
+          life: 0, maxLife: 32 + Math.random() * 22,
           r: Math.random() * 3 + 1,
           isGold,
         });
@@ -123,7 +155,7 @@ function Constellation() {
       if (didDrag || hoveredNode < 0) return;
       const node = nodes[hoveredNode];
       const proj = projected[hoveredNode];
-      if (proj) spawnFlash(proj.sx, proj.sy, node.type === 'project');
+      if (proj) spawnFlash(proj.sx, proj.sy, node.type === 'project' || node.type === 'exp');
       if (node && node.link) {
         setTimeout(() => {
           const target = document.getElementById(node.link);
@@ -201,9 +233,40 @@ function Constellation() {
       const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
       const y1 = y * cosX - z1 * sinX;
       const z2 = y * sinX + z1 * cosX;
-      const fov = 500;
-      const scale = fov / (fov + z2 + 400);
+      const fov = 560;
+      const scale = fov / (fov + z2 + 340);
       return { sx: x1 * scale, sy: y1 * scale, z: z2, scale };
+    };
+
+    // ── Render helpers ────────────────────────────────────────────────
+    const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a})`;
+    const lerp = (a, b, t2) => a + (b - a) * t2;
+    const mix = (c, c2, t2) => [lerp(c[0], c2[0], t2), lerp(c[1], c2[1], t2), lerp(c[2], c2[2], t2)];
+    const colorOf = (type) => COLORS[type] || COLORS.skill;
+    const fogOf = (z) => Math.max(0.12, Math.min(1, 1 - (z + 300) / 680));
+    const glow = (x, y, r, c, a) => {
+      if (a <= 0 || r <= 0) return;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, rgba(c, a));
+      g.addColorStop(1, rgba(c, 0));
+      ctx.fillStyle = g;
+      ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    };
+    const spikes = (x, y, len, c, a) => {
+      if (a <= 0) return;
+      for (const ang of [0, Math.PI / 2]) {
+        const dx = Math.cos(ang), dy = Math.sin(ang);
+        const g = ctx.createLinearGradient(x - dx * len, y - dy * len, x + dx * len, y + dy * len);
+        g.addColorStop(0, rgba(c, 0));
+        g.addColorStop(0.5, rgba(c, a));
+        g.addColorStop(1, rgba(c, 0));
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x - dx * len, y - dy * len);
+        ctx.lineTo(x + dx * len, y + dy * len);
+        ctx.stroke();
+      }
     };
 
     let t = 0;
@@ -216,9 +279,9 @@ function Constellation() {
       explodeActive = true;
       sessionStorage.setItem('constellation_shown', '1');
       shockwaves = [
-        { r: 0, maxR: 500, alpha: 0.8, speed: 12, color: [192, 57, 43] },
-        { r: 0, maxR: 380, alpha: 0.6, speed: 8,  color: [201, 168, 76] },
-        { r: 0, maxR: 260, alpha: 0.5, speed: 5,  color: [220, 120, 60] },
+        { r: 0, maxR: 520, alpha: 0.85, speed: 13, color: COLORS.skill },
+        { r: 0, maxR: 400, alpha: 0.6, speed: 9, color: COLORS.project },
+        { r: 0, maxR: 280, alpha: 0.5, speed: 5.5, color: COLORS.devops },
       ];
     };
 
@@ -232,6 +295,8 @@ function Constellation() {
     }, { threshold: 0.3 });
     obs.observe(canvas);
 
+    const NODE_R = { project: 13, exp: 12, ml: 9, skill: 8.5, devops: 9 };
+
     let raf = 0;
     const frame = () => {
       ctx.clearRect(0, 0, W, H);
@@ -242,6 +307,7 @@ function Constellation() {
         if (explodeProgress >= 1) { explodeProgress = 1; explodeActive = false; }
       }
       const eased = explodeProgress < 1 ? 1 - Math.pow(1 - explodeProgress, 3) : 1;
+      const appear = Math.min(1, eased * 2);
 
       if (!isDragging) {
         velY += (0.002 - velY) * 0.05;
@@ -257,27 +323,48 @@ function Constellation() {
         return { ...n, ...p, sx: cx + p.sx, sy: cy + p.sy };
       });
 
-      const sorted = [...projected].sort((a, b) => a.z - b.z);
+      // Hover hit-test up front so focus is current this frame.
+      hoveredNode = -1;
+      const rect = canvas.getBoundingClientRect();
+      const lx = mouseX - rect.left, ly = mouseY - rect.top;
+      let bestDist = Infinity;
+      projected.forEach((n, i) => {
+        const dx = lx - n.sx, dy = ly - n.sy;
+        const d2 = dx * dx + dy * dy;
+        const hitR = n.type === 'core'
+          ? 46
+          : Math.max(24, (NODE_R[n.type] || 8) * n.scale * 1.8 + 16);
+        if (d2 < hitR * hitR && d2 < bestDist) { bestDist = d2; hoveredNode = i; }
+      });
+      canvas.style.cursor = hoveredNode >= 0 ? 'pointer' : (isDragging ? 'grabbing' : 'grab');
+      const focus = hoveredNode;
+      const focusActive = focus >= 0;
 
-      [
-        [cx - 80, cy - 60, 340, 'rgba(192,57,43,0.06)'],
-        [cx + 80, cy + 50, 280, 'rgba(201,168,76,0.05)'],
-        [cx - 50, cy + 90, 220, 'rgba(220,120,60,0.04)'],
-      ].forEach(([x, y, r, c]) => {
-        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-        g.addColorStop(0, c);
-        g.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      const sorted = [...projected].sort((a, b) => b.z - a.z);
+
+      // ── Additive light pass ──────────────────────────────────────
+      ctx.globalCompositeOperation = 'lighter';
+
+      // Drifting nebula — radii scaled to the canvas so the glow always fades
+      // to zero before the edges (no hard rectangular clip).
+      const neb = Math.min(W, H) * 0.46;
+      glow(cx + Math.cos(t * 0.3) * 40, cy + Math.sin(t * 0.25) * 30, neb, COLORS.skill, 0.05);
+      glow(cx + Math.cos(t * 0.2 + 2) * 50, cy + Math.sin(t * 0.3 + 1) * 40, neb * 0.78, COLORS.project, 0.045);
+      glow(cx + Math.cos(t * 0.18 + 4) * 35, cy + Math.sin(t * 0.22 + 3) * 50, neb * 0.6, COLORS.devops, 0.03);
+
+      // Parallax twinkling starfield
+      dust.forEach((d) => {
+        const p = project3D(d.x, d.y, d.z);
+        const twk = 0.45 + 0.55 * Math.sin(t * d.sp + d.tw);
+        const a = (0.06 + p.scale * 0.22) * twk * fogOf(p.z) * appear;
+        const c = d.isGold ? COLORS.project : COLORS.skill;
+        ctx.fillStyle = rgba(c, a);
+        ctx.beginPath();
+        ctx.arc(cx + p.sx, cy + p.sy, d.r * p.scale, 0, Math.PI * 2);
+        ctx.fill();
       });
 
-      const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 400);
-      grd.addColorStop(0, 'rgba(192,57,43,0.05)');
-      grd.addColorStop(0.4, 'rgba(201,168,76,0.025)');
-      grd.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = grd;
-      ctx.fillRect(cx - 440, cy - 440, 880, 880);
-
+      // Intro shockwaves
       for (let i = shockwaves.length - 1; i >= 0; i--) {
         const sw = shockwaves[i];
         sw.r += sw.speed;
@@ -286,179 +373,188 @@ function Constellation() {
         const swFade = sw.alpha * (1 - sw.r / sw.maxR);
         ctx.beginPath();
         ctx.arc(cx, cy, sw.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(${sw.color[0]},${sw.color[1]},${sw.color[2]},${swFade})`;
+        ctx.strokeStyle = rgba(sw.color, swFade);
         ctx.lineWidth = 2.5 * (1 - sw.r / sw.maxR) + 0.5;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = `rgba(${sw.color[0]},${sw.color[1]},${sw.color[2]},0.6)`;
         ctx.stroke();
-        ctx.shadowBlur = 0;
+      }
+      if (explodeProgress > 0 && explodeProgress < 0.32) {
+        const flashA = ((0.32 - explodeProgress) / 0.32) * 0.8;
+        glow(cx, cy, explodeProgress * 260, [255, 236, 200], flashA);
       }
 
-      if (explodeProgress > 0 && explodeProgress < 0.3) {
-        const flashA = ((0.3 - explodeProgress) / 0.3) * 0.7;
-        const flashR = explodeProgress * 200;
-        const fg = ctx.createRadialGradient(cx, cy, 0, cx, cy, flashR);
-        fg.addColorStop(0, `rgba(240,200,160,${flashA})`);
-        fg.addColorStop(0.3, `rgba(192,57,43,${flashA * 0.6})`);
-        fg.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = fg;
-        ctx.fillRect(cx - flashR, cy - flashR, flashR * 2, flashR * 2);
-      }
-
-      dust.forEach((d) => {
-        const p = project3D(d.x, d.y, d.z);
-        const a = 0.15 + p.scale * 0.3;
-        ctx.beginPath();
-        ctx.arc(cx + p.sx, cy + p.sy, d.r * p.scale, 0, Math.PI * 2);
-        ctx.fillStyle = d.isGold ? `rgba(201,168,76,${a})` : `rgba(192,57,43,${a * 0.7})`;
-        ctx.fill();
-      });
-
+      // Edges — depth-faded gradient filaments
       edges.forEach(([a, b]) => {
         const na = projected[a], nb = projected[b];
-        const depth = (na.z + nb.z) * 0.5;
-        const alpha = Math.max(0.03, 0.18 - depth * 0.0003);
+        const fog = fogOf((na.z + nb.z) / 2);
+        const cross = crossSet.has(key(a, b));
+        let alpha = (cross ? 0.22 : 0.14) * fog;
+        let lw = (cross ? 0.7 : 0.55) * (0.6 + 0.6 * ((na.scale + nb.scale) / 2));
+        let ca = colorOf(na.type), cb = colorOf(nb.type);
+        if (focusActive) {
+          if (a === focus || b === focus) { alpha *= 2.6; lw *= 1.7; ca = COLORS.project; cb = COLORS.core; }
+          else { alpha *= 0.1; }
+        }
+        const g = ctx.createLinearGradient(na.sx, na.sy, nb.sx, nb.sy);
+        g.addColorStop(0, rgba(ca, alpha));
+        g.addColorStop(1, rgba(cb, alpha));
+        ctx.strokeStyle = g;
+        ctx.lineWidth = lw;
         ctx.beginPath();
         ctx.moveTo(na.sx, na.sy);
         ctx.lineTo(nb.sx, nb.sy);
-        const isCross = crossLinks.some(([ca, cb]) => (ca === a && cb === b) || (ca === b && cb === a));
-        ctx.strokeStyle = isCross
-          ? `rgba(201,168,76,${alpha * 0.8})`
-          : `rgba(192,57,43,${alpha})`;
-        ctx.lineWidth = 0.5;
         ctx.stroke();
       });
 
+      // Energy packets — comet trails
       packets.forEach((p) => {
         p.t += p.speed;
-        if (p.t > 1) p.t = 0;
-        const fx = nodes[p.from].x + (nodes[p.to].x - nodes[p.from].x) * p.t;
-        const fy = nodes[p.from].y + (nodes[p.to].y - nodes[p.from].y) * p.t;
-        const fz = nodes[p.from].z + (nodes[p.to].z - nodes[p.from].z) * p.t;
-        const pProj = project3D(fx * eased, fy * eased, fz * eased);
-        const alpha = 0.4 + pProj.scale * 0.5;
-        ctx.beginPath();
-        ctx.arc(cx + pProj.sx, cy + pProj.sy, 2 * pProj.scale, 0, Math.PI * 2);
-        ctx.fillStyle = p.isGold ? `rgba(201,168,76,${alpha})` : `rgba(240,100,80,${alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.isGold ? 'rgba(201,168,76,0.8)' : 'rgba(192,57,43,0.8)';
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      hoveredNode = -1;
-      const rect = canvas.getBoundingClientRect();
-      const lx = mouseX - rect.left, ly = mouseY - rect.top;
-      projected.forEach((n, i) => {
-        const dx = lx - n.sx, dy = ly - n.sy;
-        const hitR = n.type === 'core' ? 24 : 14;
-        if (Math.sqrt(dx * dx + dy * dy) < hitR) hoveredNode = i;
-      });
-      canvas.style.cursor = hoveredNode >= 0 ? 'pointer' : (isDragging ? 'grabbing' : 'grab');
-
-      sorted.forEach((n) => {
-        const i = projected.indexOf(n);
-        const isHovered = hoveredNode === i;
-        const depth = n.z;
-        const alpha = Math.max(0.2, 1 - depth * 0.001) * Math.min(1, eased * 2);
-
-        if (n.type === 'core') {
-          for (let ring = 0; ring < 3; ring++) {
-            const pulse = 1 + Math.sin(t * 2 + ring * 1.2) * 0.18;
-            const rr = (16 + ring * 12) * n.scale * pulse;
-            ctx.beginPath();
-            ctx.arc(n.sx, n.sy, rr, 0, Math.PI * 2);
-            ctx.strokeStyle = `rgba(192,57,43,${alpha * (0.5 - ring * 0.12)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-          const bloomG = ctx.createRadialGradient(n.sx, n.sy, 0, n.sx, n.sy, 36 * n.scale);
-          bloomG.addColorStop(0, `rgba(192,57,43,${alpha * 0.4})`);
-          bloomG.addColorStop(1, 'rgba(192,57,43,0)');
-          ctx.fillStyle = bloomG;
-          ctx.fillRect(n.sx - 40, n.sy - 40, 80, 80);
+        if (p.t > 1) p.t -= 1;
+        const from = nodes[p.from], to = nodes[p.to];
+        const c = p.isGold ? COLORS.project : COLORS.ml;
+        const dim = focusActive && !(p.from === focus || p.to === focus) ? 0.18 : 1;
+        const SEG = 6;
+        for (let k = SEG; k >= 0; k--) {
+          const tt = p.t - k * 0.03;
+          if (tt < 0) continue;
+          const fx = from.x + (to.x - from.x) * tt;
+          const fy = from.y + (to.y - from.y) * tt;
+          const fz = from.z + (to.z - from.z) * tt;
+          const pr = project3D(fx * eased, fy * eased, fz * eased);
+          let a = (1 - k / SEG);
+          a = a * a * (0.5 + 0.5 * pr.scale) * 0.85 * dim;
+          const rr = (2.4 - k * 0.24) * pr.scale;
+          if (rr <= 0 || a <= 0) continue;
+          if (k === 0) glow(cx + pr.sx, cy + pr.sy, rr * 5, c, a * 0.5);
+          ctx.fillStyle = rgba(k === 0 ? [255, 236, 205] : c, a);
           ctx.beginPath();
-          ctx.arc(n.sx, n.sy, 10 * n.scale, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(240,200,180,${alpha})`;
-          ctx.shadowBlur = 25;
-          ctx.shadowColor = 'rgba(192,57,43,1)';
+          ctx.arc(cx + pr.sx, cy + pr.sy, rr, 0, Math.PI * 2);
           ctx.fill();
-          ctx.shadowBlur = 0;
-        } else {
-          const baseR =
-            n.type === 'project' ? 8 :
-            n.type === 'exp' ? 7 :
-            n.type === 'ml' ? 6 :
-            n.type === 'devops' ? 5 : 5;
-          const r = baseR * n.scale * (isHovered ? 1.8 : 1);
-          const nodeRGB =
-            n.type === 'project' || n.type === 'exp' ? [201, 168, 76] :
-            n.type === 'devops' ? [220, 120, 60] : [192, 57, 43];
-          const bloom = ctx.createRadialGradient(n.sx, n.sy, 0, n.sx, n.sy, r * 4);
-          bloom.addColorStop(0, `rgba(${nodeRGB[0]},${nodeRGB[1]},${nodeRGB[2]},${alpha * 0.2})`);
-          bloom.addColorStop(1, `rgba(${nodeRGB[0]},${nodeRGB[1]},${nodeRGB[2]},0)`);
-          ctx.fillStyle = bloom;
-          ctx.fillRect(n.sx - r * 5, n.sy - r * 5, r * 10, r * 10);
-
-          const color =
-            n.type === 'project' ? `rgba(201,168,76,${alpha * (isHovered ? 1 : 0.9)})` :
-            n.type === 'exp' ? `rgba(240,180,80,${alpha * (isHovered ? 1 : 0.85)})` :
-            n.type === 'ml' ? `rgba(192,57,43,${alpha * (isHovered ? 1 : 0.85)})` :
-            n.type === 'devops' ? `rgba(220,120,60,${alpha * (isHovered ? 1 : 0.8)})` :
-            `rgba(192,57,43,${alpha * (isHovered ? 1 : 0.75)})`;
-
-          ctx.beginPath();
-          ctx.arc(n.sx, n.sy, r, 0, Math.PI * 2);
-          ctx.fillStyle = color;
-          ctx.shadowBlur = isHovered ? 20 : (n.scale > 0.9 ? 8 : 0);
-          ctx.shadowColor =
-            n.type === 'project' || n.type === 'exp' ? 'rgba(201,168,76,0.9)' :
-            n.type === 'devops' ? 'rgba(220,120,60,0.9)' :
-            'rgba(192,57,43,0.9)';
-          ctx.fill();
-          ctx.shadowBlur = 0;
-
-          if (isHovered) {
-            ctx.beginPath();
-            ctx.arc(n.sx, n.sy, r + 6, 0, Math.PI * 2);
-            ctx.strokeStyle =
-              n.type === 'project' || n.type === 'exp' ? 'rgba(201,168,76,0.5)' :
-              n.type === 'devops' ? 'rgba(220,120,60,0.5)' :
-              'rgba(192,57,43,0.5)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-
-          if (isHovered || n.scale > 0.88) {
-            const labelAlpha = isHovered ? 1 : Math.min(1, (n.scale - 0.88) * 8) * alpha * 0.85;
-            ctx.font = isHovered
-              ? `bold ${Math.round(13 * n.scale)}px 'JetBrains Mono', monospace`
-              : `${Math.round(10 * n.scale)}px 'JetBrains Mono', monospace`;
-            ctx.textAlign = 'center';
-            ctx.fillStyle =
-              n.type === 'project' || n.type === 'exp' ? `rgba(201,168,76,${labelAlpha})` :
-              n.type === 'devops' ? `rgba(220,120,60,${labelAlpha})` :
-              n.type === 'ml' ? `rgba(220,100,80,${labelAlpha})` :
-              `rgba(240,236,228,${labelAlpha * 0.8})`;
-            ctx.fillText(n.label, n.sx, n.sy - r - 6);
-          }
         }
       });
 
+      // Nodes — stars (far → near)
+      sorted.forEach((n) => {
+        const i = projected.indexOf(n);
+        const isHovered = focus === i;
+        const fog = fogOf(n.z);
+        let foc = 1;
+        if (focusActive) foc = isHovered ? 1 : adjacency[focus].has(i) ? 0.95 : 0.16;
+        const a = fog * appear * foc;
+        const x = n.sx, y = n.sy, s = n.scale;
+
+        if (n.type === 'core') {
+          const pulse = 0.85 + 0.15 * Math.sin(t * 1.6);
+          const hb = isHovered ? 1.18 : 1;
+          glow(x, y, 104 * s * hb, COLORS.skill, a * 0.18 * pulse);
+          glow(x, y, 66 * s * hb, COLORS.project, a * 0.22 * pulse);
+          glow(x, y, 36 * s * hb, [255, 236, 206], a * 0.52 * pulse);
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(t * 0.15);
+          spikes(0, 0, 116 * s * pulse * hb, [255, 236, 206], a * 0.5);
+          ctx.rotate(Math.PI / 4);
+          spikes(0, 0, 64 * s * pulse * hb, COLORS.project, a * 0.32);
+          ctx.restore();
+          // anamorphic horizontal flare
+          const flw = 205 * s * hb, flh = 2.6;
+          const fg = ctx.createLinearGradient(x - flw, y, x + flw, y);
+          fg.addColorStop(0, rgba([255, 236, 206], 0));
+          fg.addColorStop(0.5, rgba([255, 240, 212], a * 0.5));
+          fg.addColorStop(1, rgba([255, 236, 206], 0));
+          ctx.fillStyle = fg;
+          ctx.fillRect(x - flw, y - flh, flw * 2, flh * 2);
+          ctx.fillStyle = rgba([255, 247, 230], Math.min(1, a + 0.1));
+          ctx.beginPath();
+          ctx.arc(x, y, 12.5 * s * (isHovered ? 1.25 : 1), 0, Math.PI * 2);
+          ctx.fill();
+          return;
+        }
+
+        const c = colorOf(n.type);
+        const r = (NODE_R[n.type] || 5) * s * (isHovered ? 1.85 : 1);
+        glow(x, y, r * 5, c, a * 0.22 * (isHovered ? 1.7 : 1));
+        glow(x, y, r * 1.7, c, a * 0.85);
+        const bright = isHovered || ((n.type === 'project' || n.type === 'exp') && s > 0.95);
+        if (bright) spikes(x, y, r * (isHovered ? 5 : 3.2), c, a * 0.7);
+        ctx.fillStyle = rgba(mix(c, [255, 246, 224], 0.45), a);
+        ctx.beginPath();
+        ctx.arc(x, y, r * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+        if (isHovered) {
+          ctx.strokeStyle = rgba([255, 240, 212], Math.min(1, a * 0.6 + 0.35));
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(x, y, r + 10, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      });
+
+      // Flash particles
       for (let i = flashParticles.length - 1; i >= 0; i--) {
         const fp = flashParticles[i];
         fp.x += fp.vx; fp.y += fp.vy;
         fp.vx *= 0.92; fp.vy *= 0.92;
         fp.life++;
-        const a = Math.max(0, 1 - fp.life / fp.maxLife);
+        const fa = Math.max(0, 1 - fp.life / fp.maxLife);
+        const c = fp.isGold ? COLORS.project : COLORS.ml;
+        glow(fp.x, fp.y, fp.r * 4 * fa, c, fa * 0.5);
+        ctx.fillStyle = rgba([255, 238, 210], fa);
         ctx.beginPath();
-        ctx.arc(fp.x, fp.y, fp.r * a, 0, Math.PI * 2);
-        ctx.fillStyle = fp.isGold ? `rgba(201,168,76,${a})` : `rgba(240,80,60,${a})`;
-        ctx.shadowBlur = 6;
-        ctx.shadowColor = fp.isGold ? 'rgba(201,168,76,0.8)' : 'rgba(192,57,43,0.8)';
+        ctx.arc(fp.x, fp.y, fp.r * fa, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0;
         if (fp.life >= fp.maxLife) flashParticles.splice(i, 1);
+      }
+
+      // ── Text + vignette pass (normal blending) ───────────────────
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.textAlign = 'center';
+
+      // Ambient name labels for the nearest, non-focused nodes
+      sorted.forEach((n) => {
+        if (n.type === 'core') return;
+        const i = projected.indexOf(n);
+        if (focus === i) return;
+        if (n.scale <= 0.92) return;
+        const fog = fogOf(n.z);
+        let foc = 1;
+        if (focusActive) foc = adjacency[focus].has(i) ? 0.7 : 0.07;
+        const la = Math.min(1, (n.scale - 0.92) * 9) * fog * 0.8 * foc;
+        if (la <= 0.04) return;
+        const c = colorOf(n.type);
+        const r = (NODE_R[n.type] || 6) * n.scale;
+        ctx.font = "400 10.5px 'JetBrains Mono', monospace";
+        ctx.shadowColor = 'rgba(0,0,0,0.7)';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = rgba(mix(c, [246, 240, 228], 0.4), la);
+        ctx.fillText(n.label, n.sx, n.sy - r - 12);
+        ctx.shadowBlur = 0;
+      });
+
+      // Focused node — category kicker + name (the selected node's "card")
+      if (focusActive) {
+        const n = projected[focus];
+        const c = colorOf(n.type);
+        const r = n.type === 'core' ? 20 : (NODE_R[n.type] || 6) * n.scale * 1.85;
+        const name = n.type === 'core' ? 'Ethan Chang' : n.label;
+        const nameY = n.sy - r - 22;
+        const catY = nameY - 17;
+        ctx.strokeStyle = rgba(c, 0.6);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(n.sx, n.sy - r - 5);
+        ctx.lineTo(n.sx, nameY + 6);
+        ctx.stroke();
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 12;
+        ctx.font = "600 9.5px 'JetBrains Mono', monospace";
+        ctx.letterSpacing = '3px';
+        ctx.fillStyle = rgba(mix(c, [255, 242, 218], 0.25), 0.95);
+        ctx.fillText((CATEGORY[n.type] || '').toUpperCase(), n.sx, catY);
+        ctx.letterSpacing = '0px';
+        ctx.font = "600 14.5px 'JetBrains Mono', monospace";
+        ctx.fillStyle = rgba([247, 241, 229], 1);
+        ctx.fillText(name, n.sx, nameY);
+        ctx.shadowBlur = 0;
       }
 
       raf = requestAnimationFrame(frame);

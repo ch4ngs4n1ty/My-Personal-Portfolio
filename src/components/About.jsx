@@ -1,49 +1,52 @@
 import projectsData from '../data/projects.json';
 import toolsData from '../data/tools.json';
 
+const STATS = (projects, tools) => [
+  { num: '4', suffix: 'th', label: 'Year, B.S. CS' },
+  { num: String(projects), label: 'Projects Shipped' },
+  { num: String(tools), label: 'Tools & Tech' },
+  { num: '∞', label: 'Problems Solved' },
+];
+
 function About() {
+  const stats = STATS(projectsData.length, toolsData.length);
+
   return (
     <section id="about">
-      <div className="about-grid">
-        <div>
-          <div className="about-number reveal">01</div>
-          <div className="about-section-label reveal">About Me</div>
-          <h2 className="about-heading reveal">
+      <div className="about-stats reveal">
+        {stats.map((s) => (
+          <div className="stat-item" key={s.label}>
+            <div className="stat-num">
+              {s.num}{s.suffix && <span>{s.suffix}</span>}
+            </div>
+            <div className="stat-label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <article className="about-panel reveal">
+        <div className="about-watermark" aria-hidden="true">01</div>
+        <div className="about-edge" aria-hidden="true" />
+        <div className="about-panel-inner">
+          <div className="about-section-label">About Me</div>
+          <h2 className="about-heading">
             Building at the<br />edge of <em>data &amp; code</em>
           </h2>
-          <div className="about-body reveal">
+          <div className="about-body">
             <p>
-              I'm a <strong>Computer Science student at Rochester Institute of Technology</strong> drawn to the intersection of
-              data science, machine learning, and real-world software. I enjoy turning messy, raw data into systems that
-              actually do something.
+              I'm a <strong>Computer Science major in my fourth year at the Rochester Institute of Technology</strong>,
+              working toward my bachelor's degree. What started as plain curiosity about how software works has grown into
+              a real passion for <strong>data science, machine learning, and AI</strong>. Those are the parts of computing
+              where raw, messy data turns into something that can predict, reason, and genuinely help people.
             </p>
             <p>
-              Whether I'm tutoring algorithms in ASL, building predictive models for clinical research, or shipping
-              full-stack apps with a team — I bring the same precision to every problem.
+              My goal is to become a <strong>well-rounded engineer</strong> who's equally at home training a model,
+              shipping a full-stack app, or explaining a tricky algorithm in ASL. I care less about any single tool and
+              more about understanding a problem deeply and building things that actually hold up in the real world.
             </p>
           </div>
         </div>
-        <div>
-          <div className="about-stats">
-            <div className="stat-item reveal">
-              <div className="stat-num">2<span>+</span></div>
-              <div className="stat-label">Years Experience</div>
-            </div>
-            <div className="stat-item reveal">
-              <div className="stat-num">{projectsData.length}</div>
-              <div className="stat-label">Projects Shipped</div>
-            </div>
-            <div className="stat-item reveal">
-              <div className="stat-num">{toolsData.length}</div>
-              <div className="stat-label">Tools &amp; Tech</div>
-            </div>
-            <div className="stat-item reveal">
-              <div className="stat-num">∞</div>
-              <div className="stat-label">Problems Solved</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </article>
     </section>
   );
 }

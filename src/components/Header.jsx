@@ -16,10 +16,10 @@ function Header() {
         <div className="hero-legend-wrap">
           <div className="hero-legend-rule"></div>
           <div className="hero-legend">
-            <span><span className="legend-dot" style={{ background: '#c9a84c' }}></span>Projects</span>
-            <span><span className="legend-dot" style={{ background: '#f0b450' }}></span>Experience</span>
-            <span><span className="legend-dot" style={{ background: '#c0392b' }}></span>ML &amp; Tools</span>
-            <span><span className="legend-dot" style={{ background: '#dc7840' }}></span>DevOps</span>
+            <span><span className="legend-dot" style={{ background: '#d6b25c' }}></span>Projects</span>
+            <span><span className="legend-dot" style={{ background: '#e2a850' }}></span>Experience</span>
+            <span><span className="legend-dot" style={{ background: '#e26048' }}></span>ML &amp; Tools</span>
+            <span><span className="legend-dot" style={{ background: '#ce8246' }}></span>DevOps</span>
           </div>
         </div>
 

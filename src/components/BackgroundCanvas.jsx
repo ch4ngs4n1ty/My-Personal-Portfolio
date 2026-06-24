@@ -67,27 +67,8 @@ function BackgroundCanvas() {
       });
     };
 
-    const drawGrid = () => {
-      ctx.clearRect(0, 0, W, H);
-      ctx.strokeStyle = 'rgba(192,57,43,0.03)';
-      ctx.lineWidth = 1;
-      const gs = 80;
-      for (let x = 0; x < W; x += gs) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, H);
-        ctx.stroke();
-      }
-      for (let y = 0; y < H; y += gs) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(W, y);
-        ctx.stroke();
-      }
-    };
-
     const frame = (t) => {
-      drawGrid();
+      ctx.clearRect(0, 0, W, H);
 
       stars.forEach((s) => {
         s.a = 0.2 + 0.5 * Math.abs(Math.sin(t * s.speed + s.x * 0.01));

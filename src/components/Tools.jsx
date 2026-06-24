@@ -5,12 +5,16 @@ function ToolItem({ tool }) {
 
   const inner = (
     <>
-      <img
-        src={`${baseUrl}${tool.logo}`}
-        alt=""
-        className="tool-image"
-        aria-hidden="true"
-      />
+      <span className="tool-glyph" aria-hidden="true">
+        {tool.icon ? (
+          <span
+            className="tool-icon"
+            style={{ '--icon': `url(${baseUrl}images/icons/${tool.icon}.svg)` }}
+          />
+        ) : (
+          <span className="tool-mono">{tool.name.charAt(0)}</span>
+        )}
+      </span>
       <span className="tool-name">{tool.name}</span>
     </>
   );
