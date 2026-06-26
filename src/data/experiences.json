@@ -1,6 +1,17 @@
 [
   {
     "id": 1,
+    "title": "iSAFE R&D Intern",
+    "company": "Sandia National Laboratories",
+    "duration": "May 2026 - August 2026",
+    "location": "Albuquerque, NM - Onsite",
+    "summary": "Currently working ",
+    "skills": ["Research", "Data Analysis", "Problem Solving"],
+    "logo": "",
+    "url": ""
+  },
+  {
+    "id": 2,
     "title": "Software Development Tutor",
     "company": "NTID Learning Center - Rochester Institute of Technology",
     "duration": "September 2025 - Present",
@@ -9,9 +20,10 @@
     "skills": ["Bilingual Communication", "Accessible Teaching", "Instructional Adaptability", "Active Listening", "Confidence-Building"],
     "logo": "/images/rit.png",
     "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"
+    
   },
   {
-    "id": 2,
+    "id": 3,
     "title": "Data Science Intern",
     "company": "Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program - University of Pittsburgh",
     "duration": "May 2025 - July 2025",
@@ -22,7 +34,7 @@
     "url": "https://www.aibids.org/home"
   },
   {
-    "id": 3,
+    "id": 4,
     "title": "Math Tutor",
     "company": "NTID Learning Center - Rochester Institute of Technology",
     "duration": "September 2024 - Present",

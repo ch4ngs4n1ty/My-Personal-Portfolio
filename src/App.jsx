@@ -38,6 +38,12 @@ function useReveal() {
 function App() {
   const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('intro_done'));
 
+  // always open at the top — don't let the browser restore the previous scroll position
+  useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (!showIntro) return;
     const timer = setTimeout(() => sessionStorage.setItem('intro_done', '1'), 2400);
