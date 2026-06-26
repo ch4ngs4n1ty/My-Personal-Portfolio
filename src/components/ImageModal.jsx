@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 function ImageModal({ image, onClose }) {
   useEffect(() => {
@@ -26,21 +27,22 @@ function ImageModal({ image, onClose }) {
     }
   };
 
-  return (
-    <div 
-      className="image-modal" 
+  return createPortal(
+    <div
+      className="image-modal"
       style={{ display: 'grid' }}
       onClick={handleBackgroundClick}
     >
       <span className="modal-close" onClick={onClose}>&times;</span>
       <div className="modal-content-wrapper">
-        <img 
-          className="modal-content" 
-          src={image.src} 
-          alt={image.alt} 
+        <img
+          className="modal-content"
+          src={image.src}
+          alt={image.alt}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

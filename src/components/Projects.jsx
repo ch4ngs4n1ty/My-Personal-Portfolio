@@ -1,22 +1,19 @@
 import { useState } from 'react';
 import projectsData from '../data/projects.json';
 import ImageModal from './ImageModal';
+import ProjectInsights from './ProjectInsights';
 
 function ProjectCard({ project, index }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [showInsights, setShowInsights] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const baseUrl = import.meta.env.BASE_URL;
 
   const num = String(index + 1).padStart(2, '0');
-  const validArtifacts = (project.artifacts || []).filter(
-    (a) => a && a.type === 'image' && a.src
-  );
-
-  const stopPropagation = (e) => e.stopPropagation();
+  const openInsights = () => setShowInsights(true);
 
   return (
     <>
-      <article className={`project-card reveal${isExpanded ? ' expanded' : ''}`}>
+      <article className="project-card reveal">
         <div className="project-bg" aria-hidden="true" />
         <div className="project-stripe" aria-hidden="true" />
         <div className="project-watermark" aria-hidden="true">{num}</div>
@@ -25,11 +22,12 @@ function ProjectCard({ project, index }) {
           className="project-content"
           role="button"
           tabIndex={0}
-          onClick={() => setIsExpanded((v) => !v)}
+          aria-label={`View insights for ${project.title}`}
+          onClick={openInsights}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              setIsExpanded((v) => !v);
+              openInsights();
             }
           }}
         >
@@ -45,54 +43,20 @@ function ProjectCard({ project, index }) {
               <span key={t} className="project-tag">{t}</span>
             ))}
           </div>
-          <div className="project-actions" onClick={stopPropagation}>
-            {project.githubUrl ? (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-action"
-              >
-                View on GitHub →
-              </a>
-            ) : (
-              <span className="project-action" style={{ opacity: 0.6 }}>
-                Repo private
-              </span>
-            )}
-            {validArtifacts.length > 0 && (
-              <button
-                type="button"
-                className="project-action"
-                onClick={() =>
-                  setSelectedImage({
-                    ...validArtifacts[0],
-                    src: `${baseUrl}${validArtifacts[0].src}`,
-                  })
-                }
-              >
-                View Artifact
-              </button>
-            )}
-          </div>
-          {validArtifacts.length > 0 && (
-            <div className="project-artifacts" onClick={stopPropagation}>
-              {validArtifacts.map((art, i) => (
-                <img
-                  key={i}
-                  src={`${baseUrl}${art.src}`}
-                  alt={art.alt}
-                  className="artifact-thumb"
-                  onClick={() =>
-                    setSelectedImage({ ...art, src: `${baseUrl}${art.src}` })
-                  }
-                />
-              ))}
-            </div>
-          )}
+          <span className="project-cue">View insights →</span>
         </div>
         <div className="project-arrow" aria-hidden="true">→</div>
       </article>
+
+      {showInsights && (
+        <ProjectInsights
+          project={project}
+          index={index}
+          baseUrl={baseUrl}
+          onViewArtifact={setSelectedImage}
+          onClose={() => setShowInsights(false)}
+        />
+      )}
 
       {selectedImage && (
         <ImageModal
