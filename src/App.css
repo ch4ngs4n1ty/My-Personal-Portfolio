@@ -174,13 +174,14 @@ body.cursor-hover .cursor-ring { width: 60px; height: 60px; border-color: rgba(2
   font-size: 13px;
   letter-spacing: 0.02em;
   color: var(--white);
+  transition: color .6s ease;
 }
 .nav-mark::before,
 .nav-mark::after {
   content: '';
   position: absolute;
   transform: rotate(45deg);
-  transition: transform .6s cubic-bezier(.2,.8,.2,1), border-color .4s;
+  transition: transform .8s cubic-bezier(.65,0,.35,1), border-color .6s ease, box-shadow .6s ease;
 }
 .nav-mark::before {
   inset: 5px;
@@ -190,13 +191,16 @@ body.cursor-hover .cursor-ring { width: 60px; height: 60px; border-color: rgba(2
   inset: 9px;
   border: 1px solid rgba(201,168,76,0.3);
 }
+/* iris opens: outer ring expands + spins, inner core contracts + counter-spins */
+.nav-logo:hover .nav-mark { color: var(--gold-bright); }
 .nav-logo:hover .nav-mark::before {
-  transform: rotate(225deg);
-  border-color: var(--gold);
+  transform: rotate(225deg) scale(1.14);
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 14px rgba(201,168,76,0.45);
 }
 .nav-logo:hover .nav-mark::after {
-  transform: rotate(-135deg);
-  border-color: rgba(192,57,43,0.5);
+  transform: rotate(-135deg) scale(0.55);
+  border-color: rgba(192,57,43,0.75);
 }
 .nav-wordmark {
   font-family: var(--serif);
@@ -380,7 +384,7 @@ section { position: relative; z-index: 1; }
   /* gradient shell acts as the angled border */
   background: linear-gradient(135deg, rgba(192,57,43,0.85) 0%, rgba(201,168,76,0.85) 100%);
   clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
-  transition: filter .35s, transform .15s;
+  transition: filter .6s ease, transform .18s ease;
 }
 /* dark core inset inside the gradient rim */
 .hero-cta::before, .form-submit::before {
@@ -400,12 +404,12 @@ section { position: relative; z-index: 1; }
   background: linear-gradient(100deg, var(--red) 0%, var(--red-bright) 72%, var(--gold-bright) 100%);
   clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
   transform: translateX(-103%);
-  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+  transition: transform .7s cubic-bezier(.65,0,.35,1);
 }
 .hero-cta:hover::after, .form-submit:hover::after { transform: translateX(0); }
 .hero-cta:hover, .hero-cta:focus-visible,
 .form-submit:hover, .form-submit:focus-visible {
-  filter: drop-shadow(0 0 18px rgba(192,57,43,0.45));
+  filter: drop-shadow(0 0 22px rgba(201,168,76,0.4));
 }
 .hero-cta:active, .form-submit:active { transform: translateY(1px) scale(0.99); }
 .hero-cta span, .form-submit span { position: relative; z-index: 1; }
@@ -414,10 +418,10 @@ section { position: relative; z-index: 1; }
   flex-shrink: 0;
   background: var(--gold-bright);
   transform: rotate(45deg);
-  transition: transform .45s cubic-bezier(.2,.8,.2,1), background .3s;
+  transition: transform .7s cubic-bezier(.65,0,.35,1), background .5s ease;
 }
 .hero-cta:hover .cta-gem, .form-submit:hover .cta-gem {
-  transform: rotate(225deg);
+  transform: rotate(225deg) scale(1.15);
   background: var(--black);
 }
 
@@ -641,18 +645,40 @@ section { position: relative; z-index: 1; }
   font-size: 12px;
   color: var(--gold-bright);
   font-weight: 400;
+  transition: color .5s ease, text-shadow .5s ease;
 }
+/* inner diamond — spins in + glows on hover */
 .section-num::before {
   content: '';
   position: absolute;
   inset: 7px;
   border: 1px solid rgba(192,57,43,0.6);
   transform: rotate(45deg);
-  transition: transform .6s cubic-bezier(.2,.8,.2,1), border-color .4s;
+  transition: transform .8s cubic-bezier(.65,0,.35,1), border-color .55s ease, box-shadow .55s ease;
+}
+/* outer reticle — locks on from small, counter-spinning */
+.section-num::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border: 1px solid rgba(201,168,76,0.5);
+  transform: rotate(45deg) scale(0.5);
+  opacity: 0;
+  transition: transform .8s cubic-bezier(.65,0,.35,1), opacity .55s ease;
+  pointer-events: none;
+}
+.section-header:hover .section-num {
+  color: var(--white);
+  text-shadow: 0 0 14px rgba(201,168,76,0.4);
 }
 .section-header:hover .section-num::before {
-  transform: rotate(225deg);
-  border-color: var(--gold);
+  transform: rotate(225deg) scale(0.8);
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 12px rgba(201,168,76,0.35);
+}
+.section-header:hover .section-num::after {
+  transform: rotate(-135deg) scale(1);
+  opacity: 1;
 }
 .section-title {
   font-family: var(--serif);
@@ -1470,50 +1496,45 @@ section { position: relative; z-index: 1; }
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 2px;
+  gap: 10px;
 }
+/* blade-cut tile with a red→gold rim, matching the CTA + form system */
 .tool-item {
-  padding: 36px 16px 28px;
-  background: linear-gradient(165deg, var(--black3) 0%, var(--black) 100%);
-  text-align: center;
   position: relative;
-  overflow: hidden;
+  padding: 36px 16px 28px;
+  text-align: center;
   opacity: 0;
   transform: scale(0.96);
-  transition: opacity .45s, transform .45s cubic-bezier(.2,.8,.2,1), background .35s;
+  transition: opacity .45s, transform .45s cubic-bezier(.2,.8,.2,1), filter .4s;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  background: linear-gradient(150deg, rgba(192,57,43,0.32) 0%, rgba(201,168,76,0.26) 100%);
+  clip-path: polygon(13px 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%, 0 13px);
 }
 .tool-item.visible { opacity: 1; transform: scale(1); }
-.tool-item:hover { transform: translateY(-5px); }
-
-/* Soft gold glow rising from the base on hover */
+.tool-item:hover {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 14px 26px rgba(0,0,0,0.45));
+}
+/* dark textured core inside the rim */
 .tool-item::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(120% 85% at 50% 130%, rgba(201,168,76,0.12) 0%, transparent 62%);
-  opacity: 0;
-  transition: opacity .4s;
-  pointer-events: none;
+  inset: 1px;
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  background:
+    radial-gradient(120% 85% at 50% 128%, rgba(201,168,76,0.12) 0%, transparent 60%),
+    linear-gradient(165deg, var(--black3) 0%, var(--black) 100%);
+  transition: background .4s;
+  z-index: 0;
 }
-.tool-item:hover::before { opacity: 1; }
-
-/* Accent rule that draws in along the bottom edge */
-.tool-item::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 2px;
-  background: linear-gradient(to right, var(--gold), transparent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .45s cubic-bezier(.2,.8,.2,1);
-  pointer-events: none;
+.tool-item:hover::before {
+  background:
+    radial-gradient(120% 85% at 50% 118%, rgba(201,168,76,0.2) 0%, transparent 58%),
+    linear-gradient(165deg, #171717 0%, var(--black) 100%);
 }
-.tool-item:hover::after { transform: scaleX(1); }
 
 .tool-glyph {
   position: relative;
@@ -1521,34 +1542,56 @@ section { position: relative; z-index: 1; }
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 42px;
+}
+/* diamond reticle that locks on around the icon on hover */
+.tool-glyph::before {
+  content: '';
+  position: absolute;
+  width: 48px; height: 48px;
+  border: 1px solid rgba(201,168,76,0);
+  transform: rotate(45deg) scale(0.55);
+  opacity: 0;
+  transition: transform .6s cubic-bezier(.65,0,.35,1), opacity .4s ease,
+    border-color .4s ease, box-shadow .4s ease;
+  pointer-events: none;
+}
+.tool-item:hover .tool-glyph::before {
+  border-color: rgba(201,168,76,0.5);
+  transform: rotate(225deg) scale(1);
+  opacity: 1;
+  box-shadow: 0 0 16px rgba(201,168,76,0.22);
 }
 /* Monochrome SVG, tinted via CSS mask so it stays on-palette */
 .tool-icon {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 38px;
   height: 38px;
   background-color: var(--white-dim);
   -webkit-mask: var(--icon) center / contain no-repeat;
   mask: var(--icon) center / contain no-repeat;
-  transition: background-color .3s, transform .35s cubic-bezier(.2,.8,.2,1);
+  transition: background-color .3s, transform .5s cubic-bezier(.65,0,.35,1);
 }
 .tool-item:hover .tool-icon {
-  background-color: var(--gold);
-  transform: scale(1.08);
+  background-color: var(--gold-bright);
+  transform: scale(1.06);
 }
 /* Typographic fallback for tools without a brand icon */
 .tool-mono {
+  position: relative;
+  z-index: 1;
   font-family: var(--serif);
-  font-size: 34px;
+  font-size: 32px;
   line-height: 1;
   font-weight: 700;
   color: var(--white-dim);
-  transition: color .3s, transform .35s cubic-bezier(.2,.8,.2,1);
+  transition: color .3s, transform .5s cubic-bezier(.65,0,.35,1);
 }
 .tool-item:hover .tool-mono {
-  color: var(--gold);
-  transform: scale(1.08);
+  color: var(--gold-bright);
+  transform: scale(1.06);
 }
 .tool-name {
   position: relative;
@@ -1557,9 +1600,9 @@ section { position: relative; z-index: 1; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--white-dim);
-  transition: color .3s;
+  transition: color .3s, letter-spacing .3s;
 }
-.tool-item:hover .tool-name { color: var(--white); }
+.tool-item:hover .tool-name { color: var(--white); letter-spacing: 0.2em; }
 
 /* ── CONTACT ──────────────────────────────────────────────────────────────── */
 #contact {
@@ -1631,64 +1674,68 @@ section { position: relative; z-index: 1; }
 .contact-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
+/* blade-cut field wrapped in a red→gold rim, matching the CTA system */
 .form-field {
   position: relative;
-  overflow: hidden;
-  background:
-    repeating-linear-gradient(-45deg, rgba(201,168,76,0.035) 0 1px, transparent 1px 13px),
-    linear-gradient(160deg, var(--black3) 0%, var(--black) 100%);
-  border: 1px solid rgba(255,255,255,0.07);
-  transition: background .35s, border-color .35s, box-shadow .35s, transform .35s;
+  background: linear-gradient(135deg, rgba(192,57,43,0.5) 0%, rgba(201,168,76,0.42) 100%);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1), filter .5s ease;
 }
 .form-field.full { grid-column: span 2; }
-/* corner glow — warms toward red on focus */
+/* dark textured core inside the rim */
 .form-field::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(120% 90% at 100% 0%, rgba(201,168,76,0.10) 0%, transparent 58%);
-  opacity: 0.4;
-  transition: opacity .35s, background .35s;
-  pointer-events: none;
+  inset: 1.5px;
+  clip-path: polygon(13px 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%, 0 13px);
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(201,168,76,0.10) 0%, transparent 58%),
+    repeating-linear-gradient(-45deg, rgba(201,168,76,0.04) 0 1px, transparent 1px 13px),
+    linear-gradient(160deg, #131313 0%, var(--black) 100%);
+  transition: background .45s ease;
+  z-index: 0;
 }
-/* animated glowing bottom accent */
-.form-field::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 0; height: 2px;
-  background: linear-gradient(to right, var(--red-bright), var(--gold-bright));
-  box-shadow: 0 0 12px rgba(201,168,76,0.5);
-  transition: width .45s cubic-bezier(.2,.8,.2,1);
-}
-.form-field:hover { border-color: rgba(201,168,76,0.2); }
+.form-field:hover { filter: drop-shadow(0 0 10px rgba(192,57,43,0.22)); }
 .form-field:focus-within {
-  border-color: rgba(201,168,76,0.4);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 26px rgba(192,57,43,0.14);
   transform: translateY(-2px);
+  filter: drop-shadow(0 0 18px rgba(201,168,76,0.38));
 }
 .form-field:focus-within::before {
-  opacity: 1;
-  background: radial-gradient(120% 90% at 100% 0%, rgba(192,57,43,0.16) 0%, transparent 58%);
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(192,57,43,0.2) 0%, transparent 58%),
+    repeating-linear-gradient(-45deg, rgba(201,168,76,0.055) 0 1px, transparent 1px 13px),
+    linear-gradient(160deg, #1a1514 0%, var(--black) 100%);
 }
-.form-field:focus-within::after { width: 100%; }
 .form-field label,
 .form-field input,
 .form-field textarea { position: relative; z-index: 1; }
 .form-field label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--red);
   padding: 16px 20px 0;
-  transition: color .35s, letter-spacing .35s;
+  transition: color .35s;
 }
-.form-field:focus-within label {
-  color: var(--gold-bright);
-  letter-spacing: 0.34em;
+/* signature diamond gem — flips to gold and glows on focus */
+.form-field label::before {
+  content: '';
+  width: 6px; height: 6px;
+  flex-shrink: 0;
+  background: var(--red);
+  transform: rotate(45deg);
+  transition: background .35s, box-shadow .35s, transform .6s cubic-bezier(.65,0,.35,1);
+}
+.form-field:focus-within label { color: var(--gold-bright); }
+.form-field:focus-within label::before {
+  background: var(--gold-bright);
+  box-shadow: 0 0 10px rgba(201,168,76,0.75);
+  transform: rotate(225deg);
 }
 .form-field input, .form-field textarea {
   display: block;
@@ -1714,7 +1761,7 @@ section { position: relative; z-index: 1; }
 .form-field input:-webkit-autofill:hover,
 .form-field input:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--white);
-  -webkit-box-shadow: 0 0 0 1000px var(--black3) inset;
+  -webkit-box-shadow: 0 0 0 1000px #131313 inset;
   caret-color: var(--white);
   transition: background-color 9999s ease-in-out 0s;
 }
