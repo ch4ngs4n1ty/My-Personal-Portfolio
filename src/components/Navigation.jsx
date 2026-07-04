@@ -27,7 +27,10 @@ function Navigation() {
 
   return (
     <nav className="nav">
-      <a href="#hero" className="nav-logo">EC<span>.</span></a>
+      <a href="#hero" className="nav-logo" aria-label="Back to top">
+        <span className="nav-mark">EC</span>
+        <span className="nav-wordmark">Ethan Chang</span>
+      </a>
       <ul className="nav-links">
         {SECTIONS.map(({ id, label }) => (
           <li key={id}>

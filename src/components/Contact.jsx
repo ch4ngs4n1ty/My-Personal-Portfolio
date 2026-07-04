@@ -168,6 +168,7 @@ function Contact() {
               />
             </div>
             <button type="submit" className="form-submit">
+              <span className="cta-gem" aria-hidden="true"></span>
               <span>Send Message →</span>
             </button>
           </form>
