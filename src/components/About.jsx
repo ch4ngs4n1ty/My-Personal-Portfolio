@@ -28,22 +28,36 @@ function About() {
         <div className="about-watermark" aria-hidden="true">01</div>
         <div className="about-edge" aria-hidden="true" />
         <div className="about-panel-inner">
-          <div className="about-section-label">About Me</div>
+          <div className="about-section-label">
+            <span className="about-gem" aria-hidden="true"></span>About Me
+          </div>
           <h2 className="about-heading">
             Building at the<br />edge of <em>data &amp; code</em>
           </h2>
           <div className="about-body">
-            <p>
-              I'm a <strong>Computer Science major in my fourth year at the Rochester Institute of Technology</strong>,
-              working toward my bachelor's degree. What started as plain curiosity about how software works has grown into
-              a real passion for <strong>data science, machine learning, and AI</strong>. Those are the parts of computing
-              where raw, messy data turns into something that can predict, reason, and genuinely help people.
+            <p className="about-lead">
+              I'm a <strong>fourth-year Computer Science student</strong> at the{' '}
+              <strong>Rochester Institute of Technology</strong>. I came in curious about how software actually gets
+              built, and over the past few years that curiosity has turned into a real interest in{' '}
+              <em>data science, machine learning, and AI</em>.
             </p>
             <p>
-              My goal is to become a <strong>well-rounded engineer</strong> who's equally at home training a model,
-              shipping a full-stack app, or explaining a tricky algorithm in ASL. I care less about any single tool and
-              more about understanding a problem deeply and building things that actually hold up in the real world.
+              Coming out of my computer science degree, I'm aiming to be a <em>well-rounded engineer</em> who can
+              adapt to just about any technology a problem calls for. I care less about mastering one specific tool
+              and more about learning quickly, thinking through the data, and building solutions that actually hold
+              up in the real world.
             </p>
+          </div>
+          <div className="about-focus">
+            <span className="about-focus-label">Focus</span>
+            <div className="about-focus-tags">
+              {['Data Science', 'Machine Learning', 'Artificial Intelligence'].map((t) => (
+                <span className="about-focus-tag" key={t}>
+                  <span className="about-focus-gem" aria-hidden="true"></span>
+                  <span>{t}</span>
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </article>

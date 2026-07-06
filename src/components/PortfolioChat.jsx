@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import SectionHeader from './SectionHeader';
 
 const API_URL = import.meta.env.VITE_CHAT_API_URL;
 
@@ -120,11 +121,7 @@ function PortfolioChat() {
 
   return (
     <section id="ask" aria-label="Ask the portfolio assistant">
-      <div className="section-header reveal">
-        <span className="section-num">//</span>
-        <h2 className="section-title">Ask Anything</h2>
-        <div className="section-line"></div>
-      </div>
+      <SectionHeader num="//" title="Ask Anything" kicker="// Talk to my portfolio" />
 
       <div className="chat-shell reveal">
         <div className="chat-rail" aria-hidden="true">

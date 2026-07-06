@@ -2,6 +2,7 @@ import { useState } from 'react';
 import projectsData from '../data/projects.json';
 import ImageModal from './ImageModal';
 import ProjectInsights from './ProjectInsights';
+import SectionHeader from './SectionHeader';
 
 function ProjectCard({ project, index }) {
   const [showInsights, setShowInsights] = useState(false);
@@ -71,11 +72,7 @@ function ProjectCard({ project, index }) {
 function Projects() {
   return (
     <section id="projects">
-      <div className="section-header reveal">
-        <span className="section-num">03</span>
-        <h2 className="section-title">Projects</h2>
-        <div className="section-line"></div>
-      </div>
+      <SectionHeader num="03" title="Projects" kicker="// What I've built" />
       <div className="projects-grid">
         {projectsData.map((project, i) => (
           <ProjectCard key={project.id} project={project} index={i} />

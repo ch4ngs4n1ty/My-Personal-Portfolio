@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SectionHeader from './SectionHeader';
 
 function Contact() {
   const baseUrl = import.meta.env.BASE_URL;
@@ -25,11 +26,7 @@ function Contact() {
 
   return (
     <section id="contact">
-      <div className="section-header reveal">
-        <span className="section-num">05</span>
-        <h2 className="section-title">Get In Touch</h2>
-        <div className="section-line"></div>
-      </div>
+      <SectionHeader num="05" title="Get In Touch" kicker="// Let's connect" />
       <div className="contact-grid">
         <div>
           <h3 className="contact-heading reveal">

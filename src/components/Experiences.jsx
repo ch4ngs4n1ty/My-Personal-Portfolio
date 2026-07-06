@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import experiencesData from '../data/experiences.json';
+import SectionHeader from './SectionHeader';
 
 function Experiences() {
   const baseUrl = import.meta.env.BASE_URL;
@@ -23,11 +24,7 @@ function Experiences() {
 
   return (
     <section id="experience">
-      <div className="section-header reveal">
-        <span className="section-num">02</span>
-        <h2 className="section-title">Experience</h2>
-        <div className="section-line"></div>
-      </div>
+      <SectionHeader num="02" title="Experience" kicker="// Where I've worked" />
       <div className="timeline" ref={timelineRef}>
         {experiencesData.map((exp, i) => {
           const year = exp.duration?.match(/\b(?:19|20)\d{2}\b/)?.[0];

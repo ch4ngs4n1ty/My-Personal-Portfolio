@@ -1,4 +1,5 @@
 import toolsData from '../data/tools.json';
+import SectionHeader from './SectionHeader';
 
 function ToolItem({ tool }) {
   const baseUrl = import.meta.env.BASE_URL;
@@ -37,11 +38,7 @@ function ToolItem({ tool }) {
 function Tools() {
   return (
     <section id="tools">
-      <div className="section-header reveal">
-        <span className="section-num">04</span>
-        <h2 className="section-title">Tech Stack</h2>
-        <div className="section-line"></div>
-      </div>
+      <SectionHeader num="04" title="Tech Stack" kicker="// What I work with" />
       <div className="tools-grid">
         {toolsData.map((tool) => (
           <ToolItem key={tool.id} tool={tool} />
