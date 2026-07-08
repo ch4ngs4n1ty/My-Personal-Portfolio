@@ -15,6 +15,13 @@ function ProjectCard({ project, index }) {
   return (
     <>
       <article className="project-card reveal">
+        {project.backgroundImage && (
+          <div
+            className="project-img"
+            aria-hidden="true"
+            style={{ backgroundImage: `url(${baseUrl}${project.backgroundImage.replace(/^\//, '')})` }}
+          />
+        )}
         <div className="project-bg" aria-hidden="true" />
         <div className="project-stripe" aria-hidden="true" />
         <div className="project-watermark" aria-hidden="true">{num}</div>

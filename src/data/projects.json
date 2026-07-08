@@ -69,8 +69,21 @@
     "githubUrl": "",
     "backgroundImage": "/images/astro-and-hopper-bg.png",
     "artifacts": [{
-      
+
     }]
-    }
+    },
+  {
+    "id": 6,
+    "title": "Sports Data Visualization",
+    "tech": ["Python", "Pandas", "Matplotlib", "Jupyter"],
+    "duration": "2026 - Present",
+    "description": "Building an interactive collection of visualizations that explore sports statistics and performance trends. Cleaning and reshaping raw datasets with Pandas, then translating the numbers into clear, story-driven charts that surface patterns behind player and team performance.",
+    "tools": ["Python", "Pandas", "Matplotlib", "Jupyter Notebook", "NumPy", "Kaggle", "GitHub"],
+    "githubUrl": "",
+    "backgroundImage": "",
+    "artifacts": [{
+
+    }]
+  }
 ]
 

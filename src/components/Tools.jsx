@@ -7,10 +7,12 @@ function ToolItem({ tool }) {
   const inner = (
     <>
       <span className="tool-glyph" aria-hidden="true">
-        {tool.icon ? (
-          <span
-            className="tool-icon"
-            style={{ '--icon': `url(${baseUrl}images/icons/${tool.icon}.svg)` }}
+        {tool.logo ? (
+          <img
+            className="tool-logo"
+            src={`${baseUrl}${tool.logo.replace(/^\//, '')}`}
+            alt=""
+            loading="lazy"
           />
         ) : (
           <span className="tool-mono">{tool.name.charAt(0)}</span>

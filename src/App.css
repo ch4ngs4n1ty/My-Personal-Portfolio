@@ -1188,6 +1188,8 @@ section { position: relative; z-index: 1; }
 .project-card:nth-child(3) { grid-column: span 4; }
 .project-card:nth-child(4) { grid-column: span 4; }
 .project-card:nth-child(5) { grid-column: span 4; }
+/* newest project gets the full-width feature row */
+.project-card:nth-child(6) { grid-column: span 12; }
 
 /* Alternate the brand accent so cards vary without ever leaving the palette */
 .project-card:nth-child(even) {
@@ -1197,7 +1199,25 @@ section { position: relative; z-index: 1; }
 
 /* cards no longer expand in place — a click opens the Insights panel */
 
-/* Generated, palette-locked backdrop — corner glow over a deep gradient */
+/* Per-project artwork — desaturated into the theme, wakes up on hover */
+.project-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(0.55) brightness(0.62) contrast(1.05);
+  opacity: 0.55;
+  transform: scale(1.01);
+  transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .6s ease, opacity .6s ease;
+}
+.project-card:hover .project-img {
+  transform: scale(1.06);
+  filter: grayscale(0.1) brightness(0.75) contrast(1.05);
+  opacity: 0.7;
+}
+
+/* Palette-locked overlay — corner glow over a deep translucent gradient
+   (sits above the artwork; cards without artwork read the same as before) */
 .project-bg {
   position: absolute;
   inset: 0;
@@ -1205,7 +1225,7 @@ section { position: relative; z-index: 1; }
     radial-gradient(130% 90% at 100% 0%,
       color-mix(in srgb, var(--accent) 16%, transparent) 0%,
       transparent 55%),
-    linear-gradient(155deg, var(--black3) 0%, var(--black) 100%);
+    linear-gradient(155deg, rgba(17,17,17,0.72) 0%, rgba(5,5,5,0.88) 100%);
   transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s;
 }
 .project-card:hover .project-bg,
@@ -1694,21 +1714,23 @@ section { position: relative; z-index: 1; }
   opacity: 1;
   box-shadow: 0 0 16px rgba(201,168,76,0.22);
 }
-/* Monochrome SVG, tinted via CSS mask so it stays on-palette */
-.tool-icon {
+/* Real brand logo — muted into the theme at rest, full colour on hover */
+.tool-logo {
   position: relative;
   z-index: 1;
   display: block;
   width: 38px;
   height: 38px;
-  background-color: var(--white-dim);
-  -webkit-mask: var(--icon) center / contain no-repeat;
-  mask: var(--icon) center / contain no-repeat;
-  transition: background-color .3s, transform .5s cubic-bezier(.65,0,.35,1);
+  object-fit: contain;
+  filter: grayscale(0.65) brightness(0.85);
+  opacity: 0.85;
+  transition: filter .45s ease, opacity .45s ease,
+    transform .5s cubic-bezier(.65,0,.35,1);
 }
-.tool-item:hover .tool-icon {
-  background-color: var(--gold-bright);
-  transform: scale(1.06);
+.tool-item:hover .tool-logo {
+  filter: grayscale(0) brightness(1);
+  opacity: 1;
+  transform: scale(1.08);
 }
 /* Typographic fallback for tools without a brand icon */
 .tool-mono {
@@ -1975,6 +1997,7 @@ section { position: relative; z-index: 1; }
   .projects-grid { grid-template-columns: 1fr 1fr; }
   .project-card:nth-child(n) { grid-column: span 1; }
   .project-card:nth-child(1) { grid-column: span 2; }
+  .project-card:nth-child(6) { grid-column: span 2; }
   .footer { padding: 24px; }
   /* tighten the left gutter on small screens */
   .timeline { max-width: 100%; padding-left: 38px; }
