@@ -1,16 +1,61 @@
-# React + Vite
+# Personal Portfolio — Ethan Chang
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fast, single-page developer portfolio built with React and Vite, featuring an
+animated Three.js background and an AI chat widget that answers questions about
+my work in real time.
 
-Currently, two official plugins are available:
+**🌐 Live site:** https://ch4ngs4n1ty.github.io/My-Personal-Portfolio/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer    | Technology                                               |
+| -------- | -------------------------------------------------------- |
+| Frontend | React 19, Vite 7                                         |
+| Graphics | Three.js (animated constellation / starfield background) |
+| Content  | JSON-driven data (projects, experiences, tools)          |
+| AI chat  | Cloudflare Worker → Anthropic Claude API                 |
+| Hosting  | GitHub Pages (site) + Cloudflare Workers (chat backend)  |
 
-## Expanding the ESLint configuration
+## How It's Built
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Component-driven UI.** Sections (About, Experience, Projects, Tools) are
+  reusable React components rendered from JSON, so content updates never touch
+  markup — edit the data files in [`src/data/`](src/data/) and the cards
+  regenerate.
+- **Custom visuals.** A Three.js canvas renders an animated constellation
+  background, alongside a custom cursor, intro overlay, and image modals.
+- **"Ask Ethan" chatbot.** A Cloudflare Worker holds the Claude API key
+  server-side, builds a system prompt from the real portfolio data, and streams
+  answers back to the widget — no key ever reaches the browser.
+
+## Running Locally
+
+```bash
+npm install        # install dependencies
+npm run dev        # start dev server at http://localhost:5173
+npm run dev:all    # run the site + chat worker together
+```
+
+## Building & Deploying
+
+```bash
+npm run build      # production build → dist/
+npm run deploy     # build and publish to GitHub Pages
+npm run deploy:all # deploy site + Cloudflare chat worker
+```
+
+## Project Structure
+
+```
+src/
+├── components/   # React UI components
+├── data/         # projects.json, experiences.json, tools.json
+├── App.jsx       # root component
+└── main.jsx      # entry point
+worker/           # Cloudflare Worker for the AI chat backend
+```
+
+> More detail on updating content and deployment lives in
+> [DEPLOY-GUIDE.md](DEPLOY-GUIDE.md) and [HOW-TO-UPDATE.md](HOW-TO-UPDATE.md).
