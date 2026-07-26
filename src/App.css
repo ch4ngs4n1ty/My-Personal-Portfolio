@@ -433,19 +433,53 @@ section { position: relative; z-index: 1; }
 
 /* ── CONSTELLATION ────────────────────────────────────────────────────────── */
 #constellation {
-  height: 85vh;
-  min-height: 660px;
+  height: 88vh;
+  min-height: 720px;
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   margin-bottom: 80px;
 }
 .constellation-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
   z-index: 1;
+}
+
+/* Title sits in its own space at the top; the graph fills the area below it */
+.constellation-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  pointer-events: none;
+  padding: 52px 24px 0;
+}
+.constellation-kicker {
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+}
+.constellation-title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4.4vw, 58px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  background: linear-gradient(to right, var(--gold-bright) 0%, #fff1d6 45%, var(--gold-bright) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 34px rgba(201,168,76,0.22);
+}
+.constellation-head .hero-hint {
+  margin-top: 4px;
 }
 
 /* ── ASK / PORTFOLIO CHAT ─────────────────────────────────────────────────── */
@@ -958,28 +992,6 @@ section { position: relative; z-index: 1; }
 }
 .timeline-item:last-child { margin-bottom: 0; }
 .timeline-item.visible { opacity: 1; transform: translateX(0); }
-
-/* serif year sitting in the gutter, left of the spine */
-.timeline-year {
-  position: absolute;
-  left: -132px; top: 22px;
-  width: 72px;
-  text-align: right;
-  font-family: var(--serif);
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: rgba(201,168,76,0.42);
-  white-space: nowrap;
-  pointer-events: none;
-  transition: color .4s, transform .4s, text-shadow .4s;
-}
-.timeline-item:hover .timeline-year,
-.timeline-item.active .timeline-year {
-  color: var(--gold-bright);
-  text-shadow: 0 0 18px rgba(201,168,76,0.45);
-  transform: translateX(-3px);
-}
 
 /* always-visible connector tying the spine into each card's accent edge */
 .timeline-item::before {
@@ -2006,7 +2018,6 @@ section { position: relative; z-index: 1; }
   .timeline-item::after { left: 1px; }
   .timeline-card { padding: 24px 24px 26px 28px; }
   .timeline-logo { width: 44px; height: 44px; }
-  .timeline-year { display: none; }
   .section-header { gap: 20px; margin-bottom: 54px; }
   .section-ghost { font-size: clamp(48px, 9vw, 80px); }
 }

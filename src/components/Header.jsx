@@ -11,11 +11,6 @@ function Header() {
         <p className="hero-sub">
           Data Science &nbsp;·&nbsp; Machine Learning &nbsp;·&nbsp; <em>Software Engineering</em>
         </p>
-        <p className="hero-hint">
-          <span><em>Drag</em> to rotate</span>
-          <i className="hint-sep" aria-hidden="true"></i>
-          <span><em>Click</em> any node to explore</span>
-        </p>
 
         <div className="hero-legend-wrap">
           <div className="hero-legend-rule"></div>

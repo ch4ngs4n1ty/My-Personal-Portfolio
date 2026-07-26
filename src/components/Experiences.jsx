@@ -26,17 +26,12 @@ function Experiences() {
     <section id="experience">
       <SectionHeader num="02" title="Experience" kicker="// Where I've worked" />
       <div className="timeline" ref={timelineRef}>
-        {experiencesData.map((exp, i) => {
-          const year = exp.duration?.match(/\b(?:19|20)\d{2}\b/)?.[0];
-          return (
+        {experiencesData.map((exp, i) => (
           <article
             key={exp.id}
             className="timeline-item reveal"
             style={{ '--i': i }}
           >
-            {year && (
-              <span className="timeline-year" aria-hidden="true">{year}</span>
-            )}
             <div className="timeline-card">
               <div className="timeline-card-inner">
                 <span className="timeline-date">{exp.duration}</span>
@@ -71,8 +66,7 @@ function Experiences() {
               </div>
             </div>
           </article>
-          );
-        })}
+        ))}
       </div>
     </section>
   );

@@ -576,6 +576,15 @@ function Constellation() {
 
   return (
     <section id="constellation" aria-label="Interactive node graph">
+      <div className="constellation-head reveal">
+        <p className="constellation-kicker">// About me — charted in stars</p>
+        <h2 className="constellation-title">The Constellation</h2>
+        <p className="hero-hint">
+          <span><em>Drag</em> to rotate</span>
+          <i className="hint-sep" aria-hidden="true"></i>
+          <span><em>Click</em> any node to explore</span>
+        </p>
+      </div>
       <canvas ref={canvasRef} className="constellation-canvas" />
     </section>
   );
