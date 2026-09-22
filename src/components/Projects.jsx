@@ -14,7 +14,7 @@ function ProjectCard({ project, index }) {
 
   return (
     <>
-      <article className="project-card reveal">
+      <article className="project-card reveal" style={{ '--idx': index }}>
         {project.backgroundImage && (
           <div
             className="project-img"

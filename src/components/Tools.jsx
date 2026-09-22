@@ -1,7 +1,7 @@
 import toolsData from '../data/tools.json';
 import SectionHeader from './SectionHeader';
 
-function ToolItem({ tool }) {
+function ToolItem({ tool, index }) {
   const baseUrl = import.meta.env.BASE_URL;
 
   const inner = (
@@ -29,12 +29,13 @@ function ToolItem({ tool }) {
         target="_blank"
         rel="noopener noreferrer"
         className="tool-item reveal"
+        style={{ '--idx': index }}
       >
         {inner}
       </a>
     );
   }
-  return <div className="tool-item reveal">{inner}</div>;
+  return <div className="tool-item reveal" style={{ '--idx': index }}>{inner}</div>;
 }
 
 function Tools() {
@@ -42,8 +43,8 @@ function Tools() {
     <section id="tools">
       <SectionHeader num="04" title="Tech Stack" kicker="// What I work with" />
       <div className="tools-grid">
-        {toolsData.map((tool) => (
-          <ToolItem key={tool.id} tool={tool} />
+        {toolsData.map((tool, i) => (
+          <ToolItem key={tool.id} tool={tool} index={i} />
         ))}
       </div>
     </section>

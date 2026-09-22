@@ -1,5 +1,21 @@
 import { useEffect, useRef } from 'react';
 
+/* Deep-space field rendered in three parallax planes.
+   Far  — dense, tiny, cold; barely moves. Reads as distance.
+   Mid  — the working starfield; drifts with the scroll.
+   Near — sparse warm embers + occasional comets; moves most.
+   Depth comes from the parallax ratio, not from brightness alone. */
+
+const PLANES = [
+  { count: 150, depth: 0.16, rMin: 0.25, rMax: 0.75, alpha: 0.42, twinkle: 0.00035 },
+  { count: 90,  depth: 0.42, rMin: 0.5,  rMax: 1.35, alpha: 0.62, twinkle: 0.00065 },
+  { count: 38,  depth: 0.85, rMin: 0.9,  rMax: 2.1,  alpha: 0.85, twinkle: 0.00110 },
+];
+
+// cold distance, warm foreground — the palette's crimson/gold live up close
+const FAR_COLORS = [[186, 196, 232], [208, 214, 240], [160, 172, 216]];
+const NEAR_COLORS = [[242, 239, 233], [201, 168, 76], [192, 57, 43], [226, 168, 80]];
+
 function BackgroundCanvas() {
   const canvasRef = useRef(null);
 
@@ -7,139 +23,142 @@ function BackgroundCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let W = 0, H = 0;
-    let raf = 0;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let W = 0, H = 0, dpr = 1, raf = 0, scrollY = window.scrollY;
 
     const resize = () => {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = Math.floor(W * dpr);
+      canvas.height = Math.floor(H * dpr);
+      canvas.style.width = `${W}px`;
+      canvas.style.height = `${H}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
+
+    const rand = (a, b) => a + Math.random() * (b - a);
+
+    // field spans 2x viewport height so parallax never runs out of stars
+    const build = () =>
+      PLANES.map((p, i) => ({
+        ...p,
+        stars: Array.from({ length: p.count }, () => ({
+          x: Math.random(),
+          y: Math.random(),
+          r: rand(p.rMin, p.rMax),
+          phase: Math.random() * Math.PI * 2,
+          col: (i === 2 ? NEAR_COLORS : FAR_COLORS)[
+            Math.floor(Math.random() * (i === 2 ? NEAR_COLORS : FAR_COLORS).length)
+          ],
+        })),
+      }));
+    let planes = build();
+
+    // sparse comets — rare enough to feel like an event, not decoration
+    const comets = [];
+    let cometTimer = rand(220, 420);
+    const spawnComet = () => {
+      const fromLeft = Math.random() < 0.5;
+      const speed = rand(3.4, 6.2);
+      const warm = Math.random() < 0.55;
+      comets.push({
+        x: fromLeft ? -40 : W + 40,
+        y: rand(H * 0.04, H * 0.62),
+        vx: fromLeft ? speed : -speed,
+        vy: rand(0.5, 1.5),
+        len: rand(120, 260),
+        life: 0,
+        max: rand(60, 95),
+        col: warm ? [240, 214, 160] : [196, 206, 240],
+      });
+    };
+
+    const onScroll = () => { scrollY = window.scrollY; };
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', resize);
 
-    const starColors = [
-      [240, 236, 228],
-      [201, 168, 76],
-      [192, 57, 43],
-      [220, 200, 180],
-    ];
-    const stars = Array.from({ length: 220 }, () => ({
-      x: Math.random() * 2560,
-      y: Math.random() * 1440,
-      r: Math.random() * 1.6 + 0.2,
-      a: Math.random(),
-      speed: Math.random() * 0.0008 + 0.0003,
-      col: starColors[Math.floor(Math.random() * starColors.length)],
-    }));
-
-    const embers = Array.from({ length: 40 }, () => ({
-      x: Math.random() * 2560,
-      y: Math.random() * 1440,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: -(Math.random() * 0.4 + 0.1),
-      r: Math.random() * 2.5 + 0.8,
-      isGold: Math.random() < 0.5,
-      phase: Math.random() * Math.PI * 2,
-    }));
-
-    const shootTypes = [
-      { col: [192, 57, 43], speed: 5, len: 180, lw: 1.5 },
-      { col: [201, 168, 76], speed: 3, len: 140, lw: 1.2 },
-      { col: [240, 236, 228], speed: 7, len: 220, lw: 1.0 },
-      { col: [220, 120, 60], speed: 2, len: 100, lw: 2.0 },
-    ];
-    const shoots = [];
-    let shootTimer = 0;
-
-    const spawnShoot = () => {
-      const type = shootTypes[Math.floor(Math.random() * shootTypes.length)];
-      const goLeft = Math.random() < 0.5;
-      shoots.push({
-        x: goLeft ? W + 20 : -20,
-        y: Math.random() * H * 0.7,
-        vx: (type.speed + Math.random() * 2) * (goLeft ? -1 : 1),
-        vy: Math.random() * 2 + 0.5,
-        len: type.len + Math.random() * 60,
-        life: 0,
-        maxLife: Math.random() * 50 + 35,
-        col: type.col,
-        lw: type.lw,
-      });
-    };
-
-    const frame = (t) => {
+    const draw = (t) => {
       ctx.clearRect(0, 0, W, H);
 
-      stars.forEach((s) => {
-        s.a = 0.2 + 0.5 * Math.abs(Math.sin(t * s.speed + s.x * 0.01));
-        ctx.beginPath();
-        ctx.arc(s.x % W, s.y % H, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${s.col[0]},${s.col[1]},${s.col[2]},${s.a * 0.55})`;
-        ctx.fill();
+      const fieldH = H * 2;
+
+      planes.forEach((plane) => {
+        const shift = (scrollY * plane.depth) % fieldH;
+        plane.stars.forEach((s) => {
+          const px = s.x * W;
+          let py = s.y * fieldH - shift;
+          if (py < -10) py += fieldH;
+          if (py > H + 10) py -= fieldH;
+          if (py < -10 || py > H + 10) return;
+
+          const tw = reduced ? 0.8 : 0.55 + 0.45 * Math.sin(t * plane.twinkle + s.phase);
+          const a = plane.alpha * tw;
+          const [r, g, b] = s.col;
+
+          // brightest near-plane stars get a soft bloom
+          if (plane.depth > 0.6 && s.r > 1.5) {
+            const grd = ctx.createRadialGradient(px, py, 0, px, py, s.r * 5);
+            grd.addColorStop(0, `rgba(${r},${g},${b},${a * 0.5})`);
+            grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+            ctx.fillStyle = grd;
+            ctx.beginPath();
+            ctx.arc(px, py, s.r * 5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          ctx.beginPath();
+          ctx.arc(px, py, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+          ctx.fill();
+        });
       });
 
-      embers.forEach((e) => {
-        e.x += e.vx;
-        e.y += e.vy;
-        e.phase += 0.02;
-        e.x += Math.sin(e.phase) * 0.3;
-        if (e.y < -10) { e.y = H + 10; e.x = Math.random() * W; }
-        if (e.x < -10) e.x = W + 10;
-        if (e.x > W + 10) e.x = -10;
-        const pulse = 0.4 + 0.5 * Math.abs(Math.sin(e.phase));
-        ctx.beginPath();
-        ctx.arc(e.x, e.y, e.r * pulse, 0, Math.PI * 2);
-        ctx.fillStyle = e.isGold
-          ? `rgba(201,168,76,${pulse * 0.5})`
-          : `rgba(192,57,43,${pulse * 0.45})`;
-        if (pulse > 0.7) {
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = e.isGold ? 'rgba(201,168,76,0.6)' : 'rgba(192,57,43,0.6)';
+      if (!reduced) {
+        if (--cometTimer <= 0) { spawnComet(); cometTimer = rand(260, 560); }
+
+        for (let i = comets.length - 1; i >= 0; i--) {
+          const c = comets[i];
+          c.x += c.vx; c.y += c.vy; c.life++;
+          const fade = Math.sin((c.life / c.max) * Math.PI);
+          const dir = Math.sign(c.vx);
+          const tail = Math.min(c.len, c.life * Math.abs(c.vx) * 1.6);
+          const tx = c.x - dir * tail;
+          const ty = c.y - (c.vy / Math.abs(c.vx)) * tail;
+          const [r, g, b] = c.col;
+          const grd = ctx.createLinearGradient(c.x, c.y, tx, ty);
+          grd.addColorStop(0, `rgba(${r},${g},${b},${fade * 0.9})`);
+          grd.addColorStop(0.35, `rgba(${r},${g},${b},${fade * 0.22})`);
+          grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          ctx.beginPath();
+          ctx.moveTo(c.x, c.y);
+          ctx.lineTo(tx, ty);
+          ctx.strokeStyle = grd;
+          ctx.lineWidth = 1.15;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+          if (c.life >= c.max) comets.splice(i, 1);
         }
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      shootTimer++;
-      if (shootTimer > 55) { spawnShoot(); shootTimer = Math.floor(Math.random() * 15); }
-      if (Math.random() < 0.002) { spawnShoot(); spawnShoot(); spawnShoot(); }
-
-      for (let i = shoots.length - 1; i >= 0; i--) {
-        const s = shoots[i];
-        s.x += s.vx;
-        s.y += s.vy;
-        s.life++;
-        const progress = s.life / s.maxLife;
-        const alpha = Math.sin(progress * Math.PI);
-        const tailLen = Math.min(s.len, s.life * Math.abs(s.vx) * 2);
-        const dirX = s.vx / Math.abs(s.vx);
-        const grad = ctx.createLinearGradient(
-          s.x, s.y,
-          s.x - dirX * tailLen,
-          s.y - (s.vy / Math.abs(s.vx)) * tailLen
-        );
-        grad.addColorStop(0, `rgba(${s.col[0]},${s.col[1]},${s.col[2]},${alpha * 0.95})`);
-        grad.addColorStop(0.4, `rgba(${s.col[0]},${s.col[1]},${s.col[2]},${alpha * 0.3})`);
-        grad.addColorStop(1, `rgba(${s.col[0]},${s.col[1]},${s.col[2]},0)`);
-        ctx.beginPath();
-        ctx.moveTo(s.x, s.y);
-        ctx.lineTo(s.x - dirX * tailLen, s.y - (s.vy / Math.abs(s.vx)) * tailLen);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = s.lw;
-        ctx.shadowBlur = alpha > 0.4 ? 8 : 0;
-        ctx.shadowColor = `rgba(${s.col[0]},${s.col[1]},${s.col[2]},0.8)`;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-        if (s.life >= s.maxLife) shoots.splice(i, 1);
       }
 
-      raf = requestAnimationFrame(frame);
+      raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(frame);
+    raf = requestAnimationFrame(draw);
+
+    // pause the loop when the tab is hidden
+    const onVis = () => {
+      cancelAnimationFrame(raf);
+      if (!document.hidden) raf = requestAnimationFrame(draw);
+    };
+    document.addEventListener('visibilitychange', onVis);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
 
