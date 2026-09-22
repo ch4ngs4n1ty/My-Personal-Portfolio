@@ -12,8 +12,9 @@ const PLANES = [
   { count: 38,  depth: 0.85, rMin: 0.9,  rMax: 2.1,  alpha: 0.85, twinkle: 0.00110 },
 ];
 
-// cold distance, warm foreground — the palette's crimson/gold live up close
-const FAR_COLORS = [[186, 196, 232], [208, 214, 240], [160, 172, 216]];
+// depth comes from brightness, not hue — every star stays in the
+// black/crimson/gold palette. Distant stars are dim bone-white.
+const FAR_COLORS = [[214, 208, 198], [186, 178, 166], [228, 220, 206]];
 const NEAR_COLORS = [[242, 239, 233], [201, 168, 76], [192, 57, 43], [226, 168, 80]];
 
 function BackgroundCanvas() {
@@ -72,7 +73,7 @@ function BackgroundCanvas() {
         len: rand(120, 260),
         life: 0,
         max: rand(60, 95),
-        col: warm ? [240, 214, 160] : [196, 206, 240],
+        col: warm ? [240, 214, 160] : [236, 228, 214],
       });
     };
 
