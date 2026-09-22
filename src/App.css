@@ -1662,6 +1662,147 @@ section { position: relative; z-index: 1; }
 .project-cue-arrow { transition: transform var(--dur) var(--ease); }
 .project-card:hover .project-cue-arrow { transform: translateX(5px); }
 
+/* ── "More work" divider ─────────────────────────────────────────────────── */
+.projects-more-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin: var(--s-9) 0 var(--s-6);
+}
+.projects-more-label {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.projects-more-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--hair-warm), rgba(255,255,255,0.05) 40%, transparent);
+}
+.projects-more-count {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--white-faint);
+  white-space: nowrap;
+}
+
+/* ── Compact tiles — secondary work, scannable without the scroll cost ───── */
+.projects-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+@media (max-width: 1000px) { .projects-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px)  { .projects-tiles { grid-template-columns: 1fr; } }
+
+.project-tile {
+  --accent: var(--gold);
+  --accent-bright: var(--gold-bright);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  min-height: 176px;
+  cursor: pointer;
+  background: linear-gradient(155deg, var(--black3) 0%, var(--black) 100%);
+  border: 1px solid var(--hair);
+  transition:
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+.project-tile:nth-child(odd) {
+  --accent: var(--red);
+  --accent-bright: var(--red-bright);
+}
+.project-tile:hover,
+.project-tile:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 14px 36px -22px rgba(0,0,0,0.9);
+}
+.project-tile:focus-visible { outline: none; }
+
+/* accent hairline across the top edge, drawn in on hover */
+.project-tile::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent), transparent);
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease);
+}
+.project-tile:hover::before { transform: scaleX(1); }
+
+.project-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.project-tile-num {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.16em;
+  color: var(--accent-bright);
+}
+.project-tile-arrow {
+  font-size: var(--t-sm);
+  color: var(--white-faint);
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.project-tile:hover .project-tile-arrow {
+  color: var(--accent-bright);
+  transform: translateX(4px);
+}
+
+.project-tile-title {
+  font-family: var(--serif);
+  font-size: var(--t-base);
+  font-weight: 700;
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-top: var(--s-2);
+  text-wrap: balance;
+  transition: color var(--dur) var(--ease);
+}
+.project-tile:hover .project-tile-title { color: var(--accent-bright); }
+
+.project-tile-meta {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--white-faint);
+}
+
+.project-tile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: var(--s-4);
+}
+.project-tile-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  border-radius: var(--radius);
+  color: color-mix(in srgb, var(--accent-bright) 85%, var(--white));
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
 /* stack the split on narrow screens */
 @media (max-width: 860px) {
   .project-card,
