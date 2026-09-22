@@ -1,6 +1,32 @@
 [
   {
     "id": 1,
+    "title": "PlayIQ — Sports Analytics Dashboard",
+    "tech": ["JavaScript", "React", "Node.js", "XGBoost"],
+    "duration": "March 2026 - Present",
+    "description": "Built a multi-sport analytics dashboard covering MLB, NBA, WNBA, NFL, NHL and NCAAB, with per-game deep dives across matchup, form, roster and sport-specific modeling tabs. Engineered transparent projection models — Log5 batter-vs-pitcher matchups, Binomial and Poisson distributions, additive scoring — where every output carries a methodology entry naming its source, inputs and formula. Trained an XGBoost model for MLB first-five-innings outcomes offline via a GitHub Actions workflow, and integrated Claude for context-aware game analysis.",
+    "tools": ["JavaScript", "React 18", "Node.js", "Python", "XGBoost", "Babel Standalone", "GitHub Actions", "Vercel", "Claude API", "MLB/ESPN APIs"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Sports-Data-Visualization",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A dark-mode sports intelligence dashboard built deliberately without a build step — React 18 and Babel Standalone from a CDN, and a pure Node http/https backend with zero npm dependencies. The design goal was transparency: apart from one XGBoost model, every projection is inspectable arithmetic that explains where its number came from.",
+      "metrics": [
+        { "value": "6", "label": "Sports covered" },
+        { "value": "0", "label": "Backend deps" },
+        { "value": "1", "label": "ML model, by design" }
+      ],
+      "highlights": [
+        "Designed a slate-triage system that badges games (HOT PLAY / LEAN / LOOK / FADE) so the highest-signal matchups surface before drilling in",
+        "Built an Edge Finder using Log5 matchup math with per-player threshold projections across MLB, NBA and WNBA",
+        "Implemented a live MLB feed with scoreboard, base state, measured pitch locations and play-by-play on a 10-second cache floor",
+        "Automated offline model training through a CI workflow so the first-5-innings model retrains without touching the runtime",
+        "Kept every non-ML score attached to a `why` string naming its endpoint, inputs and formula"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 2,
     "title": "Chroma",
     "tech": ["Angular", "Spring Boot", "Java", "REST API"],
     "duration": "August 2025 - December 2025",
@@ -8,12 +34,10 @@
     "tools": ["Angular", "Spring Boot", "Java", "REST API", "TypeScript", "JUnit", "Swing", "GitHub", "Agile/Scrum methodologies"],
     "githubUrl": "https://github.com/ch4ngs4n1ty/Chroma",
     "backgroundImage": "/images/chroma-bg.png",
-    "artifacts": [{
-      
-    }]
+    "artifacts": []
   },
   {
-    "id": 2,
+    "id": 3,
     "title": "ACL Unplanned Surgery Predictive Model",
     "tech": ["Python", "SQL", "Pandas", "Scikit-learn"],
     "duration": "June 2025 - September 2025",
@@ -27,10 +51,37 @@
         "type": "image",
         "src": "/images/aclr-diagram.png",
         "alt": "ACL Unplanned Surgery Predictive Model Diagram"
-      }]
+      }
+    ]
   },
   {
-    "id": 3,
+    "id": 4,
+    "title": "Stock Dip Analysis API",
+    "tech": ["TypeScript", "Express", "PostgreSQL", "Docker"],
+    "duration": "April 2026 - May 2026",
+    "description": "Built a TypeScript and Express service that scores whether a well-known stock is in a dip worth researching further. Integrated Finnhub for quotes, candles and company news with an Alpha Vantage fallback, and computed RSI locally from candle closes when the upstream indicator endpoint was unavailable. Implemented a capped 100-point rule-based scoring model that weighs dip depth against SMA50, RSI and news sentiment, then labels each result GOOD DIP, WATCH or AVOID.",
+    "tools": ["TypeScript", "Express", "Node.js", "PostgreSQL", "Docker", "Docker Compose", "Jest", "Finnhub API", "Alpha Vantage API", "Python"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Stock-Market-Analysis",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A deliberately conservative screening API: it flags stocks worth a closer look rather than claiming any is a buy, and it leaves out valuation, full fundamentals and analyst ratings instead of pretending to model them. The scoring rules are fixed and published, so any label can be traced back to the four inputs that produced it.",
+      "metrics": [
+        { "value": "4", "label": "Scoring rules" },
+        { "value": "2", "label": "Data sources + fallback" },
+        { "value": "3", "label": "Unit test suites" }
+      ],
+      "highlights": [
+        "Designed a transparent 100-point scoring model: dip depth (30), price above SMA50 (25), RSI below 35 (20), and absence of bad-news keywords (25)",
+        "Built an Alpha Vantage fallback path for historical candles when Finnhub restricts the endpoint on free-tier keys",
+        "Calculated RSI locally from candle closes rather than depending on a provider indicator endpoint",
+        "Added a response cache and normalizer layer to keep third-party rate limits from reaching the scoring path",
+        "Containerized the service with Docker Compose alongside a seeded PostgreSQL instance"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 5,
     "title": "Movie Database Management Systems",
     "tech": ["Python", "PostgreSQL", "SSH Tunnel", "SQL"],
     "duration": "January 2025 - May 2025",
@@ -47,43 +98,126 @@
     ]
   },
   {
-    "id": 4,
+    "id": 6,
+    "title": "Race Condition Detective",
+    "tech": ["C#", ".NET", "Concurrency"],
+    "duration": "February 2026",
+    "description": "Diagnosed and repaired race conditions across five intentionally broken concurrent C# components — a bank ledger, counter, cache, logger and queue. Traced each defect to its specific non-atomic read-modify-write sequence and shared mutable state, then selected the narrowest correct fix for each case rather than applying a blanket lock. Documented every bug with its location, the threading interleaving that triggers it, the applied fix, and why that fix restores correctness.",
+    "tools": ["C#", ".NET 8", "Multithreading", "lock / Monitor", "Interlocked", "Concurrent Collections", "Visual Studio"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Bank-Race-Condition-Detective",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "An exercise in reading concurrent code for what it actually compiles to rather than what it looks like. The core insight repeated across the bugs: operations that read as single statements — `_count++`, or assigning a computed balance — are read-modify-write sequences that two threads can interleave, silently losing one update.",
+      "metrics": [
+        { "value": "5", "label": "Race conditions fixed" },
+        { "value": "5", "label": "Components analyzed" },
+        { "value": "100%", "label": "Fixes documented" }
+      ],
+      "highlights": [
+        "Identified lost updates in bank deposit/withdraw from non-atomic read-modify-write on shared balance state",
+        "Replaced `_count++` with `Interlocked.Increment` to make the increment a single atomic instruction instead of paying for a full lock",
+        "Matched each fix to its failure mode — locks where a critical section spans multiple operations, interlocked primitives where one word is updated",
+        "Wrote a structured analysis for every bug covering location, shared state, why it fails, the fix, and why the fix holds"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 7,
     "title": "Wildfire Simulation",
     "tech": ["C"],
     "duration": "Sep 2024 - Oct 2024",
     "description": "Designed and implemented a C-based wildfire simulation modeling probabilistic fire propagation across a grid-based forest. Developed probabilistic fire spread algorithms incorporating neighbor states, tree density, and burn probability with Fisher–Yates random initialization. Enhanced simulation performance and accuracy through iterative debugging, modular refactoring, and thorough documentation.",
     "tools": ["C", "GCC", "Makefile", "Unix/Linux CLI", "MobaXterm", "VS Code", "GitHub", "Valgrind"],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Wildfire-Simulation",
     "backgroundImage": "/images/wildfire-bg.png",
-    "artifacts": [{
-      
-    }]
+    "artifacts": []
   },
   {
-    "id": 5,
+    "id": 8,
+    "title": "Pathfinding Search Algorithms",
+    "tech": ["Java", "A*", "BFS", "DFS"],
+    "duration": "June 2025",
+    "description": "Implemented and compared BFS, DFS and A* search over a city road network loaded from external city and edge datasets. Built an A* heuristic using straight-line distance between coordinates to guide expansion toward the goal, and structured the search layer so each algorithm shares a common interface over the same graph representation. Benchmarked the three strategies on identical routes to compare path optimality against nodes expanded.",
+    "tools": ["Java", "A* Search", "Breadth-First Search", "Depth-First Search", "Priority Queues", "Graph Traversal", "IntelliJ", "GitHub"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/AI-Path-Algorithm-Project",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A direct comparison of three classical search strategies on the same weighted city graph, built to make the trade-offs concrete: DFS finds a path fast but not a good one, BFS guarantees fewest hops but explores blindly, and A* reaches the optimal route while expanding a fraction of the nodes given an admissible heuristic.",
+      "metrics": [
+        { "value": "3", "label": "Algorithms implemented" },
+        { "value": "A*", "label": "Fewest expansions" },
+        { "value": "2", "label": "External datasets" }
+      ],
+      "highlights": [
+        "Implemented A* with a straight-line-distance heuristic over geographic city coordinates",
+        "Loaded the road network from separate city and edge data files into a shared graph structure",
+        "Designed a common search interface so BFS, DFS and A* run against identical inputs for fair comparison",
+        "Benchmarked path cost against nodes expanded to show the heuristic's effect on search effort"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 9,
     "title": "Astros and Hoppers",
-    "tech": ["Java"],
+    "tech": ["Java", "JavaFX"],
     "duration": "April 2024 - May 2024",
     "description": "Developed Astros and Hoppers, an interactive Java puzzle game with custom mechanics and logic-driven challenges. Partnered to implement a BFS-based shortest-path system that powers core gameplay decisions and guarantees correct pathfinding behavior. Built the JavaFX game board UI and integrated department-provided image assets for a polished player experience, while supporting both GUI and PTUI (text-based) interaction via the command line.",
     "tools": ["Java", "JavaFX", "IntelliJ", "GitHub", "Command Line Interface (CLI)", "PTUI"],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Hoppers-and-Astros-Project",
     "backgroundImage": "/images/astro-and-hopper-bg.png",
-    "artifacts": [{
-
-    }]
-    },
+    "artifacts": []
+  },
   {
-    "id": 6,
-    "title": "Sports Data Visualization",
-    "tech": ["Python", "Pandas", "Matplotlib", "Jupyter"],
-    "duration": "2026 - Present",
-    "description": "Building an interactive collection of visualizations that explore sports statistics and performance trends. Cleaning and reshaping raw datasets with Pandas, then translating the numbers into clear, story-driven charts that surface patterns behind player and team performance.",
-    "tools": ["Python", "Pandas", "Matplotlib", "Jupyter Notebook", "NumPy", "Kaggle", "GitHub"],
-    "githubUrl": "",
+    "id": 10,
+    "title": "Evolutionary Stable Strategy Simulation",
+    "tech": ["Python", "Game Theory", "Simulation"],
+    "duration": "June 2025 - July 2025",
+    "description": "Built a Hawk-Dove simulation in Python to explore how Evolutionarily Stable Strategies emerge from simple encounter rules. Modeled a configurable population where individuals compete over a finite resource, with hawk aggression carrying a survival cost, then ran repeated encounters to observe which strategy mix stabilizes. Exposed population size, hawk percentage, resource amount and hawk cost as command-line parameters to make the equilibrium conditions directly testable.",
+    "tools": ["Python 3.12", "Game Theory", "Monte Carlo Simulation", "CLI Argument Parsing", "Unix/Linux", "GitHub"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Game-Theory----ESS-Simulation",
     "backgroundImage": "",
-    "artifacts": [{
-
-    }]
+    "insights": {
+      "summary": "A parameter-driven study of the classic Hawk-Dove game. The simulation makes the central result tangible: the stable strategy mix is governed by the ratio of hawk cost to resource value, not by how many hawks start in the population — when cost exceeds the resource, aggression collapses regardless of its initial share.",
+      "metrics": [
+        { "value": "4", "label": "Tunable parameters" },
+        { "value": "2", "label": "Competing strategies" },
+        { "value": "CLI", "label": "Fully parameterized" }
+      ],
+      "highlights": [
+        "Modeled hawk-hawk, hawk-dove and dove-dove encounters with distinct payoff and survival outcomes",
+        "Demonstrated that hawk cost relative to resource amount drives equilibrium more than initial hawk percentage",
+        "Exposed every simulation variable as a command-line argument with sensible defaults for reproducible runs",
+        "Separated individual, simulation and entry-point concerns into distinct modules"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 11,
+    "title": "Reaction Timing Racing Game",
+    "tech": ["Lua", "Roblox", "Rojo"],
+    "duration": "May 2026",
+    "description": "Developed a multiplayer reaction-time racing game for Roblox where players advance along a ten-line track by tapping within a timed window after a randomized flash. Implemented the authoritative server game loop handling countdown, intermission, flash scheduling and win detection, paired with a separate client script for input and feedback. Centralized all tuning — flash windows, cooldowns, track geometry, lane spacing and monetization IDs — into a single shared configuration module.",
+    "tools": ["Lua", "Roblox Studio", "Rojo", "Aftman", "Client-Server Architecture", "GitHub"],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Reaction-Timing-Racing-Game",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A server-authoritative multiplayer game built with an external toolchain rather than inside Roblox Studio — Rojo syncs a real filesystem project into the engine, so the code lives in version control like any other repository. Game feel is driven entirely by a single config module, making balance changes a one-line edit.",
+      "metrics": [
+        { "value": "8", "label": "Max players" },
+        { "value": "10", "label": "Track lines" },
+        { "value": "1", "label": "Config module" }
+      ],
+      "highlights": [
+        "Built a server-authoritative loop covering intermission, countdown, randomized flash timing and win detection",
+        "Split responsibilities across ServerScriptService, StarterPlayerScripts and a shared ReplicatedStorage module",
+        "Randomized flash intervals within a tuned delay range so players cannot pattern-match the timing",
+        "Designed gamepass abilities (Reflex Boost extending the tap window, Eliminator with a cooldown) around the core timing mechanic",
+        "Used Rojo and Aftman to keep the project in version control instead of inside Roblox Studio"
+      ]
+    },
+    "artifacts": []
   }
 ]
-
