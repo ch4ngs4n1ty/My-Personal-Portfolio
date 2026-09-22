@@ -4,6 +4,12 @@ import ImageModal from './ImageModal';
 import ProjectInsights from './ProjectInsights';
 import SectionHeader from './SectionHeader';
 
+// first sentence only — the full write-up lives in the Insights panel
+function lede(text = '') {
+  const cut = text.match(/^(.*?[.!?])\s/);
+  return cut ? cut[1] : text;
+}
+
 function ProjectCard({ project, index }) {
   const [showInsights, setShowInsights] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -11,49 +17,72 @@ function ProjectCard({ project, index }) {
 
   const num = String(index + 1).padStart(2, '0');
   const openInsights = () => setShowInsights(true);
+  const hasArt = Boolean(project.backgroundImage);
 
   return (
     <>
-      <article className="project-card reveal" style={{ '--idx': index }}>
-        {project.backgroundImage && (
-          <div
-            className="project-img"
-            aria-hidden="true"
-            style={{ backgroundImage: `url(${baseUrl}${project.backgroundImage.replace(/^\//, '')})` }}
-          />
-        )}
-        <div className="project-bg" aria-hidden="true" />
-        <div className="project-stripe" aria-hidden="true" />
-        <div className="project-watermark" aria-hidden="true">{num}</div>
-        <div className="project-edge" aria-hidden="true" />
-        <div
-          className="project-content"
-          role="button"
-          tabIndex={0}
-          aria-label={`View insights for ${project.title}`}
-          onClick={openInsights}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openInsights();
-            }
-          }}
-        >
-          <div className="project-num">{num}</div>
+      <article
+        className={`project-card reveal${hasArt ? '' : ' no-art'}`}
+        style={{ '--idx': index }}
+        role="button"
+        tabIndex={0}
+        aria-label={`View insights for ${project.title}`}
+        onClick={openInsights}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openInsights();
+          }
+        }}
+      >
+        {/* ── visual half ── */}
+        <div className="project-visual" aria-hidden="true">
+          {hasArt ? (
+            <div
+              className="project-img"
+              style={{ backgroundImage: `url(${baseUrl}${project.backgroundImage.replace(/^\//, '')})` }}
+            />
+          ) : (
+            // no artwork: build a panel from the stack instead of leaving a hole
+            <div className="project-fallback">
+              <span className="project-fallback-num">{num}</span>
+              <span className="project-fallback-stack">
+                {(project.tools || project.tech).slice(0, 5).map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
+              </span>
+            </div>
+          )}
+          <span className="project-visual-veil" />
+        </div>
+
+        {/* ── content half ── */}
+        <div className="project-content">
+          <div className="project-index">
+            <span className="project-num">{num}</span>
+            <span className="project-index-rule" aria-hidden="true" />
+          </div>
+
           <h3 className="project-title">{project.title}</h3>
+
           <div className="project-meta">
             {project.duration}
             {project.program && ` · ${project.program}`}
           </div>
-          <p className="project-desc">{project.description}</p>
+
+          <p className="project-desc">{lede(project.description)}</p>
+
           <div className="project-tags">
             {project.tech.map((t) => (
               <span key={t} className="project-tag">{t}</span>
             ))}
           </div>
-          <span className="project-cue">View insights →</span>
+
+          <span className="project-cue">
+            View insights
+            <span className="project-cue-arrow" aria-hidden="true">→</span>
+          </span>
         </div>
-        <div className="project-arrow" aria-hidden="true">→</div>
       </article>
 
       {showInsights && (

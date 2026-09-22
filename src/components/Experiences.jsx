@@ -33,29 +33,37 @@ function Experiences() {
             style={{ '--i': i }}
           >
             <div className="timeline-card">
-              <div className="timeline-card-inner">
-                <span className="timeline-date">{exp.duration}</span>
-                <div className="timeline-role">
-                  {exp.logo && (
-                    <img
-                      src={`${baseUrl}${exp.logo}`}
-                      alt=""
-                      className="timeline-logo"
-                      aria-hidden="true"
-                    />
-                  )}
-                  {exp.url ? (
-                    <a href={exp.url} target="_blank" rel="noopener noreferrer">
-                      {exp.title}
-                      <span className="timeline-arrow" aria-hidden="true">↗</span>
-                    </a>
-                  ) : (
-                    exp.title
-                  )}
+              {/* header band: logo + identity on the left, dates on the right */}
+              <header className="timeline-head">
+                {exp.logo && (
+                  <span className="timeline-logo-frame" aria-hidden="true">
+                    <img src={`${baseUrl}${exp.logo}`} alt="" className="timeline-logo" />
+                  </span>
+                )}
+
+                <div className="timeline-identity">
+                  <h3 className="timeline-role">
+                    {exp.url ? (
+                      <a href={exp.url} target="_blank" rel="noopener noreferrer">
+                        {exp.title}
+                        <span className="timeline-arrow" aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      exp.title
+                    )}
+                  </h3>
+                  <div className="timeline-company">{exp.company}</div>
                 </div>
-                <div className="timeline-company">{exp.company}</div>
-                <div className="timeline-location">{exp.location}</div>
+
+                <div className="timeline-when">
+                  <span className="timeline-date">{exp.duration}</span>
+                  <span className="timeline-location">{exp.location}</span>
+                </div>
+              </header>
+
+              <div className="timeline-body">
                 <p className="timeline-desc">{exp.summary}</p>
+
                 {exp.skills?.length > 0 && (
                   <div className="timeline-skills">
                     {exp.skills.map((skill) => (
