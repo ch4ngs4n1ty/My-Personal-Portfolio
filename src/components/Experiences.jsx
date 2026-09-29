@@ -29,7 +29,7 @@ function Experiences() {
         {experiencesData.map((exp, i) => (
           <article
             key={exp.id}
-            className="timeline-item reveal"
+            className={`timeline-item reveal${exp.current ? ' is-current' : ''}`}
             style={{ '--i': i }}
           >
             <div className="timeline-card">
@@ -51,6 +51,12 @@ function Experiences() {
                     ) : (
                       exp.title
                     )}
+                    {exp.current && (
+                      <span className="timeline-current">
+                        <span className="timeline-current-dot" aria-hidden="true" />
+                        Current
+                      </span>
+                    )}
                   </h3>
                   <div className="timeline-company">{exp.company}</div>
                 </div>
@@ -63,6 +69,44 @@ function Experiences() {
 
               <div className="timeline-body">
                 <p className="timeline-desc">{exp.summary}</p>
+
+                {/* role progression within one employer, newest first */}
+                {exp.roles?.length > 0 && (
+                  <ol className="timeline-roles" aria-label={`Roles at ${exp.company}`}>
+                    {exp.roles.map((role) => (
+                      <li
+                        key={role.title + role.duration}
+                        className={`timeline-roles-step${role.current ? ' is-current' : ''}`}
+                      >
+                        <div className="timeline-roles-top">
+                          <span className="timeline-roles-title">{role.title}</span>
+                          <span className="timeline-roles-date">{role.duration}</span>
+                        </div>
+                        <div className="timeline-roles-meta">
+                          {role.type}
+                          {role.location && ` · ${role.location}`}
+                        </div>
+                        {role.note && <p className="timeline-roles-note">{role.note}</p>}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+
+                {exp.highlights?.length > 0 && (
+                  <ul className="timeline-highlights">
+                    {exp.highlights.map((h) => <li key={h}>{h}</li>)}
+                  </ul>
+                )}
+
+                {exp.award && (
+                  <div className="timeline-award">
+                    <span className="timeline-award-mark" aria-hidden="true">✦</span>
+                    <div>
+                      <div className="timeline-award-name">{exp.award.name}</div>
+                      <div className="timeline-award-detail">{exp.award.detail}</div>
+                    </div>
+                  </div>
+                )}
 
                 {exp.skills?.length > 0 && (
                   <div className="timeline-skills">

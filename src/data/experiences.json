@@ -1,12 +1,44 @@
 [
   {
     "id": 1,
-    "title": "iSAFE R&D Intern",
-    "company": "Sandia National Laboratories",
-    "duration": "May 2026 - July 2026",
-    "location": "Albuquerque, NM - Onsite",
-    "summary": "Currently working ",
-    "skills": ["Research", "Data Analysis", "Problem Solving"],
+    "title": "Year-Round R&D Intern",
+    "company": "Sandia National Laboratories · iSAFE",
+    "duration": "May 2026 - Present",
+    "location": "Remote - Part-time",
+    "current": true,
+    "summary": "Started as a full-time R&D intern onsite in Albuquerque for the summer, and was offered an extension to stay on as a year-round intern, now working part-time and remotely alongside my studies at RIT.",
+    "roles": [
+      {
+        "title": "Year-Round R&D Intern",
+        "type": "Part-time · Remote",
+        "duration": "August 2026 - Present",
+        "current": true,
+        "note": "Extension offered at the end of the summer to continue the work through the school year."
+      },
+      {
+        "title": "R&D Intern",
+        "type": "Full-time · Onsite",
+        "duration": "May 2026 - July 2026",
+        "location": "Albuquerque, NM",
+        "note": "Summer internship building the simulation training tool with laboratory scientists."
+      }
+    ],
+    "highlights": [
+      "Worked with laboratory scientists to build a training tool that simulates data from hypothetical radioactive material releases.",
+      "Learned to work with unfamiliar scientific and nuclear-related data and apply it to the software tool."
+    ],
+    "award": {
+      "name": "Thunderbird Award",
+      "detail": "Purpose-Driven category, for my contributions during the internship"
+    },
+    "skills": [
+      "Research",
+      "Scientific Data",
+      "Simulation",
+      "Software Development",
+      "Collaboration",
+      "Remote Work"
+    ],
     "logo": "/images/snl.png",
     "url": "https://www.sandia.gov/"
   },
@@ -17,10 +49,15 @@
     "duration": "September 2025 - Present",
     "location": "Rochester, NY - Onsite",
     "summary": "Provide individualized and group tutoring on programming concepts across Python, Java, and Excel. Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.",
-    "skills": ["Bilingual Communication", "Accessible Teaching", "Instructional Adaptability", "Active Listening", "Confidence-Building"],
+    "skills": [
+      "Bilingual Communication",
+      "Accessible Teaching",
+      "Instructional Adaptability",
+      "Active Listening",
+      "Confidence-Building"
+    ],
     "logo": "/images/rit.png",
     "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"
-    
   },
   {
     "id": 3,
@@ -29,7 +66,15 @@
     "duration": "May 2025 - July 2025",
     "location": "Pittsburgh, PA - Hybrid",
     "summary": "Collaborated with faculty and peers on data-driven projects addressing healthcare and informatics challenges. Analyzed complex patient data to generate actionable insights supporting predictive modeling initiatives, and presented findings to stakeholders with practical recommendations.",
-    "skills": ["Collaboration", "Communication", "Data Cleaning", "Data Analysis", "Data Storytelling", "Data Security", "Adaptability"],
+    "skills": [
+      "Collaboration",
+      "Communication",
+      "Data Cleaning",
+      "Data Analysis",
+      "Data Storytelling",
+      "Data Security",
+      "Adaptability"
+    ],
     "logo": "/images/pitt.png",
     "url": "https://www.aibids.org/home"
   },
@@ -40,9 +85,14 @@
     "duration": "September 2024 - September 2025",
     "location": "Rochester, NY - Onsite",
     "summary": "Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.",
-    "skills": ["Bilingual Communication", "Accessible Teaching", "Instructional Adaptability", "Active Listening", "Confidence-Building"],
+    "skills": [
+      "Bilingual Communication",
+      "Accessible Teaching",
+      "Instructional Adaptability",
+      "Active Listening",
+      "Confidence-Building"
+    ],
     "logo": "/images/rit.png",
     "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"
   }
 ]
-
