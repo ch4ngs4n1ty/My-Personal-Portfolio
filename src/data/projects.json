@@ -134,8 +134,8 @@
     "artifacts": [
       {
         "type": "image",
-        "src": "/images/aclr-diagram.png",
-        "alt": "ACL Unplanned Surgery Predictive Model Diagram"
+        "src": "/images/aclr-poster.png",
+        "alt": "Research poster — Enhancing Prediction of Unplanned Surgeries After ACL Reconstruction: Evaluating the Role of Activity Level Among SDoH Factors"
       }
     ]
   },
