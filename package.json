@@ -10,6 +10,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "resume": "cd resume && (command -v tectonic >/dev/null && tectonic resume.tex || latexmk -pdf -interaction=nonstopmode resume.tex) && cp resume.pdf ../public/resume.pdf",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "deploy:all": "npm run deploy && cd worker && npx wrangler deploy"

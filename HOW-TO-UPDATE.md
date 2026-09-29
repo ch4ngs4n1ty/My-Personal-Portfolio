@@ -69,6 +69,24 @@ New tool card appears automatically! ✅
 2. Reference them in JSON as `/images/filename.png`
 3. React finds them automatically!
 
+## 📄 Update Your Resume
+
+Don't upload a PDF: edit `resume/resume.tex` and push to `main`.
+
+GitHub Actions (`.github/workflows/deploy.yml`) compiles it, commits the new
+`public/resume.pdf` back to the repo, rebuilds the site and redeploys it. Run
+`git pull` afterwards to get that PDF commit locally.
+
+The top of `resume.tex` lists the building blocks (`\entry`, `\project`,
+`\bullets`, `\skills`, `\tools`). To preview locally, run `npm run resume`
+(needs `tectonic` or `latexmk`, e.g. `brew install tectonic`).
+
+## 🚀 Deploying
+
+Every push to `main` deploys the site automatically; `npm run deploy` is no
+longer needed. The chat worker is separate: after changing projects or
+experiences, run `cd worker && npx wrangler deploy` so the chatbot knows about them.
+
 ## 🎯 JSON Field Explanations
 
 ### Projects

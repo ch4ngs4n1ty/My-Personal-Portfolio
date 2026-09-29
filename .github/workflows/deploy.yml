@@ -1,0 +1,63 @@
+# On every push to main:
+#   1. compile resume/resume.tex -> public/resume.pdf (committed back if it changed)
+#   2. build the Vite site
+#   3. publish dist/ to the gh-pages branch, which GitHub Pages serves
+name: Build resume & deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so the resume's last-edit time is stable
+
+      # Pin the PDF's embedded timestamps to the last resume.tex commit, so an
+      # unchanged .tex compiles to a byte-identical PDF and nothing is recommitted.
+      - name: Pin PDF timestamps
+        run: echo "SOURCE_DATE_EPOCH=$(git log -1 --format=%ct -- resume/resume.tex)" >> "$GITHUB_ENV"
+
+      - name: Compile resume
+        uses: xu-cheng/latex-action@v3
+        env:
+          FORCE_SOURCE_DATE: 1
+        with:
+          root_file: resume.tex
+          working_directory: resume
+
+      - name: Commit rebuilt resume PDF
+        run: |
+          cp resume/resume.pdf public/resume.pdf
+          if ! git diff --quiet -- public/resume.pdf; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/resume.pdf
+            git commit -m "chore(resume): rebuild PDF from resume.tex [skip ci]"
+            git push
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
