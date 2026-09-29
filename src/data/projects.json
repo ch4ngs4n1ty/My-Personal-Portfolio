@@ -28,7 +28,7 @@
       "summary": "A dark-mode sports intelligence dashboard built deliberately without a build step — React 18 and Babel Standalone from a CDN, and a pure Node http/https backend with zero npm dependencies. The design goal was transparency: apart from one XGBoost model, every projection is inspectable arithmetic that explains where its number came from.",
       "metrics": [
         {
-          "value": "122",
+          "value": "125",
           "label": "Commits"
         },
         {
@@ -44,6 +44,7 @@
         "Designed a slate-triage system that badges games (HOT PLAY / LEAN / LOOK / FADE) so the highest-signal matchups surface before drilling in",
         "Built an Edge Finder using Log5 matchup math with per-player threshold projections across MLB, NBA and WNBA",
         "Implemented a live MLB feed with scoreboard, base state, measured pitch locations and play-by-play on a 10-second cache floor",
+        "Added streaming MLB and NFL live feeds with win-probability indicators, an NFL field and stadium view, and an NFL Edge Finder built on last-5 and career-vs-opponent splits",
         "Automated offline model training through a CI workflow so the first-5-innings model retrains without touching the runtime",
         "Kept every non-ML score attached to a `why` string naming its endpoint, inputs and formula"
       ]
@@ -245,6 +246,101 @@
         "Documented Docker and manual setup paths so the project runs locally either way"
       ]
     }
+  },
+  {
+    "id": 12,
+    "title": "Secure Distributed Messenger",
+    "tech": [
+      "C#",
+      ".NET",
+      "TCP/UDP",
+      "Cryptography"
+    ],
+    "duration": "January 2026 - April 2026",
+    "description": "Built a peer-to-peer encrypted chat application in C# with a team of four, where every node runs as both server and client in a TCP mesh. Owned peer discovery and resilient connections: UDP broadcast announcements every 5 seconds with 30-second eviction of silent peers, a heartbeat monitor that flags connections after 15 seconds of silence, and exponential-backoff reconnection. Every message is AES-256 encrypted with a per-peer session key exchanged over RSA-2048 and signed with RSA-SHA256.",
+    "tools": [
+      "C#",
+      ".NET 9",
+      "TCP Sockets",
+      "UDP Broadcast",
+      "AES-256",
+      "RSA-2048",
+      "Task Parallel Library"
+    ],
+    "githubUrl": "https://github.com/elc6696/Secure-Distributed-Messenger",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A decentralized, end-to-end encrypted console messenger built for CSCI 251 (Parallel and Distributed Systems) over three sprints. Each node runs parallel accept, receive, heartbeat, discovery and timeout loops, and messages are framed as length-prefixed JSON over full-duplex TCP.",
+      "metrics": [
+        {
+          "value": "101",
+          "label": "Commits"
+        },
+        {
+          "value": "4",
+          "label": "Team members"
+        },
+        {
+          "value": "7",
+          "label": "Parallel loops per node"
+        }
+      ],
+      "highlights": [
+        "Implemented UDP peer discovery broadcasting PEER:{id}:{port} on port 5001, with automatic TCP connection and key exchange to newly discovered peers",
+        "Broke simultaneous-connect races by letting only the lexicographically smaller peer ID initiate the connection",
+        "Built two independent failure-detection layers: 15-second heartbeat timeout and 30-second discovery eviction",
+        "Added exponential-backoff reconnection (1, 2, 4, 8, 16 s, capped at 30 s, five attempts)",
+        "Secured traffic with an RSA-OAEP-wrapped AES-256-CBC session key per peer and RSA-SHA256 message signatures"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 13,
+    "title": "ASL Calculator",
+    "tech": [
+      "Python",
+      "OpenCV",
+      "MediaPipe",
+      "Scikit-learn"
+    ],
+    "duration": "December 2025",
+    "description": "Co-built a computer-vision calculator that reads American Sign Language hand gestures from a webcam for numbers and operators, then evaluates the expression when a Done sign is shown. Built the vision layer: two-hand MediaPipe tracking with independent smoothing per hand, and a feature extractor that normalizes 21 hand landmarks for position and scale and detects which fingers are extended. Fed those features into a Random Forest classifier for real-time digit recognition.",
+    "tools": [
+      "Python",
+      "OpenCV",
+      "MediaPipe Hands",
+      "Scikit-learn",
+      "NumPy",
+      "Random Forest"
+    ],
+    "githubUrl": null,
+    "backgroundImage": "",
+    "insights": {
+      "summary": "An accessibility-focused gesture calculator built with a teammate. Recognition runs as a pipeline: landmark tracking, normalized feature extraction, then classification, driven by a state machine that sequences number, operator, number until the Done gesture.",
+      "metrics": [
+        {
+          "value": "21",
+          "label": "Landmarks per hand"
+        },
+        {
+          "value": "47D",
+          "label": "Feature vector"
+        },
+        {
+          "value": "100",
+          "label": "Trees in forest"
+        }
+      ],
+      "highlights": [
+        "Tracked up to two hands at once with per-hand exponential smoothing to steady landmarks between frames",
+        "Normalized landmarks to the wrist and hand size so features stay stable as the hand moves or changes distance",
+        "Improved thumb detection to account for its shorter length and sideways motion",
+        "Combined a 42-dimensional landmark vector with 5 finger-extension states for the classifier input",
+        "Built data-collection, training and live-classification tools for digits 0 to 9"
+      ]
+    },
+    "artifacts": []
   },
   {
     "id": 6,
@@ -520,6 +616,182 @@
         "Randomized flash intervals within a tuned delay range so players cannot pattern-match the timing",
         "Designed gamepass abilities (Reflex Boost extending the tap window, Eliminator with a cooldown) around the core timing mechanic",
         "Used Rojo and Aftman to keep the project in version control instead of inside Roblox Studio"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 14,
+    "title": "Postfix Expression Interpreter",
+    "tech": [
+      "C",
+      "Data Structures",
+      "Makefile"
+    ],
+    "duration": "October 2024 - November 2024",
+    "description": "Wrote an interpreter in C that reads postfix expressions, builds an expression tree, evaluates it and prints the equivalent infix form. Implemented a linked-list token stack, a symbol table loaded from a file for named variables, and interior and leaf tree nodes supporting arithmetic, modulo, conditional and assignment operators. Added parse and evaluation error handling and debugged the program to be free of memory leaks.",
+    "tools": [
+      "C",
+      "GCC",
+      "Makefile",
+      "Valgrind"
+    ],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Postfix-Expression-Interpreter",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A read-eval-print loop over postfix input, built from hand-written data structures with manual memory management.",
+      "metrics": [
+        {
+          "value": "40",
+          "label": "Commits"
+        },
+        {
+          "value": "7",
+          "label": "Operators"
+        },
+        {
+          "value": "~1.4k",
+          "label": "Lines of C"
+        }
+      ],
+      "highlights": [
+        "Parsed postfix tokens into an expression tree using a dynamically allocated linked-list stack",
+        "Supported +, -, *, /, %, the ? conditional and = assignment into a file-backed symbol table",
+        "Reported distinct parse and evaluation errors such as too few tokens, unknown symbols and division by zero",
+        "Tracked down and fixed memory leaks across stack, tree and symbol-table code"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 15,
+    "title": "Decision Cascade Classifier",
+    "tech": [
+      "Python",
+      "R",
+      "Matplotlib"
+    ],
+    "duration": "October 2025",
+    "description": "Built a decision-cascade classifier from scratch in Python and R that separates two classes using two numeric features. Wrote a recursive tree builder that searches every candidate threshold on each feature, scores splits with a custom cost function balancing node size against purity, and emits the trained model as a standalone Python classify() function. Tuned the purity weight across a range of values for the best accuracy and plotted the resulting decision boundaries.",
+    "tools": [
+      "Python",
+      "R",
+      "Matplotlib",
+      "CSV"
+    ],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/Better-Decision-Trees",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A CSCI 420 (Data Mining) project that generates code: training produces a nested if/else classifier that runs without the training program.",
+      "metrics": [
+        {
+          "value": "2",
+          "label": "Languages"
+        },
+        {
+          "value": "2.17",
+          "label": "Tuned purity weight"
+        },
+        {
+          "value": "20",
+          "label": "Commits"
+        }
+      ],
+      "highlights": [
+        "Implemented exhaustive threshold search over both features at every node",
+        "Designed a cost function that rewards pure nodes and stops the tree from creating tiny splits",
+        "Generated a standalone classify(HemHt, BowTieWd) function from the trained tree",
+        "Visualized training points against every learned threshold boundary"
+      ]
+    },
+    "artifacts": []
+  },
+  {
+    "id": 16,
+    "title": "PCA and K-Means Customer Segmentation",
+    "tech": [
+      "Python",
+      "NumPy",
+      "Pandas",
+      "Scikit-learn"
+    ],
+    "duration": "November 2025",
+    "description": "Segmented shopping-cart data across 20 product categories by computing the covariance matrix and its eigendecomposition by hand to perform PCA. Chose the number of components from a cumulative explained-variance plot, projected the data onto the top two principal components, and ran K-Means in that space. Mapped the cluster centers back to the original 20 categories to describe what each customer segment buys.",
+    "tools": [
+      "Python",
+      "NumPy",
+      "Pandas",
+      "Scikit-learn",
+      "Matplotlib"
+    ],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/PCA-and-K-Means",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A two-person CSCI 420 project combining hand-built PCA with K-Means clustering to find customer segments.",
+      "metrics": [
+        {
+          "value": "20",
+          "label": "Product categories"
+        },
+        {
+          "value": "4",
+          "label": "Clusters"
+        },
+        {
+          "value": "2",
+          "label": "Team members"
+        }
+      ],
+      "highlights": [
+        "Computed covariance, eigenvalues and eigenvectors with NumPy instead of a library PCA call",
+        "Plotted cumulative explained variance to justify how many components to keep",
+        "Clustered the 2-D projection with K-Means and mapped the centers back to original categories"
+      ]
+    },
+    "artifacts": [
+      {
+        "type": "image",
+        "src": "/images/pca-kmeans-clusters.png",
+        "alt": "K-Means clusters (k=4) on the PCA projection"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "One-Rule Threshold Classifier",
+    "tech": [
+      "R",
+      "Classification"
+    ],
+    "duration": "September 2025",
+    "description": "Built a one-rule classifier in R that flags aggressive drivers from traffic-station data. Swept every threshold on speed, lane-change count and brightness, scored each by false-positive and false-negative rates, and chose the single feature and threshold with the lowest error. Exported the winning rule as a standalone classifier script that runs on new test files.",
+    "tools": [
+      "R",
+      "Rscript",
+      "CSV"
+    ],
+    "githubUrl": "https://github.com/ch4ngs4n1ty/One-Rule-Threshold-Classifier",
+    "backgroundImage": "",
+    "insights": {
+      "summary": "A CSCI 420 project comparing single-feature decision rules on combined multi-station traffic data.",
+      "metrics": [
+        {
+          "value": "3",
+          "label": "Features compared"
+        },
+        {
+          "value": "2",
+          "label": "Error rates balanced"
+        },
+        {
+          "value": "1",
+          "label": "Winning rule"
+        }
+      ],
+      "highlights": [
+        "Combined dozens of per-station CSV files into one dataset",
+        "Evaluated false-positive and false-negative rates at every candidate threshold",
+        "Picked lane changes with a threshold of 2 as the lowest-error rule and shipped it as a reusable script"
       ]
     },
     "artifacts": []
