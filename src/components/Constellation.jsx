@@ -58,11 +58,19 @@ function Constellation() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    let W = 0, H = 0, dpr = 1;
+    // The node sphere projects to at most ~310px from center; `fit` shrinks the
+    // layout so every node (plus its glow) stays clear of the canvas edges.
+    const SPHERE_REACH = 310;
+    const EDGE_PAD = 64;
+    let W = 0, H = 0, dpr = 1, fit = 1;
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       W = canvas.offsetWidth;
       H = canvas.offsetHeight;
+      // small screens need the room more than the margin
+      const padX = Math.min(EDGE_PAD, W * 0.06);
+      const padY = Math.min(EDGE_PAD, H * 0.1);
+      fit = Math.max(0.3, Math.min(1, (H / 2 - padY) / SPHERE_REACH, (W / 2 - padX) / SPHERE_REACH));
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -235,7 +243,7 @@ function Constellation() {
       const z2 = y * sinX + z1 * cosX;
       const fov = 560;
       const scale = fov / (fov + z2 + 340);
-      return { sx: x1 * scale, sy: y1 * scale, z: z2, scale };
+      return { sx: x1 * scale * fit, sy: y1 * scale * fit, z: z2, scale };
     };
 
     // ── Render helpers ────────────────────────────────────────────────
@@ -345,9 +353,9 @@ function Constellation() {
       // ── Additive light pass ──────────────────────────────────────
       ctx.globalCompositeOperation = 'lighter';
 
-      // Drifting nebula — radii scaled to the canvas so the glow always fades
-      // to zero before the edges (no hard rectangular clip).
-      const neb = Math.min(W, H) * 0.46;
+      // Drifting nebula — radius capped at half the height minus the ~50px
+      // drift, so the glow fades to zero before the edges (no hard clip).
+      const neb = Math.min(W * 0.46, H / 2 - 60);
       glow(cx + Math.cos(t * 0.3) * 40, cy + Math.sin(t * 0.25) * 30, neb, COLORS.skill, 0.05);
       glow(cx + Math.cos(t * 0.2 + 2) * 50, cy + Math.sin(t * 0.3 + 1) * 40, neb * 0.78, COLORS.project, 0.045);
       glow(cx + Math.cos(t * 0.18 + 4) * 35, cy + Math.sin(t * 0.22 + 3) * 50, neb * 0.6, COLORS.devops, 0.03);

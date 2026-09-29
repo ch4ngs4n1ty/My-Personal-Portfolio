@@ -24,13 +24,15 @@
 
   /* ── INK ─────────────────────────────────────────────────────────────── */
   --white:      #f2efe9;
-  --white-dim:  #9a95a6;
-  --white-faint: #6b6778;
+  --white-dim:  #a39c91;
+  --white-faint: #736c63;
 
   /* ── TYPE ────────────────────────────────────────────────────────────── */
   --mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --serif:   'Noto Serif JP', 'Times New Roman', serif;
-  --sans:    var(--mono);
+  /* reading prose: a screen-first book serif; the hero line gets a calligraphic italic */
+  --prose:   'Spectral', 'Iowan Old Style', Georgia, serif;
+  --accent-italic: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
   --display: var(--serif);
 
   /* fluid type scale */
@@ -88,7 +90,8 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--void);
   color: var(--white);
-  font-family: var(--sans);
+  /* UI chrome inherits mono; reading prose opts into --prose explicitly */
+  font-family: var(--mono);
   font-size: var(--t-base);
   line-height: 1.65;
   letter-spacing: -0.006em;
@@ -251,18 +254,21 @@ body.cursor-hover .cursor-ring { width: 60px; height: 60px; border-color: rgba(2
   justify-content: space-between;
   align-items: center;
   padding: 16px 60px;
-  background: rgba(5,5,5,0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
-/* red→gold hairline anchoring the bar */
-.nav::after {
+/* Frosted backdrop that dissolves downward instead of ending in a hard edge —
+   a solid bar + hairline sliced constellation nodes in a straight line as
+   they scrolled beneath it. */
+.nav::before {
   content: '';
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px;
-  background: linear-gradient(to right,
-    transparent, rgba(192,57,43,0.4) 25%, rgba(201,168,76,0.4) 75%, transparent);
+  inset: 0 0 -32px 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(5,5,5,0.86) 0%, rgba(5,5,5,0.62) 55%, rgba(5,5,5,0) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
 }
 .nav-logo {
   display: inline-flex;
@@ -351,7 +357,9 @@ section { position: relative; z-index: 1; }
    entering on one staggered cue. Horizon glow anchors it to the starfield. */
 #hero {
   min-height: 100svh;
-  padding: var(--s-10) var(--gutter) var(--s-9);
+  /* bottom padding reserves the scroll cue's footprint (32px offset + ~80px
+     tall) so it can never sit on top of the buttons on shorter screens */
+  padding: var(--s-10) var(--gutter) calc(var(--s-6) + 112px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,14 +450,15 @@ section { position: relative; z-index: 1; }
 }
 .hero-sub em { color: var(--gold); font-style: normal; }
 
-/* the one human sentence in the hero — sans, generous, real reading size */
+/* the one human sentence in the hero — a calligraphic italic under the name */
 .hero-statement {
-  font-family: var(--sans);
-  font-size: var(--t-lg);
-  font-weight: 300;
-  line-height: 1.58;
-  letter-spacing: -0.014em;
-  color: #c3bdd0;
+  font-family: var(--accent-italic);
+  font-style: italic;
+  font-size: clamp(21px, 0.9vw + 16px, 27px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+  color: #e6dfd3;
   max-width: 54ch;
   margin: var(--s-6) auto 0;
   text-wrap: pretty;
@@ -667,8 +676,8 @@ section { position: relative; z-index: 1; }
 
 /* ── CONSTELLATION ────────────────────────────────────────────────────────── */
 #constellation {
-  height: 88vh;
-  min-height: 720px;
+  height: 100vh;
+  min-height: 820px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -680,6 +689,16 @@ section { position: relative; z-index: 1; }
   min-height: 0;
   width: 100%;
   z-index: 1;
+  /* feather every edge so glows fade into space instead of being clipped
+     into a visible rectangle by the canvas bounds */
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0, #000 44px, #000 calc(100% - 44px), transparent 100%),
+    linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0, #000 44px, #000 calc(100% - 44px), transparent 100%),
+    linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+  mask-composite: intersect;
 }
 
 /* Title sits in its own space at the top; the graph fills the area below it */
@@ -1070,17 +1089,17 @@ section { position: relative; z-index: 1; }
 }
 .about-heading em { color: var(--gold); font-style: normal; }
 .about-body {
-  font-family: var(--sans);
+  font-family: var(--prose);
   font-size: var(--t-base);
   line-height: 1.75;
-  color: #b3aec0;
+  color: #bdb5a8;
   max-width: var(--measure);
 }
 /* opening paragraph reads a touch larger and brighter */
 .about-lead {
   font-size: var(--t-lg);
   line-height: 1.62;
-  color: #ddd8e6;
+  color: #e6dfd3;
   letter-spacing: -0.012em;
 }
 .about-body p + p { margin-top: var(--s-5); }
@@ -1379,10 +1398,10 @@ section { position: relative; z-index: 1; }
 /* ── body ── */
 .timeline-body { padding: var(--s-5) var(--s-6) var(--s-6); }
 .timeline-desc {
-  font-family: var(--sans);
-  font-size: var(--t-sm);
+  font-family: var(--prose);
+  font-size: 14.5px; /* Spectral runs small; keeps prose readable */
   line-height: 1.75;
-  color: #cdc8d8;
+  color: #d2cabd;
   max-width: var(--measure);
   margin: 0;
 }
@@ -1615,8 +1634,8 @@ section { position: relative; z-index: 1; }
 
 /* description is always visible now — no hover-to-reveal */
 .project-desc {
-  font-family: var(--sans);
-  font-size: var(--t-sm);
+  font-family: var(--prose);
+  font-size: 14.5px; /* Spectral runs small; keeps prose readable */
   line-height: 1.72;
   color: var(--white-dim);
   max-width: 46ch;
@@ -2193,7 +2212,7 @@ section { position: relative; z-index: 1; }
   font-style: normal;
 }
 .contact-sub {
-  font-family: var(--sans);
+  font-family: var(--prose);
   font-size: var(--t-base);
   line-height: 1.72;
   color: var(--white-dim);
@@ -2316,7 +2335,7 @@ section { position: relative; z-index: 1; }
   border: none;
   outline: none;
   color: var(--white);
-  font-family: var(--sans);
+  font-family: var(--prose);
   font-size: var(--t-base);
   padding: 6px 20px 16px;
   resize: none;
@@ -2468,7 +2487,7 @@ section { position: relative; z-index: 1; }
   .nav { padding: 14px var(--gutter); }
   .nav-links { display: none; }
   #hero { padding: var(--s-9) var(--gutter) var(--s-8); min-height: 92svh; }
-  #constellation { height: 70vh; min-height: 480px; }
+  #constellation { height: 86vh; min-height: 600px; }
   .about-stats { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; gap: var(--s-8); }
   .projects-grid { grid-template-columns: 1fr 1fr; }
@@ -2508,4 +2527,9 @@ section { position: relative; z-index: 1; }
 @media (max-width: 380px) {
   .about-stats { grid-template-columns: 1fr; }
   .tools-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+
+/* very short viewports: the scroll cue has no room, drop it */
+@media (max-height: 640px) {
+  .hero-scroll { display: none; }
 }
