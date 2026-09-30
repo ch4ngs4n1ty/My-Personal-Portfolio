@@ -80,7 +80,7 @@
       "Agile/Scrum methodologies"
     ],
     "githubUrl": "https://github.com/ch4ngs4n1ty/Chroma",
-    "backgroundImage": "/images/chroma-bg.png",
+    "backgroundImage": "/images/chroma-shared-connection.png",
     "artifacts": [],
     "insights": {
       "summary": "A four-person Agile project structured around a clean separation of concerns: Angular components talk to a Spring REST API, which routes through controllers to a DAO persistence layer, so storage can change without touching business logic. The API ships with a JUnit suite covering all three tiers.",
