@@ -16,8 +16,8 @@ function Header() {
         </p>
 
         <p className="hero-statement">
-          I build systems that turn messy data into things people can actually use —
-          and I care most about the part where it has to hold up in the real world.
+          I build systems that turn messy data into <strong>things people can actually use</strong>.
+          I care most about the part where it has to hold up in the real world.
         </p>
 
         <div className="hero-actions">
