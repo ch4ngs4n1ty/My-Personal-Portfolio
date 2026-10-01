@@ -4,8 +4,14 @@ import ImageModal from './ImageModal';
 import ProjectInsights from './ProjectInsights';
 import SectionHeader from './SectionHeader';
 
-// the first few get full split cards; the rest collapse into a compact grid
-const FEATURED_COUNT = 5;
+// Preserve the curated order; secondary work is discovered by discipline.
+const FEATURED_COUNT = 3;
+const COLLECTIONS = [
+  { id: 'apps', label: 'Apps & APIs', projects: [4, 5] },
+  { id: 'data', label: 'Data & ML', projects: [13, 15, 16, 17] },
+  { id: 'systems', label: 'Systems & algorithms', projects: [12, 6, 8, 14] },
+  { id: 'simulations', label: 'Games & simulations', projects: [7, 9, 10, 11] },
+];
 
 // first sentence only — the full write-up lives in the Insights panel
 function lede(text = '') {
@@ -133,7 +139,7 @@ function ProjectTile({ project, index }) {
   return (
     <>
       <article
-        className="project-tile reveal"
+        className="project-tile"
         style={{ '--idx': index }}
         role="button"
         tabIndex={0}
@@ -160,8 +166,15 @@ function ProjectTile({ project, index }) {
 }
 
 function Projects() {
+  const [collection, setCollection] = useState(COLLECTIONS[0].id);
   const featured = projectsData.slice(0, FEATURED_COUNT);
   const rest = projectsData.slice(FEATURED_COUNT);
+  const collections = COLLECTIONS.map((group) => ({
+    ...group,
+    items: rest.filter((project) => group.projects.includes(project.id)
+      || (group.id === 'apps' && !COLLECTIONS.some((entry) => entry.projects.includes(project.id)))),
+  })).filter((group) => group.items.length > 0);
+  const active = collections.find((group) => group.id === collection) || collections[0];
 
   return (
     <section id="projects">
@@ -174,23 +187,43 @@ function Projects() {
       </div>
 
       {rest.length > 0 && (
-        <>
-          <div className="projects-more-head reveal">
-            <span className="projects-more-label">More work</span>
-            <span className="projects-more-rule" aria-hidden="true" />
-            <span className="projects-more-count">{rest.length} projects</span>
+        <details className="projects-collection">
+          <summary className="projects-collection-toggle">
+            <span className="projects-collection-copy">
+              <span className="projects-more-label">Beyond the highlights</span>
+              <span className="projects-collection-title">Project collection <span>{rest.length}</span></span>
+              <span className="projects-collection-hint">Apps, experiments, and the ideas in between. Explore by interest.</span>
+            </span>
+            <span className="projects-collection-icon" aria-hidden="true" />
+          </summary>
+          <div className="projects-collection-body">
+            <div className="projects-filters" role="group" aria-label="Browse projects by interest">
+              {collections.map((group) => (
+                <button
+                  key={group.id}
+                  type="button"
+                  aria-pressed={active.id === group.id}
+                  aria-controls="project-collection-results"
+                  onClick={() => setCollection(group.id)}
+                >
+                  {group.label} <span>{group.items.length}</span>
+                </button>
+              ))}
+            </div>
+            <p className="projects-collection-status" role="status">
+              {active.label} · {active.items.length} projects
+            </p>
+            <div className="projects-tiles" id="project-collection-results" role="region" aria-label={active.label}>
+              {active.items.map((project) => (
+                <ProjectTile
+                  key={project.id}
+                  project={project}
+                  index={projectsData.findIndex((item) => item.id === project.id)}
+                />
+              ))}
+            </div>
           </div>
-
-          <div className="projects-tiles">
-            {rest.map((project, i) => (
-              <ProjectTile
-                key={project.id}
-                project={project}
-                index={FEATURED_COUNT + i}
-              />
-            ))}
-          </div>
-        </>
+        </details>
       )}
     </section>
   );
