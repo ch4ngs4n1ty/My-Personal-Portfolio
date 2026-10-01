@@ -13,6 +13,21 @@ const COLLECTIONS = [
   { id: 'simulations', label: 'Games & simulations', projects: [7, 9, 10, 11] },
 ];
 
+// Small decorative symbols keep the category names as the accessible labels.
+function CollectionIcon({ category }) {
+  const paths = {
+    apps: <><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M7 6.5h.01M10 6.5h.01M9 12l-3 2.5L9 17m6-5 3 2.5-3 2.5" /></>,
+    data: <><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7" /></>,
+    systems: <><rect x="7" y="7" width="10" height="10" rx="1" /><path d="M10 3v4m4-4v4M10 17v4m4-4v4M3 10h4m-4 4h4m10-4h4m-4 4h4M10 10h4v4h-4z" /></>,
+    simulations: <><path d="M7 7h10c2 0 3 2 3.5 4l1 6c.4 2-1.5 3-3 1.5L16 16H8l-2.5 2.5C4 20 2.1 19 2.5 17l1-6C4 9 5 7 7 7Z" /><path d="M6 11v4m-2-2h4m7-2h.01m3 3h.01" /></>,
+  };
+  return (
+    <svg className="project-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      {paths[category]}
+    </svg>
+  );
+}
+
 // first sentence only — the full write-up lives in the Insights panel
 function lede(text = '') {
   const cut = text.match(/^(.*?[.!?])\s/);
@@ -206,7 +221,9 @@ function Projects() {
                   aria-controls="project-collection-results"
                   onClick={() => setCollection(group.id)}
                 >
-                  {group.label} <span>{group.items.length}</span>
+                  <CollectionIcon category={group.id} />
+                  <span className="project-category-label">{group.label}</span>
+                  <span className="project-category-count">{group.items.length}</span>
                 </button>
               ))}
             </div>

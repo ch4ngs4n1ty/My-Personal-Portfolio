@@ -1,12 +1,20 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-// Optional, future-facing schema rendered when present on a project:
-//   project.insights = {
-//     summary:    "richer overview paragraph (falls back to description)",
-//     metrics:    [{ value: "4", label: "Team size" }, ...],
-//     highlights: ["Shipped X", "Improved Y by Z%", ...],
-//   }
+function WorkInProgress({ title = 'Write-up in progress', detail = 'Project insights and highlights haven’t been documented yet.' }) {
+  return (
+    <div className="project-wip">
+      <div className="project-wip-sketch" aria-hidden="true">
+        <span /><span /><span />
+      </div>
+      <div className="project-wip-copy">
+        <p className="project-wip-title">{title}</p>
+        <p className="project-wip-detail">{detail}</p>
+      </div>
+    </div>
+  );
+}
+
 function ProjectInsights({ project, index, baseUrl, onViewArtifact, onClose }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -20,15 +28,12 @@ function ProjectInsights({ project, index, baseUrl, onViewArtifact, onClose }) {
 
   const num = String(index + 1).padStart(2, '0');
   const insights = project.insights || {};
-  const metrics =
-    insights.metrics?.length > 0
-      ? insights.metrics
-      : [
-          { value: '—', label: 'Role' },
-          { value: '—', label: 'Impact' },
-          { value: '—', label: 'Outcome' },
-        ];
-  const highlights = insights.highlights || [];
+  const metrics = (insights.metrics || []).filter(
+    (metric) => metric && metric.value != null && String(metric.value).trim()
+      && String(metric.value).trim() !== '—' && metric.label?.trim()
+  );
+  const highlights = (insights.highlights || []).filter((highlight) => highlight?.trim());
+  const overview = insights.summary?.trim() || project.description?.trim();
   const stack = project.tools?.length > 0 ? project.tools : project.tech;
   const validArtifacts = (project.artifacts || []).filter(
     (a) => a && a.type === 'image' && a.src
@@ -61,35 +66,46 @@ function ProjectInsights({ project, index, baseUrl, onViewArtifact, onClose }) {
         <div className="insights-body">
           <section className="insights-section">
             <h3 className="insights-label">Overview</h3>
-            <p className="insights-text">{insights.summary || project.description}</p>
-          </section>
-
-          <section className="insights-section">
-            <h3 className="insights-label">Insights</h3>
-            <div className="insights-metrics">
-              {metrics.map((m, i) => (
-                <div className="insight-metric" key={i}>
-                  <div className="insight-metric-value">{m.value}</div>
-                  <div className="insight-metric-label">{m.label}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="insights-section">
-            <h3 className="insights-label">Highlights</h3>
-            {highlights.length > 0 ? (
-              <ul className="insights-list">
-                {highlights.map((h, i) => (
-                  <li key={i}>{h}</li>
-                ))}
-              </ul>
+            {overview ? (
+              <p className="insights-text">{overview}</p>
             ) : (
-              <p className="insights-empty">
-                Key outcomes, challenges, and learnings for this project will live here.
-              </p>
+              <WorkInProgress title="Overview in progress" detail="This project’s introduction hasn’t been documented yet." />
             )}
           </section>
+
+          {metrics.length === 0 && highlights.length === 0 ? (
+            <section className="insights-section" aria-label="Project documentation status">
+              <WorkInProgress />
+            </section>
+          ) : (
+            <>
+              <section className="insights-section">
+                <h3 className="insights-label">Insights</h3>
+                {metrics.length > 0 ? (
+                  <div className="insights-metrics">
+                    {metrics.map((metric, i) => (
+                      <div className="insight-metric" key={i}>
+                        <div className="insight-metric-value">{metric.value}</div>
+                        <div className="insight-metric-label">{metric.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <WorkInProgress title="Insights in progress" detail="Project metrics haven’t been documented yet." />
+                )}
+              </section>
+              <section className="insights-section">
+                <h3 className="insights-label">Highlights</h3>
+                {highlights.length > 0 ? (
+                  <ul className="insights-list">
+                    {highlights.map((highlight, i) => <li key={i}>{highlight}</li>)}
+                  </ul>
+                ) : (
+                  <WorkInProgress title="Highlights in progress" detail="Outcomes and learnings haven’t been documented yet." />
+                )}
+              </section>
+            </>
+          )}
 
           <section className="insights-section">
             <h3 className="insights-label">Tech &amp; Tools</h3>

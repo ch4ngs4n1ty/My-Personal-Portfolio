@@ -1912,6 +1912,11 @@ section { position: relative; z-index: 1; }
 .projects-collection-body { padding: 0 var(--s-6) var(--s-6); }
 .projects-filters { display: flex; flex-wrap: wrap; gap: var(--s-2); }
 .projects-filters button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 0;
   padding: 10px 14px;
   border: 1px solid var(--hair);
   background: var(--black3);
@@ -1921,7 +1926,9 @@ section { position: relative; z-index: 1; }
   line-height: 1.6;
   cursor: pointer;
 }
-.projects-filters button span { margin-left: 8px; opacity: 0.7; }
+.project-category-icon { width: 18px; height: 18px; flex: 0 0 18px; }
+.project-category-label { min-width: 0; }
+.project-category-count { opacity: 0.7; }
 .projects-filters button:hover, .projects-filters button[aria-pressed="true"] {
   border-color: var(--gold);
   color: var(--gold-bright);
@@ -1932,7 +1939,7 @@ section { position: relative; z-index: 1; }
   .projects-collection-toggle { padding: var(--s-5) var(--s-4); }
   .projects-collection-body { padding: 0 var(--s-4) var(--s-4); }
   .projects-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .projects-filters button { padding: 10px 8px; }
+  .projects-filters button { padding: 10px 8px; gap: 6px; }
 }
 
 /* ── Compact tiles — secondary work, scannable without the scroll cost ───── */
@@ -2181,7 +2188,7 @@ section { position: relative; z-index: 1; }
   color: #d6d0c6;
 }
 
-/* metric tiles — placeholder-ready */
+/* Documented project metrics */
 .insights-metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2228,14 +2235,67 @@ section { position: relative; z-index: 1; }
   background: var(--red);
   transform: rotate(45deg);
 }
-.insights-empty {
+.project-wip {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  border: 1px dashed var(--hair-warm);
+  background: linear-gradient(120deg, rgba(201,168,76,0.05), transparent);
+}
+.project-wip-sketch {
+  flex: 0 0 48px;
+  height: 52px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border: 1px solid var(--hair-warm);
+  border-top-right-radius: 12px;
+  transform: rotate(-6deg);
+}
+.project-wip-sketch span {
+  display: block;
+  height: 3px;
+  background: var(--gold);
+  transform-origin: left;
+  animation: projectWriteLine 4.8s ease-in-out both;
+}
+.project-wip-sketch span:nth-child(2) { width: 75%; animation-name: projectWriteSecondLine; }
+.project-wip-sketch span:nth-child(3) { width: 40%; opacity: 0.45; animation-name: projectWriteThirdLine; }
+.project-wip-copy { min-width: 0; }
+.project-wip-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+.project-wip-detail {
+  margin-top: 6px;
   font-size: 13px;
-  line-height: 1.8;
-  font-style: italic;
+  line-height: 1.7;
   color: var(--white-dim);
-  padding: 18px 20px;
-  border: 1px dashed rgba(201,168,76,0.22);
-  background: rgba(201,168,76,0.03);
+}
+/* A short writing gesture settles into an unfinished note; no endless loader. */
+@keyframes projectWriteLine {
+  0%, 8% { transform: scaleX(0.1); opacity: 0.25; }
+  30%, 100% { transform: scaleX(1); opacity: 1; }
+}
+@keyframes projectWriteSecondLine {
+  0%, 30% { transform: scaleX(0.1); opacity: 0.25; }
+  60%, 100% { transform: scaleX(1); opacity: 1; }
+}
+@keyframes projectWriteThirdLine {
+  0%, 60% { transform: scaleX(0.1); opacity: 0.25; }
+  90%, 100% { transform: scaleX(1); opacity: 0.45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-wip-sketch span { animation: none; }
+}
+@media (max-width: 400px) {
+  .project-wip { gap: 14px; padding: 16px; }
 }
 
 .insights-chips { display: flex; flex-wrap: wrap; gap: 8px; }
