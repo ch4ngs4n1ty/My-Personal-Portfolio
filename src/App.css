@@ -1982,6 +1982,15 @@ section { position: relative; z-index: 1; }
 }
 .project-tile:hover::before { transform: scaleX(1); }
 
+.project-tile-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: var(--s-2);
+}
+
 .project-tile-top {
   display: flex;
   align-items: center;

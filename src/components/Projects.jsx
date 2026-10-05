@@ -148,6 +148,7 @@ function ProjectCard({ project, index }) {
 // compact tile for the secondary work — scannable, still opens Insights
 function ProjectTile({ project, index }) {
   const state = useInsights();
+  const baseUrl = import.meta.env.BASE_URL;
   const num = String(index + 1).padStart(2, '0');
   const open = () => state.setShowInsights(true);
 
@@ -162,6 +163,15 @@ function ProjectTile({ project, index }) {
         onClick={open}
         onKeyDown={openKeys(open)}
       >
+        {project.backgroundImage && (
+          <img
+            className="project-tile-image"
+            src={`${baseUrl}${project.backgroundImage.replace(/^\//, '')}`}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <div className="project-tile-top">
           <span className="project-tile-num">{num}</span>
           <span className="project-tile-arrow" aria-hidden="true">→</span>
