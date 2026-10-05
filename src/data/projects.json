@@ -23,7 +23,7 @@
       "MLB/ESPN APIs"
     ],
     "githubUrl": "https://github.com/ch4ngs4n1ty/Sports-Data-Visualization",
-    "backgroundImage": "/images/playiq-data-collage.png",
+    "backgroundImage": "/images/playiq-data-editorial.png",
     "insights": {
       "summary": "A dark-mode sports intelligence dashboard built deliberately without a build step — React 18 and Babel Standalone from a CDN, and a pure Node http/https backend with zero npm dependencies. The design goal was transparency: apart from one XGBoost model, every projection is inspectable arithmetic that explains where its number came from.",
       "metrics": [
