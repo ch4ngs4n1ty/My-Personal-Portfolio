@@ -35,7 +35,7 @@ function Contact() {
             <span>together</span>
           </h3>
           <p className="contact-sub reveal">
-            Open to internships, research roles, and interesting problems. If you're working on something hard — reach out.
+            I'm looking for internships and research positions. If you think I'd be a good fit for something, or you just want to talk about one of my projects, send me an email.
           </p>
           <div className="contact-links reveal">
             <a href="mailto:echang0970@gmail.com" className="contact-link">
