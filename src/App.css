@@ -1295,20 +1295,65 @@ section { position: relative; z-index: 1; }
 
 /* ── header band ── */
 .timeline-head {
+  --logo: 54px;
+  padding: var(--s-5) var(--s-6);
+  border-bottom: 1px solid var(--hair);
+  background: linear-gradient(to right, rgba(201,168,76,0.05), transparent 60%);
+}
+.timeline-row {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--s-4);
-  padding: var(--s-5) var(--s-6);
-  border-bottom: 1px solid var(--hair);
-  background: linear-gradient(to right, rgba(201,168,76,0.05), transparent 60%);
+}
+
+/* several roles at one employer: full rows tied together by a rail that
+   runs logo-to-logo, so they read as one continuous stint */
+.timeline-chain-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding-left: calc(var(--logo) + var(--s-4));
+}
+.timeline-chain-link::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--logo) / 2 - 1px);
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to top, rgba(201,168,76,0.35), var(--gold-bright));
+  box-shadow: 0 0 8px rgba(201,168,76,0.35);
+}
+.timeline-chain-link span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.timeline-chain-link span::before {
+  content: '↑';
+  color: var(--gold-bright);
+  font-size: 12px;
+}
+/* the earlier role steps back a little so the current one leads */
+.timeline-row.is-past .timeline-role { font-size: calc(var(--t-lg) * 0.9); color: #d2cabd; }
+.timeline-row.is-past .timeline-logo-frame { opacity: 0.85; }
+.timeline-row.is-past .timeline-date {
+  color: var(--gold);
+  border-color: rgba(201,168,76,0.18);
+  background: transparent;
 }
 
 /* logo sits in a framed plate rather than floating loose */
 .timeline-logo-frame {
   display: grid;
   place-items: center;
-  width: 54px; height: 54px;
+  width: var(--logo, 54px); height: var(--logo, 54px);
   flex-shrink: 0;
   padding: 7px;
   background: rgba(255,255,255,0.04);
@@ -1473,75 +1518,6 @@ section { position: relative; z-index: 1; }
   .timeline-current-dot { animation: none; }
 }
 
-/* role progression: a mini-timeline inside the card, newest on top */
-.timeline-roles {
-  list-style: none;
-  margin: var(--s-5) 0 0;
-  padding: 0 0 0 var(--s-5);
-  position: relative;
-  max-width: var(--measure);
-}
-.timeline-roles::before {
-  content: '';
-  position: absolute;
-  left: 5px; top: 8px; bottom: 8px;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.15));
-}
-.timeline-roles-step { position: relative; padding-bottom: var(--s-4); }
-.timeline-roles-step:last-child { padding-bottom: 0; }
-.timeline-roles-step::before {
-  content: '';
-  position: absolute;
-  left: calc(-1 * var(--s-5) + 1px);
-  top: 6px;
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  border: 1px solid rgba(201,168,76,0.5);
-  background: var(--black);
-}
-.timeline-roles-step.is-current::before {
-  border-color: var(--gold-bright);
-  background: var(--gold);
-  box-shadow: 0 0 10px rgba(240,192,96,0.45);
-}
-.timeline-roles-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--s-3);
-  flex-wrap: wrap;
-}
-.timeline-roles-title {
-  font-family: var(--serif);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--white);
-}
-.timeline-roles-step:not(.is-current) .timeline-roles-title { color: #d2cabd; }
-.timeline-roles-date {
-  font-family: var(--mono);
-  font-size: var(--t-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  white-space: nowrap;
-}
-.timeline-roles-meta {
-  font-family: var(--mono);
-  font-size: var(--t-xs);
-  letter-spacing: 0.06em;
-  color: var(--white-faint);
-  margin-top: 3px;
-}
-.timeline-roles-note {
-  font-family: var(--prose);
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--white-dim);
-  margin: 6px 0 0;
-}
-
 .timeline-highlights {
   list-style: none;
   margin: var(--s-5) 0 0;
@@ -1594,10 +1570,10 @@ section { position: relative; z-index: 1; }
 
 /* stack the header on narrow screens */
 @media (max-width: 720px) {
-  .timeline-head {
+  .timeline-head { padding: var(--s-5); }
+  .timeline-row {
     grid-template-columns: auto minmax(0, 1fr);
     row-gap: var(--s-4);
-    padding: var(--s-5);
   }
   .timeline-when {
     grid-column: 1 / -1;
@@ -2828,7 +2804,7 @@ section { position: relative; z-index: 1; }
   .timeline::before { left: 9px; }
   .timeline-item::before { left: 11px; width: 24px; }
   .timeline-item::after { left: 1px; }
-  .timeline-logo-frame { width: 46px; height: 46px; }
+  .timeline-head { --logo: 46px; }
   .section-header { margin-bottom: var(--s-8); }
   .hero-statement { font-size: clamp(19px, 3vw, 22px); }
 }
