@@ -142,6 +142,7 @@
   },
   {
     "id": 4,
+    "glyph": "dip",
     "title": "Stock Dip Analysis API",
     "tech": [
       "TypeScript",
@@ -193,6 +194,7 @@
   },
   {
     "id": 5,
+    "glyph": "schema",
     "title": "Movie Database Management Systems",
     "tech": [
       "Python",
@@ -249,6 +251,7 @@
   },
   {
     "id": 12,
+    "glyph": "secure",
     "title": "Secure Distributed Messenger",
     "tech": [
       "C#",
@@ -297,6 +300,7 @@
   },
   {
     "id": 13,
+    "glyph": "hand",
     "title": "ASL Calculator",
     "tech": [
       "Python",
@@ -344,6 +348,7 @@
   },
   {
     "id": 6,
+    "glyph": "race",
     "title": "Race Condition Detective",
     "tech": [
       "C#",
@@ -397,6 +402,7 @@
   },
   {
     "id": 7,
+    "glyph": "fire",
     "title": "Wildfire Simulation",
     "tech": [
       "C"
@@ -449,6 +455,7 @@
   },
   {
     "id": 8,
+    "glyph": "path",
     "title": "Pathfinding Search Algorithms",
     "tech": [
       "Java",
@@ -503,6 +510,7 @@
   },
   {
     "id": 9,
+    "glyph": "hop",
     "title": "Astros and Hoppers",
     "tech": [
       "Java",
@@ -524,6 +532,7 @@
   },
   {
     "id": 10,
+    "glyph": "ess",
     "title": "Evolutionary Stable Strategy Simulation",
     "tech": [
       "Python",
@@ -576,6 +585,7 @@
   },
   {
     "id": 11,
+    "glyph": "racing",
     "title": "Reaction Timing Racing Game",
     "tech": [
       "Lua",
@@ -622,6 +632,7 @@
   },
   {
     "id": 14,
+    "glyph": "stack",
     "title": "Postfix Expression Interpreter",
     "tech": [
       "C",
@@ -665,6 +676,7 @@
   },
   {
     "id": 15,
+    "glyph": "tree",
     "title": "Decision Cascade Classifier",
     "tech": [
       "Python",
@@ -708,6 +720,7 @@
   },
   {
     "id": 16,
+    "glyph": "cluster",
     "title": "PCA and K-Means Customer Segmentation",
     "tech": [
       "Python",
@@ -758,6 +771,7 @@
   },
   {
     "id": 17,
+    "glyph": "threshold",
     "title": "One-Rule Threshold Classifier",
     "tech": [
       "R",

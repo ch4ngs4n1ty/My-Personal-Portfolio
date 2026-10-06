@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import projectsData from '../data/projects.json';
 import ImageModal from './ImageModal';
+import ProjectGlyph from './ProjectGlyph';
 import ProjectInsights from './ProjectInsights';
 import SectionHeader from './SectionHeader';
 
@@ -145,8 +146,8 @@ function ProjectCard({ project, index }) {
   );
 }
 
-// compact tile for the secondary work — scannable, still opens Insights
-function ProjectTile({ project, index }) {
+// archive tile: a plate (artwork or line-art motif) over a short caption
+function ProjectTile({ project, index, order, category }) {
   const state = useInsights();
   const baseUrl = import.meta.env.BASE_URL;
   const num = String(index + 1).padStart(2, '0');
@@ -156,32 +157,40 @@ function ProjectTile({ project, index }) {
     <>
       <article
         className="project-tile"
-        style={{ '--idx': index }}
+        style={{ '--i': order }}
         role="button"
         tabIndex={0}
         aria-label={`View insights for ${project.title}`}
         onClick={open}
         onKeyDown={openKeys(open)}
       >
-        {project.backgroundImage && (
-          <img
-            className="project-tile-image"
-            src={`${baseUrl}${project.backgroundImage.replace(/^\//, '')}`}
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        )}
-        <div className="project-tile-top">
-          <span className="project-tile-num">{num}</span>
-          <span className="project-tile-arrow" aria-hidden="true">→</span>
+        <div className={`project-tile-plate${project.backgroundImage ? ' has-art' : ''}`} aria-hidden="true">
+          {/* the sketch is always drawn; artwork, when present, develops over it on hover */}
+          <ProjectGlyph glyph={project.glyph} seed={project.title} />
+          {project.backgroundImage && (
+            <img
+              className="project-tile-image"
+              src={`${baseUrl}${project.backgroundImage.replace(/^\//, '')}`}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+          <span className="project-tile-fig">Fig. {num}</span>
+          <span className="project-tile-kind">{category}</span>
         </div>
-        <h3 className="project-tile-title">{project.title}</h3>
-        <div className="project-tile-meta">{project.duration}</div>
-        <div className="project-tile-tags">
-          {project.tech.slice(0, 3).map((t) => (
-            <span key={t} className="project-tile-tag">{t}</span>
-          ))}
+        <div className="project-tile-body">
+          <div className="project-tile-meta">{project.duration}</div>
+          <h3 className="project-tile-title">{project.title}</h3>
+          <p className="project-tile-desc">{lede(project.description)}</p>
+          <div className="project-tile-foot">
+            <span className="project-tile-tags">
+              {project.tech.slice(0, 3).map((t) => (
+                <span key={t} className="project-tile-tag">{t}</span>
+              ))}
+            </span>
+            <span className="project-tile-arrow" aria-hidden="true">→</span>
+          </div>
         </div>
       </article>
 
@@ -192,6 +201,7 @@ function ProjectTile({ project, index }) {
 
 function Projects() {
   const [collection, setCollection] = useState(COLLECTIONS[0].id);
+  const [expanded, setExpanded] = useState(false);
   const featured = projectsData.slice(0, FEATURED_COUNT);
   const rest = projectsData.slice(FEATURED_COUNT);
   const collections = COLLECTIONS.map((group) => ({
@@ -200,6 +210,12 @@ function Projects() {
       || (group.id === 'apps' && !COLLECTIONS.some((entry) => entry.projects.includes(project.id)))),
   })).filter((group) => group.items.length > 0);
   const active = collections.find((group) => group.id === collection) || collections[0];
+
+  // a group on the map opens the archive straight onto that discipline
+  const choose = (id) => {
+    setCollection(id);
+    setExpanded(true);
+  };
 
   return (
     <section id="projects">
@@ -212,45 +228,76 @@ function Projects() {
       </div>
 
       {rest.length > 0 && (
-        <details className="projects-collection">
-          <summary className="projects-collection-toggle">
-            <span className="projects-collection-copy">
-              <span className="projects-more-label">Beyond the highlights</span>
-              <span className="projects-collection-title">Project collection <span>{rest.length}</span></span>
-              <span className="projects-collection-hint">Apps, experiments, and the ideas in between. Explore by interest.</span>
-            </span>
-            <span className="projects-collection-icon" aria-hidden="true" />
-          </summary>
-          <div className="projects-collection-body">
-            <div className="projects-filters" role="group" aria-label="Browse projects by interest">
-              {collections.map((group) => (
-                <button
-                  key={group.id}
-                  type="button"
-                  aria-pressed={active.id === group.id}
-                  aria-controls="project-collection-results"
-                  onClick={() => setCollection(group.id)}
-                >
+        <div className={`projects-collection${expanded ? ' is-open' : ''}`}>
+          <div className="projects-collection-head">
+            <div className="projects-collection-copy">
+              <span className="projects-more-label">Beyond the highlights · The archive</span>
+              <h3 className="projects-collection-title">
+                Project collection <span>{String(rest.length).padStart(2, '0')}</span>
+              </h3>
+              <p className="projects-collection-hint">
+                Apps, experiments, and the ideas in between, each one sketched as a plate. Pick a shelf to explore.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="projects-collection-toggle"
+              aria-expanded={expanded}
+              aria-controls="project-collection-body"
+              onClick={() => setExpanded((v) => !v)}
+            >
+              <span>{expanded ? 'Close archive' : 'Open archive'}</span>
+              <span className="projects-collection-icon" aria-hidden="true" />
+            </button>
+          </div>
+
+          {/* the map: every project as a miniature plate, shelved by discipline */}
+          <div className="projects-map" role="group" aria-label="Browse projects by interest">
+            {collections.map((group) => (
+              <button
+                key={group.id}
+                type="button"
+                className="projects-shelf"
+                style={{ '--n': group.items.length }}
+                aria-pressed={expanded && active.id === group.id}
+                aria-controls="project-collection-body"
+                onClick={() => choose(group.id)}
+              >
+                <span className="projects-shelf-plates" aria-hidden="true">
+                  {group.items.map((project, i) => (
+                    <span key={project.id} className="projects-shelf-plate" style={{ '--i': i }}>
+                      <ProjectGlyph glyph={project.glyph} seed={project.title} />
+                    </span>
+                  ))}
+                </span>
+                <span className="projects-shelf-label">
                   <CollectionIcon category={group.id} />
                   <span className="project-category-label">{group.label}</span>
-                  <span className="project-category-count">{group.items.length}</span>
-                </button>
-              ))}
-            </div>
-            <p className="projects-collection-status" role="status">
-              {active.label} · {active.items.length} projects
-            </p>
-            <div className="projects-tiles" id="project-collection-results" role="region" aria-label={active.label}>
-              {active.items.map((project) => (
-                <ProjectTile
-                  key={project.id}
-                  project={project}
-                  index={projectsData.findIndex((item) => item.id === project.id)}
-                />
-              ))}
+                  <span className="project-category-count">{String(group.items.length).padStart(2, '0')}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <div className="projects-collection-body" id="project-collection-body" inert={!expanded}>
+            <div className="projects-collection-inner">
+              <p className="projects-collection-status" role="status">
+                {expanded ? `${active.label} · ${active.items.length} projects` : ''}
+              </p>
+              <div className="projects-tiles" key={active.id} role="region" aria-label={active.label}>
+                {active.items.map((project, i) => (
+                  <ProjectTile
+                    key={project.id}
+                    project={project}
+                    order={i}
+                    category={active.label}
+                    index={projectsData.findIndex((item) => item.id === project.id)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </details>
+        </div>
       )}
     </section>
   );
