@@ -704,8 +704,8 @@ section { position: relative; z-index: 1; }
 
 /* ── ASK / PORTFOLIO CHAT ─────────────────────────────────────────────────── */
 #ask {
-  padding: 60px 60px 100px;
-  max-width: 1400px;
+  padding: 60px var(--gutter) 100px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 .chat-shell {
@@ -733,6 +733,12 @@ section { position: relative; z-index: 1; }
   gap: 10px;
   padding: 14px 20px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+/* same unfinished-note card the project write-ups use */
+.chat-shell .project-wip { margin: 16px 20px 0; }
+@media (max-width: 560px) {
+  .chat-shell .project-wip { margin: 12px 12px 0; padding: 14px; gap: 14px; align-items: flex-start; }
+  .chat-shell .project-wip-sketch { flex-basis: 34px; height: 38px; padding: 7px 6px; gap: 5px; }
 }
 .chat-dot {
   width: 7px;

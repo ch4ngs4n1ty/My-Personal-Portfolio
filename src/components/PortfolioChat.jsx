@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import SectionHeader from './SectionHeader';
+import WorkInProgress from './WorkInProgress';
 
 const API_URL = import.meta.env.VITE_CHAT_API_URL;
 
@@ -128,6 +129,11 @@ function PortfolioChat() {
           <span className="chat-dot" />
           <span className="chat-rail-label">AI · trained on this portfolio</span>
         </div>
+
+        <WorkInProgress
+          title="Assistant in progress"
+          detail="I'm still building and tuning this assistant, so answers may be incomplete. For anything important, reach out through the Contact section."
+        />
 
         <div className="chat-log" ref={scrollRef}>
           {messages.map((m, i) => (
