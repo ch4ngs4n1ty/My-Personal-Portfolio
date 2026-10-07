@@ -11,7 +11,7 @@
 %   \entry{Organization}{Dates}{Role}{Location}   -> job / leadership header
 %   \project{Project Name}{Dates}                 -> project header
 %   \begin{highlights} \item ... \end{highlights} -> bullet list
-%   \cat{Category}{item, item, item}              -> one Technical Skills cell
+%   \cat{Category}{item, item, item}              -> one Technical Skills line
 %-------------------------------------------------------------------------------
 \documentclass[letterpaper,10pt]{article}
 
@@ -26,7 +26,6 @@
 \fi
 \usepackage{titlesec}
 \usepackage{enumitem}
-\usepackage{tabularx}
 \usepackage[hidelinks]{hyperref}
 
 \pagestyle{empty}
@@ -51,7 +50,8 @@
                    parsep=0pt, topsep=1pt, after=\vspace{2pt}]}
   {\end{itemize}}
 
-\newcommand{\cat}[2]{\textit{#1} -- #2}
+% Single-column skill lines: ATS parsers read them in order, recruiters scan the bold label.
+\newcommand{\cat}[2]{\textbf{#1:} #2\par}
 
 %-------------------------------------------------------------------------------
 \begin{document}
@@ -62,15 +62,15 @@
   Monmouth Junction, NJ \enspace|\enspace
   (848) 200-6056 \enspace|\enspace
   \href{mailto:echang0970@gmail.com}{echang0970@gmail.com} \enspace|\enspace
-  \href{https://www.linkedin.com/in/echang0970}{linkedin.com/in/echang0970} \enspace|\enspace
-  \href{https://github.com/ch4ngs4n1ty}{github.com/ch4ngs4n1ty}
+  \href{https://www.linkedin.com/in/echang0970}{linkedin.com/in/echang0970}\\
+  \href{https://github.com/ch4ngs4n1ty}{github.com/ch4ngs4n1ty} \enspace|\enspace
+  \href{https://ch4ngs4n1ty.github.io/My-Personal-Portfolio}{ch4ngs4n1ty.github.io/My-Personal-Portfolio}
 \end{center}
 \vspace{-9pt}
 
 % ---------- Objective ----------
 \section{Objective}
-Computer Science B.S. student seeking full-time Data Engineering, Data Science,
-or AI opportunities starting Summer 2027.
+Computer Science B.S. student (May 2027) seeking full-time Software Engineering, Data Engineering, Data Science, or AI roles.
 
 % ---------- Education ----------
 \section{Education}
@@ -80,15 +80,10 @@ Dean's List: Fall 2024, Spring 2025, Fall 2025, Spring 2026
 
 % ---------- Technical Skills ----------
 \section{Technical Skills}
-% Two columns; each cell is "\cat{Category}{items}". Edit freely.
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X@{\hspace{1.2em}}>{\raggedright\arraybackslash}X@{}}
-\cat{Programming Languages}{Python, Java, SQL, JavaScript, TypeScript, HTML/CSS} &
-\cat{Developer Tools}{Git, GitHub, GitHub Actions, Maven, Jupyter Notebook, DataGrip} \\[1pt]
-\cat{Libraries \& Frameworks}{Pandas, scikit-learn, XGBoost, Matplotlib, React, Node.js, Angular, Spring Boot, JUnit} &
-\cat{Professional}{Accessible Teaching, Leadership, Advocacy, Collaboration, Active Listening, Adaptability} \\[1pt]
-\cat{AI \& LLMs}{Claude API, DeepSeek-R1, Prompt Engineering, Text Embeddings} &
-\cat{Databases \& Deployment}{PostgreSQL, Vercel, Render} \\
-\end{tabularx}
+\cat{Languages}{Python, Java, SQL, JavaScript, TypeScript, C, C\#, R, HTML/CSS}
+\cat{Frameworks \& Libraries}{React, Node.js, Express, Angular, Spring Boot, Pandas, NumPy, scikit-learn, XGBoost, Matplotlib, JUnit}
+\cat{AI \& LLMs}{Claude API, DeepSeek-R1, Prompt Engineering, Text Embeddings}
+\cat{Tools \& Platforms}{Git, GitHub Actions, Docker, PostgreSQL, Linux, Maven, Jupyter Notebook, DataGrip, Vercel, Render}
 
 % ---------- Experience ----------
 % Bullets follow Google's XYZ pattern: Accomplished [X], as measured by [Y], by doing [Z].
@@ -97,50 +92,54 @@ Dean's List: Fall 2024, Spring 2025, Fall 2025, Spring 2026
 \entry{Sandia National Laboratories}{May 2026 -- Present}
       {Data Science R\&D Intern}{Albuquerque, NM (Onsite)}
 \begin{highlights}
-  \item Built a training tool that simulates data from hypothetical radioactive material releases by working with
-        laboratory scientists to apply unfamiliar scientific and nuclear-related data to the software.
-  \item Earned a Thunderbird Award in the Purpose-Driven category for my contributions during the internship.
+  \item Built a training tool that simulates data from hypothetical radioactive material releases, partnering with
+        laboratory scientists to translate nuclear-science data into software features.
+  \item Earned a \textbf{Thunderbird Award} (Purpose-Driven category) for contributions during the internship.
 \end{highlights}
 
 \entry{Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program}{Jun 2025 -- Aug 2025}
       {Data Science Intern}{Pittsburgh, PA (Hybrid)}
 \begin{highlights}
   \item Surfaced risk patterns in \textbf{5,000+} de-identified patient records to inform a predictive model for unplanned surgery.
-  \item Extracted \textbf{464} pre-surgery clinical notes from a UPMC ACLR database (\textbf{2013--2021}) with SQL (CTEs, LEFT JOINs) and embeddings.
+  \item Extracted \textbf{464} pre-surgery clinical notes from a UPMC ACLR database (\textbf{2013--2021}) using SQL CTEs, joins, and embeddings.
   \item Classified activity levels with an LLM (DeepSeek-R1 14B), reaching \textbf{0.89} F1 on elite athletes via \textbf{6} hand-annotated example batches.
-  \item Worked on building logistic regression models in scikit-learn to predict unplanned surgery from social determinants of health.
-  \item Presented findings in a research poster to faculty, peers, and stakeholders.
+  \item Built logistic regression models in scikit-learn to predict unplanned surgery from social determinants of health (SDoH).
+  \item Presented a research poster on activity level as an SDoH predictor to faculty, peers, and stakeholders.
 \end{highlights}
 
 \entry{NTID Learning Center}{Sep 2025 -- Present}
       {Software Development Tutor}{Rochester, NY (Onsite)}
 \begin{highlights}
-  \item Build students' coding confidence by teaching debugging and computational thinking in 1:1 and group sessions (Python, Java, Excel).
-  \item Make programming accessible to Deaf and hard-of-hearing students by adapting to learning styles and teaching in ASL and speech.
+  \item Build students' coding confidence by teaching debugging and computational thinking in 1:1 and group sessions.
+  \item Make Python, Java, and Excel accessible to Deaf and hard-of-hearing students by teaching in ASL and spoken English.
 \end{highlights}
 
 % ---------- Projects ----------
 \section{Projects}
 
-\project{PlayIQ: Sports Data Visualization Dashboard \textnormal{\,|\, \textit{JavaScript, React, Node.js, Python, XGBoost}}}{Mar 2026 -- Present}
+\project{\href{https://github.com/ch4ngs4n1ty/Sports-Data-Visualization}{PlayIQ: Sports Analytics Dashboard} \textnormal{\,|\, \textit{React, Node.js, Python, XGBoost, Claude API}}}{Mar 2026 -- Present}
 \begin{highlights}
-  \item Delivered a sports analytics dashboard covering \textbf{6} leagues by building per-game matchup, form, roster,
-        and projection tabs in React.
-  \item Automated weekly retraining of an XGBoost model predicting MLB first-five-innings money lines via Python and GitHub Actions.
-  \item Served ESPN and MLB data with caching and live updates via a dependency-free Node.js backend; deployed on Vercel and Render.
+  \item Built a React dashboard for \textbf{6} leagues (MLB, NBA, WNBA, NFL, NHL, NCAAB) with per-game matchup, form, and roster tabs.
+  \item Engineered Log5, Poisson, and Binomial projection models; automated weekly XGBoost money-line retraining via GitHub Actions.
+  \item Served live ESPN and MLB data via a cached, dependency-free Node.js backend with Claude API game analysis.
 \end{highlights}
 
-\project{Chroma \textnormal{\,|\, \textit{Angular, TypeScript, Java, Spring Boot}}}{Aug 2025 -- Dec 2025}
+\project{\href{https://github.com/elc6696/Secure-Distributed-Messenger}{Secure Distributed Messenger} \textnormal{\,|\, \textit{C\#, .NET, TCP/UDP Sockets, Cryptography}}}{Jan 2026 -- Apr 2026}
 \begin{highlights}
-  \item Built a full-stack color-based data visualization app with a team, pairing a responsive Angular front end with a Spring REST API.
-  \item Kept client-server code maintainable and scalable by applying object-oriented design, unit testing
-        (JUnit), and refactoring.
+  \item Built a peer-to-peer encrypted messenger with a team of \textbf{4}, using AES-256 keys exchanged via RSA-2048 and signed messages.
+  \item Owned peer discovery and fault tolerance: UDP broadcast discovery, \textbf{15}-second heartbeat timeouts, and backoff reconnection.
 \end{highlights}
 
-\project{Movie Database Management System \textnormal{\,|\, \textit{Python, PostgreSQL, SSH}}}{Jan 2025 -- May 2025}
+\project{\href{https://github.com/ch4ngs4n1ty/Chroma}{Chroma: U-Fund Crowdfunding Platform} \textnormal{\,|\, \textit{Angular, TypeScript, Java, Spring Boot}}}{Aug 2025 -- Dec 2025}
 \begin{highlights}
-  \item Built and deployed a PostgreSQL movie database and Python application, designing its features with a team of 5.
-  \item Enabled secure remote database access and management by implementing SSH tunneling in the Python application.
+  \item Built a full-stack charity crowdfunding platform with a team of \textbf{4}: \textbf{15} Angular components over a Spring Boot REST API.
+  \item Designed a layered controller/model/DAO architecture with swappable persistence, covered by \textbf{15} JUnit test classes.
+\end{highlights}
+
+\project{\href{https://github.com/ch4ngs4n1ty/Movie-Database-Project}{Movie Database Management System} \textnormal{\,|\, \textit{Python, PostgreSQL, SQL, SSH}}}{Jan 2025 -- May 2025}
+\begin{highlights}
+  \item Built an ETL pipeline with a team of \textbf{5} that cleans Kaggle datasets and loads them into a normalized PostgreSQL schema.
+  \item Developed a modular Python application with SSH tunneling for secure remote database access and management.
 \end{highlights}
 
 % ---------- Leadership ----------
@@ -149,10 +148,8 @@ Dean's List: Fall 2024, Spring 2025, Fall 2025, Spring 2026
 \entry{RIT/NTID Cross-Registered Student Advisory Board (XSAB)}{Sep 2025 -- May 2026}
       {Golisano College of Computing and Information Sciences (GCCIS) Representative}{Rochester, NY}
 \begin{highlights}
-  \item Advocated for cross-registered students, ensuring their voices were represented within the RIT/NTID community.
-  \item Kept students informed and engaged by attending XSAB meetings and sharing updates on events, resources,
-        and services.
-  \item Nominated by the NTID Co-op and Career Center to serve as NTID Career Fair Ambassador for 2 years (Sep 2025 \& Sep 2026).
+  \item Represented cross-registered students within the RIT/NTID community, sharing XSAB updates on events, resources, and services.
+  \item Selected by the NTID Co-op and Career Center as NTID Career Fair Ambassador in 2025 and 2026.
 \end{highlights}
 
 \end{document}
