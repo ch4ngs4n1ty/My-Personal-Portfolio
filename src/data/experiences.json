@@ -24,8 +24,7 @@
       }
     ],
     "highlights": [
-      "Worked with laboratory scientists to build a training tool that simulates data from hypothetical radioactive material releases.",
-      "Learned to work with unfamiliar scientific and nuclear-related data and apply it to the software tool."
+      "Built a training tool that simulates data from hypothetical radioactive material releases, partnering with laboratory scientists to translate nuclear-science data into software features."
     ],
     "award": {
       "name": "Thunderbird Award",
@@ -63,9 +62,9 @@
     "id": 3,
     "title": "Data Science Intern",
     "company": "Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program - University of Pittsburgh",
-    "duration": "May 2025 - July 2025",
+    "duration": "June 2025 - August 2025",
     "location": "Pittsburgh, PA - Hybrid",
-    "summary": "Collaborated with faculty and peers on data-driven projects addressing healthcare and informatics challenges. Analyzed complex patient data to generate actionable insights supporting predictive modeling initiatives, and presented findings to stakeholders with practical recommendations.",
+    "summary": "Collaborated with faculty and peers on data-driven healthcare and informatics research, combining SQL, LLMs, and statistical modeling to study what predicts unplanned surgery after ACL reconstruction.",
     "skills": [
       "Collaboration",
       "Communication",
@@ -76,7 +75,14 @@
       "Adaptability"
     ],
     "logo": "/images/pitt.png",
-    "url": "https://www.aibids.org/home"
+    "url": "https://www.aibids.org/home",
+    "highlights": [
+      "Surfaced risk patterns in 5,000+ de-identified patient records to inform a predictive model for unplanned surgery.",
+      "Extracted 464 pre-surgery clinical notes from a UPMC ACLR database (2013-2021) using SQL CTEs, joins, and embeddings.",
+      "Classified activity levels with an LLM (DeepSeek-R1 14B), reaching 0.89 F1 on elite athletes via 6 hand-annotated example batches.",
+      "Built logistic regression models in scikit-learn to predict unplanned surgery from social determinants of health (SDoH).",
+      "Presented a research poster on activity level as an SDoH predictor to faculty, peers, and stakeholders."
+    ]
   },
   {
     "id": 4,
@@ -84,7 +90,7 @@
     "company": "NTID Learning Center - Rochester Institute of Technology",
     "duration": "September 2024 - September 2025",
     "location": "Rochester, NY - Onsite",
-    "summary": "Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.",
+    "summary": "Supported Deaf and hard-of-hearing students in math courses, adapting teaching approaches to diverse learning styles using ASL and spoken communication.",
     "skills": [
       "Bilingual Communication",
       "Accessible Teaching",

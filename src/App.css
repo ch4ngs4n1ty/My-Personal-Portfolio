@@ -67,7 +67,7 @@
   :root { --dur-fast: 0.01ms; --dur: 0.01ms; --dur-slow: 0.01ms; }
   /* Elements that animate in from opacity:0 must not be left invisible when
      animations are flattened — force the resting state instead. */
-  .hero-label, .hero-name, .hero-sub, .hero-statement,
+  .hero-name, .hero-statement,
   .hero-actions, .hero-scroll, .hero-cta,
   .reveal, .timeline-item, .project-card, .tool-item {
     opacity: 1 !important;
@@ -393,30 +393,6 @@ section { position: relative; z-index: 1; }
   max-width: 980px;
 }
 
-.hero-label {
-  font-family: var(--mono);
-  font-size: var(--t-xs);
-  font-weight: 400;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: var(--s-5);
-  opacity: 0;
-  animation: heroRise 1s var(--ease) .45s forwards;
-}
-/* hairlines flanking the kicker */
-.hero-label::before,
-.hero-label::after {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  width: clamp(18px, 5vw, 54px);
-  height: 1px;
-  margin: 0 14px;
-  background: linear-gradient(to right, transparent, var(--hair-warm));
-}
-.hero-label::after { background: linear-gradient(to left, transparent, var(--hair-warm)); }
-
 .hero-name {
   font-family: var(--serif);
   font-size: var(--t-3xl);
@@ -437,18 +413,6 @@ section { position: relative; z-index: 1; }
   filter: drop-shadow(0 0 38px rgba(201,168,76,0.22));
 }
 
-.hero-sub {
-  font-family: var(--mono);
-  font-size: var(--t-sm);
-  letter-spacing: 0.1em;
-  color: var(--white-dim);
-  margin-top: var(--s-6);
-  opacity: 0;
-  animation: heroRise 1s var(--ease) .86s forwards;
-  text-transform: uppercase;
-}
-.hero-sub em { color: var(--gold); font-style: normal; }
-
 /* Editorial introduction with restrained emphasis echoing the gold name. */
 .hero-statement {
   font-family: var(--prose);
@@ -462,7 +426,7 @@ section { position: relative; z-index: 1; }
   margin: var(--s-6) auto 0;
   text-wrap: balance;
   opacity: 0;
-  animation: heroRise 1s var(--ease) 1.02s forwards;
+  animation: heroRise 1s var(--ease) .86s forwards;
 }
 .hero-statement strong {
   color: var(--gold-bright);
@@ -582,7 +546,7 @@ section { position: relative; z-index: 1; }
   text-transform: uppercase;
   color: var(--white-dim);
   opacity: 0;
-  animation: heroRise 1s var(--ease) 1.02s forwards;
+  animation: heroRise 1s var(--ease) .86s forwards;
 }
 .hero-hint em {
   font-style: normal;
@@ -3094,7 +3058,9 @@ section { position: relative; z-index: 1; }
    Section padding follows --gutter, so only structural changes live here. */
 @media (max-width: 900px) {
   .nav { padding: 14px var(--gutter); }
-  .nav-links { display: none; }
+  /* compact links instead of hiding them — phone visitors still need to jump around */
+  .nav-links { gap: 22px; }
+  .nav-links a { font-size: 10px; letter-spacing: 0.12em; }
   #hero { padding: var(--s-9) var(--gutter) var(--s-8); min-height: 92svh; }
   #constellation { height: 86vh; min-height: 600px; }
   .about-stats { grid-template-columns: 1fr 1fr; }
@@ -3115,15 +3081,14 @@ section { position: relative; z-index: 1; }
 }
 
 @media (max-width: 560px) {
-  /* drop the flanking hairlines — they force an ugly wrap at this width */
-  .hero-label::before, .hero-label::after { display: none; }
-  .hero-label { font-size: 10px; letter-spacing: 0.12em; }
   .projects-grid { grid-template-columns: 1fr; }
   .project-card:nth-child(n) { grid-column: span 1; }
   .contact-form { grid-template-columns: 1fr; }
   .form-field.full, .form-submit { grid-column: span 1; }
   .about-stats { grid-template-columns: 1fr 1fr; }
   .nav-wordmark { display: none; }
+  .nav-links { gap: 18px; }
+  .nav-links .nav-secondary { display: none; }
   .footer { flex-direction: column; align-items: flex-start; gap: var(--s-2); }
   .hero-actions { flex-direction: column; gap: var(--s-4); }
   .hero-actions .hero-cta { width: 100%; }

@@ -16,6 +16,16 @@ const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
 const MAX_MESSAGES = 24; // cap conversation length to bound cost / abuse
 const MAX_CHARS = 2000; // cap per-message length
 
+// Facts that live outside the JSON data (education, job search, contact).
+// Keep in sync with resume/resume.tex.
+const PROFILE = `Name: Ethan Chang
+Education: B.S. in Computer Science, Rochester Institute of Technology (RIT), Rochester, NY. Expected graduation May 2027. GPA 3.6/4.0. Dean's List Fall 2024, Spring 2025, Fall 2025, Spring 2026.
+Looking for: full-time Software Engineering, Data Engineering, Data Science, or AI roles starting Summer 2027.
+Leadership: GCCIS Representative on the RIT/NTID Cross-Registered Student Advisory Board (Sep 2025 - May 2026); NTID Career Fair Ambassador in 2025 and 2026.
+Based in: Monmouth Junction, NJ (studies in Rochester, NY).
+Contact: echang0970@gmail.com · linkedin.com/in/echang0970 · github.com/ch4ngs4n1ty
+Resume: downloadable from the Contact section of this site.`;
+
 function buildPortfolioContext() {
   const projects = projectsData
     .map((p, i) => {
@@ -39,8 +49,11 @@ function buildPortfolioContext() {
         `EXPERIENCE ${i + 1}: ${e.title} @ ${e.company}`,
         `  When: ${e.duration}`,
         e.location && `  Where: ${e.location}`,
+        e.roles && `  Roles: ${e.roles.map((r) => `${r.title} (${r.duration}, ${[r.location, r.type].filter(Boolean).join(', ')})`).join('; ')}`,
         e.skills && `  Skills: ${e.skills.join(', ')}`,
         `  Summary: ${e.summary}`,
+        e.highlights?.length && `  Highlights: ${e.highlights.join(' ')}`,
+        e.award && `  Award: ${e.award.name} (${e.award.detail})`,
       ]
         .filter(Boolean)
         .join('\n');
@@ -49,7 +62,7 @@ function buildPortfolioContext() {
 
   const tools = toolsData.map((t) => t.name).join(', ');
 
-  return `## EXPERIENCE\n\n${experiences}\n\n## PROJECTS\n\n${projects}\n\n## TOOLS & TECHNOLOGIES\n\n${tools}`;
+  return `## PROFILE\n\n${PROFILE}\n\n## EXPERIENCE\n\n${experiences}\n\n## PROJECTS\n\n${projects}\n\n## TOOLS & TECHNOLOGIES\n\n${tools}`;
 }
 
 function buildSystemPrompt() {
@@ -57,7 +70,7 @@ function buildSystemPrompt() {
 
 Rules:
 - Answer ONLY from the information provided. Do not invent roles, dates, employers, or technologies that are not listed.
-- If something is not covered (salary, availability, personal details, anything outside this data), say you don't have that information and suggest reaching out via the Contact section.
+- If something is not covered (salary, personal details, anything outside this data), say you don't have that information and suggest reaching out via the Contact section.
 - Be concise and conversational — usually 1-3 sentences. This is a chat widget, not an essay. Respond with the final answer only; do not narrate your reasoning.
 - Speak about Ethan in the third person ("Ethan built…", "He worked on…").
 - When relevant, point visitors to the matching section of the site (Projects, Experience, Tools, Contact).

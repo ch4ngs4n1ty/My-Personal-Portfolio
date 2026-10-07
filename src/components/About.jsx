@@ -42,7 +42,7 @@ function About() {
               <em>data science, machine learning, and AI</em>.
             </p>
             <p>
-              Coming out of my computer science degree, I'm aiming to be a <em>well-rounded engineer</em> who can
+              When I graduate in May 2027, I'm aiming to start full-time as a <em>well-rounded engineer</em> who can
               adapt to just about any technology a problem calls for. I care less about mastering one specific tool
               and more about learning quickly, thinking through the data, and building solutions that actually hold
               up in the real world.
@@ -51,7 +51,7 @@ function About() {
           <div className="about-focus">
             <span className="about-focus-label">Focus</span>
             <div className="about-focus-tags">
-              {['Data Science', 'Machine Learning', 'Artificial Intelligence'].map((t) => (
+              {['Software Engineering', 'Data Science', 'Machine Learning', 'Artificial Intelligence'].map((t) => (
                 <span className="about-focus-tag" key={t}>
                   <span className="about-focus-gem" aria-hidden="true"></span>
                   <span>{t}</span>

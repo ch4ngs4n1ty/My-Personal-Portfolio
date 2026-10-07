@@ -16,5 +16,14 @@
   { "id": 15, "name": "Angular", "category": "Frameworks", "logo": "/images/logos/angular.svg", "url": "https://angular.dev/" },
   { "id": 16, "name": "TypeScript", "category": "Languages", "logo": "/images/logos/typescript.svg", "url": "https://www.typescriptlang.org/" },
   { "id": 17, "name": "Spring Boot", "category": "Frameworks", "logo": "/images/logos/springboot.svg", "url": "https://spring.io/projects/spring-boot" },
-  { "id": 18, "name": "JUnit", "category": "Dev Tools & Testing", "logo": "/images/logos/junit.svg", "url": "https://junit.org/" }
+  { "id": 18, "name": "JUnit", "category": "Dev Tools & Testing", "logo": "/images/logos/junit.svg", "url": "https://junit.org/" },
+  { "id": 19, "name": "C#", "category": "Languages", "logo": "/images/logos/csharp.svg", "url": "https://learn.microsoft.com/dotnet/csharp/" },
+  { "id": 20, "name": "R", "category": "Languages", "logo": "/images/logos/r.svg", "url": "https://www.r-project.org/" },
+  { "id": 21, "name": "React", "category": "Frameworks", "logo": "/images/logos/react.svg", "url": "https://react.dev/" },
+  { "id": 22, "name": "Node.js", "category": "Frameworks", "logo": "/images/logos/nodejs.svg", "url": "https://nodejs.org/" },
+  { "id": 23, "name": "NumPy", "category": "Data & ML", "logo": "/images/logos/numpy.svg", "url": "https://numpy.org/" },
+  { "id": 24, "name": "XGBoost", "category": "Data & ML", "logo": null, "url": "https://xgboost.ai/" },
+  { "id": 25, "name": "PostgreSQL", "category": "Databases", "logo": "/images/logos/postgresql.svg", "url": "https://www.postgresql.org/" },
+  { "id": 26, "name": "Docker", "category": "Dev Tools & Testing", "logo": "/images/logos/docker.svg", "url": "https://www.docker.com/" },
+  { "id": 27, "name": "GitHub Actions", "category": "Dev Tools & Testing", "logo": "/images/logos/githubactions.svg", "url": "https://github.com/features/actions" }
 ]

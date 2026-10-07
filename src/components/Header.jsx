@@ -9,15 +9,10 @@ function Header() {
   return (
     <section id="hero">
       <div className="hero-content">
-        <div className="hero-label">Computer Science · RIT · Class of 2026</div>
         <h1 className="hero-name">Ethan<br /><span>Chang</span></h1>
-        <p className="hero-sub">
-          Data Science &nbsp;·&nbsp; Machine Learning &nbsp;·&nbsp; <em>Software Engineering</em>
-        </p>
-
         <p className="hero-statement">
-          I build systems that turn messy data into <strong>things people can actually use</strong>.
-          I care most about the part where it has to hold up in the real world.
+          Hi, I'm Ethan, a computer science student at RIT graduating in May 2027.
+          I like turning messy data into <strong>things people can actually use</strong>.
         </p>
 
         <div className="hero-actions">

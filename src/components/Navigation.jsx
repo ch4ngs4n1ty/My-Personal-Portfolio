@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
 const SECTIONS = [
-  { id: 'about', label: 'About' },
+  // secondary links drop out on phones to keep the bar to one line
+  { id: 'about', label: 'About', secondary: true },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
-  { id: 'tools', label: 'Tools' },
+  { id: 'tools', label: 'Tools', secondary: true },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -32,8 +33,8 @@ function Navigation() {
         <span className="nav-wordmark">Ethan Chang</span>
       </a>
       <ul className="nav-links">
-        {SECTIONS.map(({ id, label }) => (
-          <li key={id}>
+        {SECTIONS.map(({ id, label, secondary }) => (
+          <li key={id} className={secondary ? 'nav-secondary' : undefined}>
             <a href={`#${id}`} className={active === id ? 'active' : ''}>{label}</a>
           </li>
         ))}
