@@ -1,5 +1,5 @@
 # On every push to main:
-#   1. compile resume/resume.tex -> public/resume.pdf (committed back if it changed)
+#   1. compile resume/resume.tex -> public/Chang_Ethan_Resume.pdf (committed back if it changed)
 #   2. build the Vite site
 #   3. publish dist/ to the gh-pages branch, which GitHub Pages serves
 name: Build resume & deploy site
@@ -39,11 +39,11 @@ jobs:
 
       - name: Commit rebuilt resume PDF
         run: |
-          cp resume/resume.pdf public/resume.pdf
-          if ! git diff --quiet -- public/resume.pdf; then
+          cp resume/resume.pdf public/Chang_Ethan_Resume.pdf
+          if ! git diff --quiet -- public/Chang_Ethan_Resume.pdf; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add public/resume.pdf
+            git add public/Chang_Ethan_Resume.pdf
             git commit -m "chore(resume): rebuild PDF from resume.tex [skip ci]"
             git push
           fi

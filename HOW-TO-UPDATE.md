@@ -74,11 +74,11 @@ New tool card appears automatically! ✅
 Don't upload a PDF: edit `resume/resume.tex` and push to `main`.
 
 GitHub Actions (`.github/workflows/deploy.yml`) compiles it, commits the new
-`public/resume.pdf` back to the repo, rebuilds the site and redeploys it. Run
+`public/Chang_Ethan_Resume.pdf` back to the repo, rebuilds the site and redeploys it. Run
 `git pull` afterwards to get that PDF commit locally.
 
 The top of `resume.tex` lists the building blocks (`\entry`, `\project`,
-`\bullets`, `\skills`, `\tools`). To preview locally, run `npm run resume`
+`highlights`, `\cat`). To preview locally, run `npm run resume`
 (needs `tectonic` or `latexmk`, e.g. `brew install tectonic`).
 
 ## 🚀 Deploying

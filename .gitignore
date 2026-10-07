@@ -27,7 +27,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# LaTeX build output (CI compiles resume/resume.tex into public/resume.pdf)
+# LaTeX build output (CI compiles resume/resume.tex into public/Chang_Ethan_Resume.pdf)
 resume/*.pdf
 resume/*.aux
 resume/*.log

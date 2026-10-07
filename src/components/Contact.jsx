@@ -73,8 +73,8 @@ function Contact() {
               linkedin.com/in/echang0970
             </a>
             <a
-              href={`${baseUrl}resume.pdf`}
-              download="Ethan_Chang_Resume.pdf"
+              href={`${baseUrl}Chang_Ethan_Resume.pdf`}
+              download="Chang_Ethan_Resume.pdf"
               className="contact-link"
             >
               <span className="contact-link-icon">
