@@ -1,146 +1,158 @@
-% ============================================================================
-%  Ethan Chang — Resume
+%-------------------------------------------------------------------------------
+% Ethan Chang — Résumé
+% Compiles with pdflatex (Overleaf default). Uses only standard packages.
 %
-%  This file is the source of truth for public/resume.pdf.
-%  Edit it, commit, and push to main: GitHub Actions compiles it, commits the
-%  new PDF back to public/resume.pdf, and redeploys the site.
+% This file is the source of truth for public/resume.pdf. Edit it, commit, and
+% push to main: GitHub Actions compiles it, commits the new PDF back to
+% public/resume.pdf, and redeploys the site.
+% Local preview (optional):  npm run resume   (needs tectonic or latexmk)
 %
-%  Local preview (optional):  npm run resume   (needs tectonic or latexmk)
-%
-%  Building blocks:
-%    \section{Title}                                  section header + rule
-%    \entry{Org}{Dates}{Role}{Location}               job / leadership heading
-%    \project{Title}{Dates}                           project heading
-%    \begin{bullets} \item ... \end{bullets}          tight bullet list
-%    \skills{A, B, C}                                 bold "Skills:" bullet
-%    \tools{A, B, C}                                  bold "Tools:" bullet
-% ============================================================================
-\documentclass[10pt]{article}
+% HOW TO EDIT
+%   \entry{Organization}{Dates}{Role}{Location}   -> job / leadership header
+%   \project{Project Name}{Dates}                 -> project header
+%   \begin{highlights} \item ... \end{highlights} -> bullet list
+%   \cat{Category}{item, item, item}              -> one Technical Skills cell
+%-------------------------------------------------------------------------------
+\documentclass[letterpaper,10pt]{article}
 
-\usepackage[letterpaper,top=0.35in,bottom=0.35in,left=0.5in,right=0.5in]{geometry}
+\usepackage[top=0.35in, bottom=0.35in, left=0.5in, right=0.5in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{newtxtext}
-\usepackage{enumitem}
+\usepackage{mathptmx}      % Times: classic, professional, very readable
+\usepackage{iftex}
+\ifPDFTeX  % font expansion is pdflatex-only; tectonic (XeTeX) gets protrusion alone
+  \usepackage[protrusion=true, expansion=true]{microtype}
+\else
+  \usepackage[protrusion=true]{microtype}
+\fi
 \usepackage{titlesec}
-\usepackage[normalem]{ulem}
+\usepackage{enumitem}
+\usepackage{tabularx}
 \usepackage[hidelinks]{hyperref}
-\usepackage{xcolor}
-
-\definecolor{linkblue}{RGB}{17,85,204}
-\newcommand{\link}[2]{\href{#1}{\color{linkblue}\uline{#2}}}
 
 \pagestyle{empty}
+\linespread{0.97}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
-\linespread{0.98}
+\raggedright
 
-% ---- section headers: bold title over a thin full-width rule ----------------
-\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-7pt}\rule{\textwidth}{0.4pt}]
+% ---------- Section headings: bold caps with a rule below ----------
+\titleformat{\section}{\bfseries\large\MakeUppercase}{}{0em}{}[\vspace{-9pt}\rule{\linewidth}{0.5pt}]
 \titlespacing*{\section}{0pt}{5pt}{4pt}
 
-% ---- entry macros -----------------------------------------------------------
+% ---------- Custom commands ----------
 \newcommand{\entry}[4]{%
   \textbf{#1} \hfill \textbf{#2}\\
-  \textbf{#3} \hfill \textbf{#4}\par}
+  \textit{#3} \hfill \textit{#4}\par}
+
 \newcommand{\project}[2]{%
-  {\small\textbf{#1}} \hfill {\small\textbf{#2}}\par}
+  \textbf{#1} \hfill \textbf{#2}\par}
 
-\newenvironment{bullets}
-  {\begin{itemize}[leftmargin=12pt,labelsep=4pt,itemsep=0pt,parsep=0pt,topsep=0pt,partopsep=0pt,after=\vspace{2.5pt}]}
+\newenvironment{highlights}
+  {\begin{itemize}[leftmargin=1.3em, label=\textbullet, itemsep=0pt,
+                   parsep=0pt, topsep=1pt, after=\vspace{2pt}]}
   {\end{itemize}}
-\newcommand{\skills}[1]{\item \textbf{Skills: #1}}
-\newcommand{\tools}[1]{\item \textbf{Tools: #1}}
 
+\newcommand{\cat}[2]{\textit{#1} -- #2}
+
+%-------------------------------------------------------------------------------
 \begin{document}
 
-% ============================================================================
-%  Header
-% ============================================================================
+% ---------- Header ----------
 \begin{center}
-  {\fontsize{26}{28}\selectfont Ethan Chang}\\[3pt]
-  Monmouth Junction, NJ \textbar{} (848) 200-6056 \textbar{}
-  \link{mailto:echang0970@gmail.com}{echang0970@gmail.com} \textbar{}
-  \link{https://linkedin.com/in/ethan-chang}{linkedin.com/in/ethan-chang} \textbar{}
-  \link{https://github.com/ethan-chang}{github.com/ethan-chang}
+  {\fontsize{22}{26}\selectfont\bfseries Ethan Chang}\\[4pt]
+  Monmouth Junction, NJ \enspace|\enspace
+  (848) 200-6056 \enspace|\enspace
+  \href{mailto:echang0970@gmail.com}{echang0970@gmail.com} \enspace|\enspace
+  \href{https://www.linkedin.com/in/echang0970}{linkedin.com/in/echang0970} \enspace|\enspace
+  \href{https://github.com/ch4ngs4n1ty}{github.com/ch4ngs4n1ty}
 \end{center}
-\vspace{-8pt}
+\vspace{-9pt}
 
-% ============================================================================
+% ---------- Objective ----------
 \section{Objective}
-% ============================================================================
-Computer Science B.S. Student \textbar{} Seeking Full-Time Data Engineering, Data Science, or AI Opportunities starting Summer 2027
+Computer Science B.S. student seeking full-time Data Engineering, Data Science,
+or AI opportunities starting Summer 2027.
 
-% ============================================================================
+% ---------- Education ----------
 \section{Education}
-% ============================================================================
-\textbf{Rochester Institute of Technology}\textit{, Rochester, NY} \hfill \textbf{Expected: May 2027}\\
-\textit{Bachelor of Science, Computer Science} \hfill \textbf{GPA:} 3.6/4.0
-\begin{bullets}
-  \item \textbf{Dean's List: Fall 2024, Spring 2025, Fall 2025, Spring 2026}
-\end{bullets}
+\entry{Rochester Institute of Technology}{Expected May 2027}
+      {Bachelor of Science, Computer Science; GPA: 3.6/4.0}{Rochester, NY}
+Dean's List: Fall 2024, Spring 2025, Fall 2025, Spring 2026
 
-% ============================================================================
-\section{Employment}
-% ============================================================================
-\entry{Sandia National Laboratories}{May 2026 - Present}{R\&D Intern}{Albuquerque, NM - Onsite}
-\begin{bullets}
-  \item Worked with laboratory scientists to build a training tool that simulates data from hypothetical radioactive material releases.
-  \item Learned to work with unfamiliar scientific and nuclear-related data and apply it to the software tool.
-  \item Received a \textbf{Thunderbird Award in the Purpose-Driven category} for my contributions during the internship.
-\end{bullets}
+% ---------- Technical Skills ----------
+\section{Technical Skills}
+% Two columns; each cell is "\cat{Category}{items}". Edit freely.
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X@{\hspace{1.2em}}>{\raggedright\arraybackslash}X@{}}
+\cat{Programming Languages}{Python, Java, SQL, JavaScript, TypeScript, HTML/CSS} &
+\cat{Developer Tools}{Git, GitHub, GitHub Actions, Maven, Jupyter Notebook, DataGrip} \\[1pt]
+\cat{Libraries \& Frameworks}{Pandas, scikit-learn, XGBoost, Matplotlib, React, Node.js, Angular, Spring Boot, JUnit} &
+\cat{Professional}{Accessible Teaching, Leadership, Advocacy, Collaboration, Active Listening, Adaptability} \\[1pt]
+\cat{AI \& LLMs}{Claude API, DeepSeek-R1, Prompt Engineering, Text Embeddings} &
+\cat{Databases \& Deployment}{PostgreSQL, Vercel, Render} \\
+\end{tabularx}
 
-\entry{Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program}{May 2025 - Jul 2025}{Data Science Intern}{Pittsburgh, PA - Hybrid}
-\begin{bullets}
-  \item Collaborated with faculty and peers on data-driven projects addressing healthcare and informatics challenges.
-  \item Analyzed \textbf{5,000+} de-identified patient records to surface risk patterns, directly informing a predictive model that flagged unplanned surgery candidates
-  \item Presented findings to faculty, peers, and stakeholders, summarizing results and sharing practical recommendations.
-  \skills{Collaboration, Data Cleaning, Data Analysis, Data Storytelling, Data Security, Adaptability}
-\end{bullets}
+% ---------- Experience ----------
+% Bullets follow Google's XYZ pattern: Accomplished [X], as measured by [Y], by doing [Z].
+\section{Experience}
 
-\entry{NTID Learning Center}{Sep 2025 - Present}{Software Development Tutor}{Rochester, NY - Onsite}
-\begin{bullets}
-  \item Provide individualized and group tutoring sessions on programming concepts across Python, Java, and Excel-based logic.
-  \item Adapt tutoring approaches to diverse learning styles, using ASL and spoken communication to support Deaf and hard-of-hearing students.
-  \item Reinforce computational thinking and debugging strategies to strengthen coding confidence and problem-solving skills.
-  \skills{Bilingual Communication, Accessible Teaching, Instructional Adaptability, Active Listening, Confidence-Building}
-\end{bullets}
+\entry{Sandia National Laboratories}{May 2026 -- Present}
+      {Data Science R\&D Intern}{Albuquerque, NM (Onsite)}
+\begin{highlights}
+  \item Built a training tool that simulates data from hypothetical radioactive material releases by working with
+        laboratory scientists to apply unfamiliar scientific and nuclear-related data to the software.
+  \item Earned a Thunderbird Award in the Purpose-Driven category for my contributions during the internship.
+\end{highlights}
 
-% ============================================================================
+\entry{Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program}{Jun 2025 -- Aug 2025}
+      {Data Science Intern}{Pittsburgh, PA (Hybrid)}
+\begin{highlights}
+  \item Surfaced risk patterns in \textbf{5,000+} de-identified patient records to inform a predictive model for unplanned surgery.
+  \item Extracted \textbf{464} pre-surgery clinical notes from a UPMC ACLR database (\textbf{2013--2021}) with SQL (CTEs, LEFT JOINs) and embeddings.
+  \item Classified activity levels with an LLM (DeepSeek-R1 14B), reaching \textbf{0.89} F1 on elite athletes via \textbf{6} hand-annotated example batches.
+  \item Worked on building logistic regression models in scikit-learn to predict unplanned surgery from social determinants of health.
+  \item Presented findings in a research poster to faculty, peers, and stakeholders.
+\end{highlights}
+
+\entry{NTID Learning Center}{Sep 2025 -- Present}
+      {Software Development Tutor}{Rochester, NY (Onsite)}
+\begin{highlights}
+  \item Build students' coding confidence by teaching debugging and computational thinking in 1:1 and group sessions (Python, Java, Excel).
+  \item Make programming accessible to Deaf and hard-of-hearing students by adapting to learning styles and teaching in ASL and speech.
+\end{highlights}
+
+% ---------- Projects ----------
 \section{Projects}
-% ============================================================================
-\project{ACL Unplanned Surgery Predictive Model (AIBIDS)}{Jun 2025 - Sep 2025}
-\begin{bullets}
-  \item Accessed UPMC database of de-identified ACLR patients (2013-2021) for predictive modeling.
-  \item Executed complex SQL queries with CTEs and LEFT JOINs to aggregate clinical datasets.
-  \item Built logistic regression models using SDoH factors to predict unplanned surgery needs.
-  \tools{Python, SQL, Pandas, Jupyter Notebook, LLMs, Prompt Engineering, Scikit-learn, PostgreSQL, Matplotlib}
-\end{bullets}
 
-\project{Movie Database Management Systems Project}{Jan 2025 - May 2025}
-\begin{bullets}
-  \item Built and deployed a PostgreSQL movie database and application using Python and SQL.
-  \item Collaborated with a group of 5 to design and develop the database and application features.
-  \item Developed a Python application with SSH tunneling for secure remote database access and management.
-  \tools{Python, SQL, PostgreSQL, SSH Tunnel, Faker, GitHub, DataGrip, Kaggle, psycopog, bcrypt, python-dotenv}
-\end{bullets}
+\project{PlayIQ: Sports Data Visualization Dashboard \textnormal{\,|\, \textit{JavaScript, React, Node.js, Python, XGBoost}}}{Mar 2026 -- Present}
+\begin{highlights}
+  \item Delivered a sports analytics dashboard covering \textbf{6} leagues by building per-game matchup, form, roster,
+        and projection tabs in React.
+  \item Automated weekly retraining of an XGBoost model predicting MLB first-five-innings money lines via Python and GitHub Actions.
+  \item Served ESPN and MLB data with caching and live updates via a dependency-free Node.js backend; deployed on Vercel and Render.
+\end{highlights}
 
-\project{Chroma}{Aug 2025 - Dec 2025}
-\begin{bullets}
-  \item Collaborated within a team to design and implement a full-stack web app for interactive color-based data visualization.
-  \item Developed a responsive front-end using Angular and integrated RESTful APIs with a Spring-based Java backend.
-  \item Applied object-oriented design, unit testing, and refactoring to ensure maintainable and scalable client-server code.
-  \tools{Angular, Spring Boot, Java, REST API, TypeScript, JUnit, GitHub, Maven, Agile/Scrum methodologies}
-\end{bullets}
+\project{Chroma \textnormal{\,|\, \textit{Angular, TypeScript, Java, Spring Boot}}}{Aug 2025 -- Dec 2025}
+\begin{highlights}
+  \item Built a full-stack color-based data visualization app with a team, pairing a responsive Angular front end with a Spring REST API.
+  \item Kept client-server code maintainable and scalable by applying object-oriented design, unit testing
+        (JUnit), and refactoring.
+\end{highlights}
 
-% ============================================================================
+\project{Movie Database Management System \textnormal{\,|\, \textit{Python, PostgreSQL, SSH}}}{Jan 2025 -- May 2025}
+\begin{highlights}
+  \item Built and deployed a PostgreSQL movie database and Python application, designing its features with a team of 5.
+  \item Enabled secure remote database access and management by implementing SSH tunneling in the Python application.
+\end{highlights}
+
+% ---------- Leadership ----------
 \section{Leadership \& Involvement}
-% ============================================================================
-\entry{RIT/NTID Cross-Registered Student Advisory Board (XSAB)}{Sep 2025 - May 2026}{Golisano College Of Computing and Information Sciences (GCCIS) Representative}{}
-\begin{bullets}
-  \item Provide support and advocacy for cross-registered students, ensuring their voices are represented within the RIT/NTID community.
-  \item Facilitated communication by attending XSAB meetings and sharing updates on events, resources, and services to keep students informed and engaged.
-  \item \textbf{NTID Career Fair Ambassador (Sep 2025 \& Sep 2026)} - Nominated for the role by the NTID Co-op and Career Center.
-  \skills{Leadership, Advocacy, Teamwork, Student Engagement, Organizational Skills, Interpersonal Skills, Collaboration}
-\end{bullets}
+
+\entry{RIT/NTID Cross-Registered Student Advisory Board (XSAB)}{Sep 2025 -- May 2026}
+      {Golisano College of Computing and Information Sciences (GCCIS) Representative}{Rochester, NY}
+\begin{highlights}
+  \item Advocated for cross-registered students, ensuring their voices were represented within the RIT/NTID community.
+  \item Kept students informed and engaged by attending XSAB meetings and sharing updates on events, resources,
+        and services.
+  \item Nominated by the NTID Co-op and Career Center to serve as NTID Career Fair Ambassador for 2 years (Sep 2025 \& Sep 2026).
+\end{highlights}
 
 \end{document}
