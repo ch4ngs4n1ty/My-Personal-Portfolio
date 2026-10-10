@@ -101,37 +101,42 @@ body {
   min-height: 100vh;
 }
 
-/* ── DEEP SPACE ATMOSPHERE ───────────────────────────────────────────────
-   Two fixed layers beneath all content. Nebula clouds give the void real
-   depth; the vignette keeps the edges dark so content stays the focus. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: -10%;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(58% 44% at 18% 12%, var(--nebula-cool) 0%, transparent 62%),
-    radial-gradient(48% 38% at 84% 26%, var(--nebula-warm) 0%, transparent 60%),
-    radial-gradient(64% 50% at 62% 88%, var(--nebula-gold) 0%, transparent 66%),
-    radial-gradient(90% 70% at 50% 50%, var(--coal) 0%, var(--void-deep) 80%);
-  animation: nebula-drift 64s ease-in-out infinite alternate;
-}
+/* Shared viewport cloud banks keep the atmosphere continuous between sections. */
 
-/* vignette + faint scanline grain for cinematic falloff */
+body::before,
 body::after {
   content: '';
   position: fixed;
-  inset: 0;
-  z-index: -1;
+  inset: -18%;
+  z-index: -2;
   pointer-events: none;
-  background: radial-gradient(120% 95% at 50% 45%, transparent 42%, rgba(2,2,6,0.72) 100%);
+  filter: blur(34px);
+  background:
+    radial-gradient(ellipse 38% 30% at 12% 22%, rgba(192,57,43,0.10), transparent 75%),
+    radial-gradient(ellipse 42% 34% at 70% 16%, rgba(201,168,76,0.08), transparent 76%),
+    radial-gradient(ellipse 40% 32% at 40% 54%, rgba(164,81,44,0.09), transparent 78%),
+    radial-gradient(ellipse 38% 38% at 88% 68%, rgba(192,57,43,0.09), transparent 75%),
+    radial-gradient(ellipse 44% 30% at 18% 88%, rgba(201,168,76,0.08), transparent 78%);
+  animation: cloud-drift 26s ease-in-out infinite alternate;
 }
 
-@keyframes nebula-drift {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(-2.2%, 1.6%, 0) scale(1.07); }
+body::after {
+  background:
+    radial-gradient(ellipse 36% 28% at 38% 12%, rgba(201,168,76,0.07), transparent 78%),
+    radial-gradient(ellipse 44% 32% at 12% 58%, rgba(164,81,44,0.08), transparent 76%),
+    radial-gradient(ellipse 38% 36% at 80% 42%, rgba(192,57,43,0.08), transparent 78%),
+    radial-gradient(ellipse 46% 30% at 58% 88%, rgba(201,168,76,0.07), transparent 76%);
+  animation-duration: 34s;
+  animation-delay: -17s;
+  animation-direction: alternate-reverse;
 }
+
+@keyframes cloud-drift {
+  0% { transform: translate3d(-4%, -3%, 0) scale(1); opacity: 0.75; }
+  50% { transform: translate3d(2%, 3%, 0) scale(1.06); opacity: 1; }
+  100% { transform: translate3d(5%, -2%, 0) scale(1.12); opacity: 0.85; }
+}
+
 
 @media (hover: hover) and (pointer: fine) {
   body { cursor: none; }
@@ -366,24 +371,6 @@ section { position: relative; z-index: 1; }
   isolation: isolate;
 }
 
-/* warm horizon bloom rising from below the name */
-/* A distant core glow behind the name — light from far away, not a sunrise.
-   Sits behind the wordmark rather than pooling at the bottom edge. */
-#hero::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 46%;
-  width: min(780px, 82vw);
-  height: 520px;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(46% 42% at 50% 50%, rgba(192,57,43,0.10) 0%, transparent 68%),
-    radial-gradient(60% 54% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 74%);
-  filter: blur(22px);
-}
 
 .hero-content {
   position: relative;
