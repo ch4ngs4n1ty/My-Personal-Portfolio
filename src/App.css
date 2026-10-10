@@ -597,7 +597,7 @@ section { position: relative; z-index: 1; }
   transition: filter .6s ease, transform .18s ease;
 }
 /* dark core inset inside the gradient rim */
-.hero-cta::before, .form-submit::before {
+.form-submit::before {
   content: '';
   position: absolute;
   inset: 1px;
@@ -607,7 +607,7 @@ section { position: relative; z-index: 1; }
   clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
 }
 /* blade-swipe fill on hover */
-.hero-cta::after, .form-submit::after {
+.form-submit::after {
   content: '';
   position: absolute;
   inset: 1px;
@@ -616,12 +616,11 @@ section { position: relative; z-index: 1; }
   transform: translateX(-103%);
   transition: transform .7s cubic-bezier(.65,0,.35,1);
 }
-.hero-cta:hover::after, .form-submit:hover::after { transform: translateX(0); }
-.hero-cta:hover, .hero-cta:focus-visible,
+.form-submit:hover::after { transform: translateX(0); }
 .form-submit:hover, .form-submit:focus-visible {
   filter: drop-shadow(0 0 22px rgba(201,168,76,0.4));
 }
-.hero-cta:active, .form-submit:active { transform: translateY(1px) scale(0.99); }
+.form-submit:active { transform: translateY(1px) scale(0.99); }
 .hero-cta span, .form-submit span { position: relative; z-index: 1; }
 .cta-gem {
   width: 7px; height: 7px;
@@ -630,15 +629,42 @@ section { position: relative; z-index: 1; }
   transform: rotate(45deg);
   transition: transform .7s cubic-bezier(.65,0,.35,1), background .5s ease;
 }
-.hero-cta:hover .cta-gem, .form-submit:hover .cta-gem {
+.form-submit:hover .cta-gem {
   transform: rotate(225deg) scale(1.15);
   background: var(--black);
 }
 
+/* Quiet hero action: warm border, short color fade, directional cue. */
 .hero-cta {
+  background: rgba(201, 168, 76, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-radius: 2px;
+  clip-path: none;
+  gap: 20px;
+  padding: 16px 28px;
+  transition: background-color 180ms ease, border-color 180ms ease;
   margin-top: 36px;
   opacity: 0;
   animation: heroRise 1s var(--ease) 1.26s forwards;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  background-color: rgba(201, 168, 76, 0.12);
+  border-color: var(--gold-bright);
+}
+.hero-cta-arrow {
+  width: 14px;
+  height: 14px;
+  color: var(--gold-bright);
+  transition: transform 180ms ease;
+}
+.hero-cta:hover .hero-cta-arrow,
+.hero-cta:focus-visible .hero-cta-arrow {
+  transform: translateY(3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta .hero-cta-arrow { transform: none; }
 }
 
 /* ── CONSTELLATION ────────────────────────────────────────────────────────── */
@@ -3034,7 +3060,6 @@ section { position: relative; z-index: 1; }
   border-radius: var(--radius);
 }
 /* the blade-clipped controls can't show an outline cleanly — glow instead */
-.hero-cta:focus-visible,
 .form-submit:focus-visible {
   outline: none;
   filter: drop-shadow(0 0 0 2px var(--gold-bright))

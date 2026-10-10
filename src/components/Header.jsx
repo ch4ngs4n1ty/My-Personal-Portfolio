@@ -17,8 +17,10 @@ function Header() {
 
         <div className="hero-actions">
           <button type="button" className="hero-cta" onClick={scrollToWork}>
-            <span className="cta-gem" aria-hidden="true"></span>
             <span>View Work</span>
+            <svg className="hero-cta-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v11m-4-4 4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
           <button type="button" className="hero-ghost" onClick={scrollToContact}>
             Get in touch
