@@ -165,7 +165,7 @@ function ProjectTile({ project, index, order, category }) {
         onKeyDown={openKeys(open)}
       >
         <div className={`project-tile-plate${project.backgroundImage ? ' has-art' : ''}`} aria-hidden="true">
-          {/* the sketch is always drawn; artwork, when present, develops over it on hover */}
+          {/* Artwork is the default cover; hover or keyboard focus reveals the animated sketch. */}
           <ProjectGlyph glyph={project.glyph} seed={project.title} />
           {project.backgroundImage && (
             <img

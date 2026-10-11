@@ -2107,40 +2107,36 @@ section { position: relative; z-index: 1; }
 }
 .project-tile:hover .project-tile-plate .glyph { transform: scale(1.04); }
 
-/* artwork develops over the sketch on hover (always shown on touch) */
+/* Artwork is the cover; hover/focus reveals a brief project sketch. */
 .project-tile-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  filter: saturate(0.6) sepia(0.25) brightness(0.8);
-  transform: scale(1.06);
-  transition:
-    opacity var(--dur-slow) var(--ease),
-    filter var(--dur-slow) var(--ease),
-    transform var(--dur-slow) var(--ease);
+  opacity: 1;
+  transition: opacity var(--dur-slow) var(--ease);
 }
 .project-tile-plate.has-art::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0;
+  opacity: 1;
+  pointer-events: none;
   background: linear-gradient(to bottom, rgba(5, 5, 5, 0.7), transparent 30%, transparent 60%, rgba(5, 5, 5, 0.8));
   transition: opacity var(--dur-slow) var(--ease);
 }
-.project-tile:hover .project-tile-image,
-.project-tile:focus-visible .project-tile-image { opacity: 1; filter: none; transform: scale(1); }
-.project-tile:hover .has-art::after,
-.project-tile:focus-visible .has-art::after { opacity: 1; }
-.project-tile:hover .has-art .glyph,
-.project-tile:focus-visible .has-art .glyph { opacity: 0; }
 .project-tile-plate .glyph { transition: transform var(--dur-slow) var(--ease), opacity var(--dur) var(--ease); }
-@media (hover: none) {
-  .project-tile-image { opacity: 1; filter: none; transform: none; }
-  .project-tile-plate.has-art::after { opacity: 1; }
-  .project-tile-plate.has-art .glyph { display: none; }
+.project-tile-plate.has-art .glyph { opacity: 0; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .project-tile:hover .project-tile-image,
+  .project-tile:hover .has-art::after { opacity: 0; }
+  .project-tile:hover .has-art .glyph { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .project-tile:focus-visible .project-tile-image,
+  .project-tile:focus-visible .has-art::after { opacity: 0; }
+  .project-tile:focus-visible .has-art .glyph { opacity: 1; }
 }
 
 .project-tile-fig, .project-tile-kind {
