@@ -231,12 +231,12 @@ function Projects() {
         <div className={`projects-collection${expanded ? ' is-open' : ''}`}>
           <div className="projects-collection-head">
             <div className="projects-collection-copy">
-              <span className="projects-more-label">Beyond the highlights · The archive</span>
+              <span className="projects-more-label">More projects</span>
               <h3 className="projects-collection-title">
                 Project collection <span>{String(rest.length).padStart(2, '0')}</span>
               </h3>
               <p className="projects-collection-hint">
-                Apps, experiments, and the ideas in between, each one sketched as a plate. Pick a shelf to explore.
+                Class projects, side projects, and experiments, grouped by type. Pick a category to browse.
               </p>
             </div>
             <button

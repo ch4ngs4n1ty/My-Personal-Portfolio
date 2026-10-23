@@ -12,7 +12,7 @@ const SUGGESTED = [
 ];
 
 const GREETING =
-  "Hi — I'm Ethan's portfolio assistant. Ask me anything about his projects, experience, or skills.";
+  "Hi, I'm Ethan's portfolio assistant. Ask me anything about his projects, experience, or skills.";
 
 function PortfolioChat() {
   const [messages, setMessages] = useState([{ role: 'assistant', content: GREETING }]);
@@ -127,7 +127,7 @@ function PortfolioChat() {
       <div className="chat-shell reveal">
         <div className="chat-rail" aria-hidden="true">
           <span className="chat-dot" />
-          <span className="chat-rail-label">AI · trained on this portfolio</span>
+          <span className="chat-rail-label">AI · answers from this portfolio</span>
         </div>
 
         <WorkInProgress

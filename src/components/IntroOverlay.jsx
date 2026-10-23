@@ -25,7 +25,7 @@ function IntroOverlay({ onComplete }) {
         <div className={`intro-line1${showLine1 ? ' show' : ''}`}>ETHAN CHANG</div>
         <div className={`intro-line2${showLine2 ? ' show' : ''}`}>Computer Science · RIT</div>
         <div className={`intro-bar${showBar ? ' show' : ''}`}></div>
-        <div className={`intro-line3${showLine3 ? ' show' : ''}`}>Initializing portfolio…</div>
+        <div className={`intro-line3${showLine3 ? ' show' : ''}`}>Class of 2027</div>
       </div>
     </div>
   );

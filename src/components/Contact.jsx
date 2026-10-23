@@ -30,12 +30,12 @@ function Contact() {
       <div className="contact-grid">
         <div>
           <h3 className="contact-heading reveal">
-            <span>Let's</span>
-            <em>build</em>
-            <span>together</span>
+            <span>Open to</span>
+            <em>full-time</em>
+            <span>roles</span>
           </h3>
           <p className="contact-sub reveal">
-            I graduate in May 2027 and I'm looking for full-time roles in software engineering, data, and AI starting Summer 2027. If you think I'd be a good fit, or you just want to talk about one of my projects, send me an email.
+            I graduate in May 2027 and can start in Summer 2027, in software engineering, data, or AI. If you think I'd be a good fit, or you just want to talk about one of my projects, send me an email.
           </p>
           <div className="contact-links reveal">
             <a href="mailto:echang0970@gmail.com" className="contact-link">

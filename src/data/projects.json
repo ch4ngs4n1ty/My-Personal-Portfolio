@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "PlayIQ — Sports Analytics Dashboard",
+    "title": "PlayIQ: Sports Analytics Dashboard",
     "tech": [
       "JavaScript",
       "React",
@@ -9,7 +9,7 @@
       "XGBoost"
     ],
     "duration": "March 2026 - Present",
-    "description": "Built a multi-sport analytics dashboard covering MLB, NBA, WNBA, NFL, NHL and NCAAB, with per-game deep dives across matchup, form, roster and sport-specific modeling tabs. Engineered transparent projection models — Log5 batter-vs-pitcher matchups, Binomial and Poisson distributions, additive scoring — where every output carries a methodology entry naming its source, inputs and formula. Trained an XGBoost model for MLB first-five-innings outcomes offline via a GitHub Actions workflow, and integrated Claude for context-aware game analysis.",
+    "description": "A sports analytics dashboard for MLB, NBA, WNBA, NFL, NHL, and NCAAB, with matchup, form, roster, and modeling tabs for each game. The projections use Log5 batter-vs-pitcher matchups, Binomial and Poisson distributions, and additive scoring, and every number shows its data source, inputs, and formula. An XGBoost model for MLB first-five-innings outcomes is trained offline in a GitHub Actions workflow, and the Claude API adds written game analysis.",
     "tools": [
       "JavaScript",
       "React 18",
@@ -25,7 +25,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/Sports-Data-Visualization",
     "backgroundImage": "/images/playiq-data-editorial.png",
     "insights": {
-      "summary": "A dark-mode sports intelligence dashboard built deliberately without a build step — React 18 and Babel Standalone from a CDN, and a pure Node http/https backend with zero npm dependencies. The design goal was transparency: apart from one XGBoost model, every projection is inspectable arithmetic that explains where its number came from.",
+      "summary": "A sports analytics dashboard with no build step: React 18 and Babel Standalone load from a CDN, and the backend uses only Node's built-in http/https modules, with no npm dependencies. Apart from one XGBoost model, every projection is plain arithmetic, and each one shows where its number came from.",
       "metrics": [
         {
           "value": "125",
@@ -41,25 +41,25 @@
         }
       ],
       "highlights": [
-        "Designed a slate-triage system that badges games (HOT PLAY / LEAN / LOOK / FADE) so the highest-signal matchups surface before drilling in",
-        "Built an Edge Finder using Log5 matchup math with per-player threshold projections across MLB, NBA and WNBA",
-        "Implemented a live MLB feed with scoreboard, base state, measured pitch locations and play-by-play on a 10-second cache floor",
-        "Added streaming MLB and NFL live feeds with win-probability indicators, an NFL field and stadium view, and an NFL Edge Finder built on last-5 and career-vs-opponent splits",
-        "Automated offline model training through a CI workflow so the first-5-innings model retrains without touching the runtime",
-        "Kept every non-ML score attached to a `why` string naming its endpoint, inputs and formula"
+        "Badged each day's games as HOT PLAY, LEAN, LOOK, or FADE so the strongest matchups show up first",
+        "Built an Edge Finder that uses Log5 matchup math to project per-player thresholds for MLB, NBA, and WNBA",
+        "Built a live MLB feed with the scoreboard, base runners, pitch locations, and play-by-play, refreshed at most every 10 seconds",
+        "Added live MLB and NFL feeds with win probability, an NFL field and stadium view, and an NFL Edge Finder based on last-5 and career-vs-opponent splits",
+        "Moved model training into a GitHub Actions workflow, so the first-five-innings model retrains without touching the live site",
+        "Gave every non-ML score a \"why\" note naming its API endpoint, inputs, and formula"
       ]
     },
     "artifacts": [
       {
         "type": "image",
         "src": "/images/playiq-screenshot.png",
-        "alt": "PlayIQ dashboard — sport selection with live data indicators"
+        "alt": "PlayIQ dashboard: sport selection with live data indicators"
       }
     ]
   },
   {
     "id": 2,
-    "title": "Chroma — U-Fund Crowdfunding Platform",
+    "title": "Chroma: U-Fund Crowdfunding Platform",
     "tech": [
       "Angular",
       "Spring Boot",
@@ -67,7 +67,7 @@
       "REST API"
     ],
     "duration": "August 2025 - December 2025",
-    "description": "Built a full-stack charitable crowdfunding platform with a team of four, where donors browse funding Needs, group them into Bundles, manage a shopping cart and maintain recurring Subscriptions. Implemented the Java REST API across layered controller, model and DAO tiers with file-backed persistence, and the Angular front-end covering authentication, dashboard, search, detail views and checkout. Backed the API with a JUnit suite spanning controller, model and persistence layers.",
+    "description": "A charity crowdfunding site built by a team of four. Donors browse funding needs, group them into bundles, check out from a cart, and set up recurring subscriptions. The back end is a Spring Boot REST API split into controller, model, and DAO layers with file-based storage, and the Angular front end covers login, the dashboard, search, detail pages, and checkout. A JUnit suite tests all three back-end layers.",
     "tools": [
       "Angular",
       "Spring Boot",
@@ -77,13 +77,13 @@
       "JUnit",
       "REST API",
       "GitHub",
-      "Agile/Scrum methodologies"
+      "Agile / Scrum"
     ],
     "githubUrl": "https://github.com/ch4ngs4n1ty/Chroma",
     "backgroundImage": "/images/chroma-shared-connection.png",
     "artifacts": [],
     "insights": {
-      "summary": "A four-person Agile project structured around a clean separation of concerns: Angular components talk to a Spring REST API, which routes through controllers to a DAO persistence layer, so storage can change without touching business logic. The API ships with a JUnit suite covering all three tiers.",
+      "summary": "A four-person Agile team project. Angular components call a Spring Boot REST API, requests go through controllers to a DAO layer, and because each DAO sits behind an interface, storage can be swapped without changing the controllers. JUnit tests cover the controller, model, and persistence layers.",
       "metrics": [
         {
           "value": "223",
@@ -99,10 +99,10 @@
         }
       ],
       "highlights": [
-        "Designed five domain resources — Needs, Bundles, Shopping Cart, Subscriptions and Users — each with its own controller, model and DAO",
-        "Built 15 Angular components covering login/register, dashboard, needs and subscription search, detail views and checkout",
-        "Separated DAO interfaces from file-backed implementations so persistence is swappable without changing controllers",
-        "Wrote JUnit coverage across controller, model and persistence tiers",
+        "Designed five resources (needs, bundles, shopping cart, subscriptions, and users), each with its own controller, model, and DAO",
+        "Built 15 Angular components covering login and registration, the dashboard, needs and subscription search, detail views, and checkout",
+        "Put each DAO behind an interface, so the file-based storage can be replaced without changing the controllers",
+        "Wrote JUnit tests for the controller, model, and persistence layers",
         "Configured CORS and environment-specific API endpoints for local development"
       ]
     }
@@ -114,19 +114,20 @@
       "Python",
       "SQL",
       "Pandas",
-      "Scikit-learn"
+      "scikit-learn"
     ],
-    "duration": "June 2025 - September 2025",
+    "duration": "May 2025 - July 2025",
     "program": "AIBIDS Program",
-    "description": "Accessed UPMC database of de-identified ACLR patients (2013-2021) for predictive modeling. Executed complex SQL queries with CTEs and LEFT JOINs to aggregate clinical datasets. Built logistic regression models using Social Determinants of Health (SDoH) factors to predict unplanned surgery needs.",
+    "description": "A research project at the University of Pittsburgh's AIBIDS program on predicting which ACL reconstruction (ACLR) patients will need an unplanned surgery afterward. I pulled pre-surgery clinical notes from a UPMC database of de-identified patients (2013-2021) with SQL, used an LLM to classify activity level from the notes, and evaluated activity level as a predictor alongside social determinants of health (SDoH) in logistic regression models.",
     "tools": [
       "Python",
       "SQL",
       "Pandas",
       "Jupyter Notebook",
-      "LLMs",
+      "LLMs (DeepSeek-R1 14B)",
       "Prompt Engineering",
-      "Scikit-learn",
+      "Text Embeddings",
+      "scikit-learn",
       "PostgreSQL",
       "Matplotlib"
     ],
@@ -136,9 +137,32 @@
       {
         "type": "image",
         "src": "/images/aclr-poster.png",
-        "alt": "Research poster — Enhancing Prediction of Unplanned Surgeries After ACL Reconstruction: Evaluating the Role of Activity Level Among SDoH Factors"
+        "alt": "Research poster: Enhancing Prediction of Unplanned Surgeries After ACL Reconstruction: Evaluating the Role of Activity Level Among SDoH Factors"
       }
-    ]
+    ],
+    "insights": {
+      "metrics": [
+        {
+          "value": "5,000+",
+          "label": "Patient records"
+        },
+        {
+          "value": "464",
+          "label": "Clinical notes"
+        },
+        {
+          "value": "0.89",
+          "label": "F1 on elite athletes"
+        }
+      ],
+      "highlights": [
+        "Surfaced risk patterns in 5,000+ de-identified patient records to inform the predictive model",
+        "Extracted 464 pre-surgery clinical notes using SQL CTEs, joins, and embeddings",
+        "Classified activity levels with DeepSeek-R1 14B, reaching 0.89 F1 on elite athletes with 6 batches of hand-annotated examples",
+        "Built logistic regression models in scikit-learn to predict unplanned surgery from SDoH factors",
+        "Presented a research poster on activity level as an SDoH predictor to faculty, peers, and stakeholders"
+      ]
+    }
   },
   {
     "id": 4,
@@ -151,7 +175,7 @@
       "Docker"
     ],
     "duration": "April 2026 - May 2026",
-    "description": "Built a TypeScript and Express service that scores whether a well-known stock is in a dip worth researching further. Integrated Finnhub for quotes, candles and company news with an Alpha Vantage fallback, and computed RSI locally from candle closes when the upstream indicator endpoint was unavailable. Implemented a capped 100-point rule-based scoring model that weighs dip depth against SMA50, RSI and news sentiment, then labels each result GOOD DIP, WATCH or AVOID.",
+    "description": "A TypeScript and Express API that scores whether a well-known stock's dip is worth a closer look. It pulls quotes, candles, and company news from Finnhub, falls back to Alpha Vantage for candles, and computes RSI itself when the provider's indicator endpoint isn't available. A 100-point rule-based score weighs dip depth against the 50-day moving average, RSI, and news sentiment, then labels the stock GOOD DIP, WATCH, or AVOID.",
     "tools": [
       "TypeScript",
       "Express",
@@ -167,7 +191,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/Stock-Market-Analysis",
     "backgroundImage": "",
     "insights": {
-      "summary": "A deliberately conservative screening API: it flags stocks worth a closer look rather than claiming any is a buy, and it leaves out valuation, full fundamentals and analyst ratings instead of pretending to model them. The scoring rules are fixed and published, so any label can be traced back to the four inputs that produced it.",
+      "summary": "A stock screening API that flags dips worth researching. It doesn't try to model valuation, fundamentals, or analyst ratings. The scoring rules are fixed and documented, so every label traces back to the four inputs behind it.",
       "metrics": [
         {
           "value": "4",
@@ -183,11 +207,11 @@
         }
       ],
       "highlights": [
-        "Designed a transparent 100-point scoring model: dip depth (30), price above SMA50 (25), RSI below 35 (20), and absence of bad-news keywords (25)",
-        "Built an Alpha Vantage fallback path for historical candles when Finnhub restricts the endpoint on free-tier keys",
-        "Calculated RSI locally from candle closes rather than depending on a provider indicator endpoint",
-        "Added a response cache and normalizer layer to keep third-party rate limits from reaching the scoring path",
-        "Containerized the service with Docker Compose alongside a seeded PostgreSQL instance"
+        "Scored stocks out of 100: dip depth (30), price above the 50-day SMA (25), RSI below 35 (20), and no bad-news keywords (25)",
+        "Fell back to Alpha Vantage for historical candles when Finnhub blocks that endpoint on free-tier keys",
+        "Calculated RSI from candle closing prices instead of relying on a provider's indicator endpoint",
+        "Added a response cache and a normalizing layer so third-party rate limits don't break scoring",
+        "Ran the service and a seeded PostgreSQL database together with Docker Compose"
       ]
     },
     "artifacts": []
@@ -195,7 +219,7 @@
   {
     "id": 5,
     "glyph": "schema",
-    "title": "Movie Database Management Systems",
+    "title": "Movie Database Management System",
     "tech": [
       "Python",
       "PostgreSQL",
@@ -203,7 +227,7 @@
       "SQL"
     ],
     "duration": "January 2025 - May 2025",
-    "description": "Built and deployed a PostgreSQL movie database and application using Python and SQL. Collaborated with a group of 5 to design and develop the database and application features. Developed a Python application with SSH tunneling for secure remote database access and management.",
+    "description": "A PostgreSQL movie database and Python application built with a team of five. An ETL pipeline cleans Kaggle datasets and loads them into a normalized schema, and the app connects to the remote database server over an SSH tunnel.",
     "tools": [
       "Python",
       "SQL",
@@ -225,7 +249,7 @@
       }
     ],
     "insights": {
-      "summary": "A team-of-five database project built around an ETL pipeline: raw Kaggle CSVs are cleaned and normalized, loaded into PostgreSQL under a designed relational schema, then queried through a Python application layer organized into auth, user, movie and collection modules.",
+      "summary": "A five-person database project. Raw Kaggle CSVs are cleaned and loaded into a normalized PostgreSQL schema, and a Python app with auth, user, movie, and collection modules runs queries against it.",
       "metrics": [
         {
           "value": "189",
@@ -241,11 +265,11 @@
         }
       ],
       "highlights": [
-        "Designed a normalized relational schema supporting search, analytics and queries like top-rated films, genre breakdown and actor co-appearances",
-        "Built an ETL pipeline ingesting and cleaning Kaggle CSV datasets before load",
-        "Structured the application into auth, user, movie and collection modules over a shared connection layer",
+        "Designed a normalized schema that supports search and queries like top-rated films, genre breakdowns, and actor co-appearances",
+        "Built an ETL pipeline that cleans Kaggle CSV datasets before loading them",
+        "Organized the app into auth, user, movie, and collection modules over a shared connection layer",
         "Used SSH tunneling for secure remote access to the database server",
-        "Documented Docker and manual setup paths so the project runs locally either way"
+        "Documented both Docker and manual setup so the project runs locally either way"
       ]
     }
   },
@@ -260,7 +284,7 @@
       "Cryptography"
     ],
     "duration": "January 2026 - April 2026",
-    "description": "Built a peer-to-peer encrypted chat application in C# with a team of four, where every node runs as both server and client in a TCP mesh. Owned peer discovery and resilient connections: UDP broadcast announcements every 5 seconds with 30-second eviction of silent peers, a heartbeat monitor that flags connections after 15 seconds of silence, and exponential-backoff reconnection. Every message is AES-256 encrypted with a per-peer session key exchanged over RSA-2048 and signed with RSA-SHA256.",
+    "description": "A peer-to-peer encrypted chat app in C#, built with a team of four, where every node is both a server and a client in a TCP mesh. I owned peer discovery and reconnection: UDP broadcasts every 5 seconds, dropping peers that go quiet for 30 seconds, a heartbeat check that flags a connection after 15 seconds of silence, and exponential-backoff reconnects. Each message is encrypted with AES-256 using a per-peer session key exchanged over RSA-2048, and signed with RSA-SHA256.",
     "tools": [
       "C#",
       ".NET 9",
@@ -273,7 +297,7 @@
     "githubUrl": "https://github.com/elc6696/Secure-Distributed-Messenger",
     "backgroundImage": "",
     "insights": {
-      "summary": "A decentralized, end-to-end encrypted console messenger built for CSCI 251 (Parallel and Distributed Systems) over three sprints. Each node runs parallel accept, receive, heartbeat, discovery and timeout loops, and messages are framed as length-prefixed JSON over full-duplex TCP.",
+      "summary": "An end-to-end encrypted console messenger with no central server, built for CSCI 251 (Parallel and Distributed Systems) over three sprints. Each node runs parallel accept, receive, heartbeat, discovery, and timeout loops, and messages are sent as length-prefixed JSON over full-duplex TCP.",
       "metrics": [
         {
           "value": "101",
@@ -289,9 +313,9 @@
         }
       ],
       "highlights": [
-        "Implemented UDP peer discovery broadcasting PEER:{id}:{port} on port 5001, with automatic TCP connection and key exchange to newly discovered peers",
-        "Broke simultaneous-connect races by letting only the lexicographically smaller peer ID initiate the connection",
-        "Built two independent failure-detection layers: 15-second heartbeat timeout and 30-second discovery eviction",
+        "Implemented UDP peer discovery broadcasting PEER:{id}:{port} on port 5001, then connecting and exchanging keys with each new peer over TCP",
+        "Prevented duplicate connections when two peers connect at once by letting only the peer with the smaller ID start the connection",
+        "Detected failures two ways: a 15-second heartbeat timeout and a 30-second discovery timeout",
         "Added exponential-backoff reconnection (1, 2, 4, 8, 16 s, capped at 30 s, five attempts)",
         "Secured traffic with an RSA-OAEP-wrapped AES-256-CBC session key per peer and RSA-SHA256 message signatures"
       ]
@@ -306,22 +330,22 @@
       "Python",
       "OpenCV",
       "MediaPipe",
-      "Scikit-learn"
+      "scikit-learn"
     ],
     "duration": "December 2025",
-    "description": "Co-built a computer-vision calculator that reads American Sign Language hand gestures from a webcam for numbers and operators, then evaluates the expression when a Done sign is shown. Built the vision layer: two-hand MediaPipe tracking with independent smoothing per hand, and a feature extractor that normalizes 21 hand landmarks for position and scale and detects which fingers are extended. Fed those features into a Random Forest classifier for real-time digit recognition.",
+    "description": "A calculator, built with a teammate, that reads American Sign Language numbers and operators from a webcam and evaluates the expression when you sign Done. I built the vision side: MediaPipe tracking for two hands with separate smoothing for each, and a feature extractor that normalizes the 21 hand landmarks for position and scale and detects which fingers are extended. A Random Forest classifier uses those features to recognize digits in real time.",
     "tools": [
       "Python",
       "OpenCV",
       "MediaPipe Hands",
-      "Scikit-learn",
+      "scikit-learn",
       "NumPy",
       "Random Forest"
     ],
     "githubUrl": null,
     "backgroundImage": "",
     "insights": {
-      "summary": "An accessibility-focused gesture calculator built with a teammate. Recognition runs as a pipeline: landmark tracking, normalized feature extraction, then classification, driven by a state machine that sequences number, operator, number until the Done gesture.",
+      "summary": "A gesture calculator built with a teammate. Recognition runs in three steps: landmark tracking, feature extraction, and classification. A state machine walks through number, operator, number until it sees the Done sign.",
       "metrics": [
         {
           "value": "21",
@@ -356,7 +380,7 @@
       "Concurrency"
     ],
     "duration": "February 2026",
-    "description": "Diagnosed and repaired race conditions across five intentionally broken concurrent C# components — a bank ledger, counter, cache, logger and queue. Traced each defect to its specific non-atomic read-modify-write sequence and shared mutable state, then selected the narrowest correct fix for each case rather than applying a blanket lock. Documented every bug with its location, the threading interleaving that triggers it, the applied fix, and why that fix restores correctness.",
+    "description": "Found and fixed race conditions in five intentionally broken C# components: a bank ledger, a counter, a cache, a logger, and a queue. Each bug came down to a non-atomic read-modify-write on shared state, and each got the smallest fix that made it correct instead of one big lock. Every bug is written up with where it is, the thread interleaving that triggers it, the fix, and why the fix works.",
     "tools": [
       "C#",
       ".NET 8",
@@ -369,7 +393,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/Bank-Race-Condition-Detective",
     "backgroundImage": "",
     "insights": {
-      "summary": "An exercise in reading concurrent code for what it actually compiles to rather than what it looks like. The core insight repeated across the bugs: operations that read as single statements — `_count++`, or assigning a computed balance — are read-modify-write sequences that two threads can interleave, silently losing one update.",
+      "summary": "A concurrency debugging assignment. The same lesson kept coming up: lines that look like one step, like _count++ or assigning a new balance, are really a read, a change, and a write, and two threads can interleave them and lose an update.",
       "metrics": [
         {
           "value": "15/15",
@@ -386,17 +410,17 @@
       ],
       "highlights": [
         "Verified every fix against a randomized harness: 10/10 trials passing on all five components, 15/15 points",
-        "Identified lost updates in bank deposit/withdraw from non-atomic read-modify-write on shared balance state",
-        "Replaced `_count++` with `Interlocked.Increment` to make the increment a single atomic instruction instead of paying for a full lock",
-        "Matched each fix to its failure mode — locks where a critical section spans multiple operations, interlocked primitives where one word is updated",
-        "Wrote a structured analysis for every bug covering location, shared state, why it fails, the fix, and why the fix holds"
+        "Found lost updates in the bank's deposit and withdraw methods caused by non-atomic updates to the shared balance",
+        "Replaced _count++ with Interlocked.Increment, which makes the increment atomic without a full lock",
+        "Used locks where a critical section spans several operations, and Interlocked operations where only one value changes",
+        "Wrote up every bug: location, shared state, why it fails, the fix, and why the fix holds"
       ]
     },
     "artifacts": [
       {
         "type": "image",
         "src": "/images/race-demo.svg",
-        "alt": "Race Condition Detective verification harness — all five components fixed"
+        "alt": "Race Condition Detective verification harness, all five components fixed"
       }
     ]
   },
@@ -408,7 +432,7 @@
       "C"
     ],
     "duration": "Sep 2024 - Oct 2024",
-    "description": "Designed and implemented a C-based wildfire simulation modeling probabilistic fire propagation across a grid-based forest. Developed probabilistic fire spread algorithms incorporating neighbor states, tree density, and burn probability with Fisher–Yates random initialization. Enhanced simulation performance and accuracy through iterative debugging, modular refactoring, and thorough documentation.",
+    "description": "A wildfire simulation in C where fire spreads probabilistically across a grid of trees. Whether a tree catches fire depends on its burning neighbors, the forest density, and a burn probability, and trees are placed with a Fisher-Yates shuffle.",
     "tools": [
       "C",
       "GCC",
@@ -429,7 +453,7 @@
       }
     ],
     "insights": {
-      "summary": "A grid-based cellular simulation where fire spreads probabilistically from burning cells to neighboring trees. Every parameter — grid size, tree density, catch probability, initial burn proportion and the neighbor threshold that influences ignition — is set at the command line, so different fire regimes can be compared directly. Compiles clean under -Wall -Wextra -pedantic.",
+      "summary": "A grid-based fire spread simulation in C. Every parameter (grid size, tree density, catch probability, initial burn proportion, and the neighbor threshold for ignition) is set on the command line, so different fire conditions are easy to compare. It compiles cleanly with -Wall -Wextra -pedantic.",
       "metrics": [
         {
           "value": "26",
@@ -445,11 +469,11 @@
         }
       ],
       "highlights": [
-        "Implemented probabilistic spread where ignition depends on the proportion of burning neighbors against a configurable threshold",
-        "Built two display modes: an overlay mode that redraws in place and a print mode that emits N discrete time steps",
-        "Tracked per-cycle and cumulative state changes to detect when the simulation reaches equilibrium",
-        "Used Fisher–Yates shuffling for unbiased random placement of trees across the grid",
-        "Separated grid simulation from rendering into distinct modules built via Makefile"
+        "Implemented probabilistic spread where ignition depends on the share of burning neighbors against a configurable threshold",
+        "Built two display modes: an overlay mode that redraws in place and a print mode that outputs N time steps",
+        "Tracked per-cycle and total state changes to detect when the fire stops spreading",
+        "Used a Fisher-Yates shuffle for unbiased random placement of trees across the grid",
+        "Separated the simulation from the display code into modules built with a Makefile"
       ]
     }
   },
@@ -464,7 +488,7 @@
       "DFS"
     ],
     "duration": "June 2025",
-    "description": "Implemented and compared BFS, DFS and A* search over a US state-capital road network loaded from external city and edge datasets. Built an A* heuristic using straight-line distance between coordinates to guide expansion toward the goal, and structured the search layer so each algorithm shares a common graph representation. Benchmarked the three strategies on identical routes to measure path quality against search effort.",
+    "description": "BFS, DFS, and A* search in Java, compared on a road network of US state capitals loaded from city and edge data files. A* uses straight-line distance between coordinates as its heuristic, and all three algorithms share one graph so they run on identical routes.",
     "tools": [
       "Java",
       "A* Search",
@@ -478,7 +502,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/AI-Path-Algorithm-Project",
     "backgroundImage": "",
     "insights": {
-      "summary": "A direct comparison of three classical search strategies on the same weighted graph. Running Olympia to Tallahassee makes the trade-off concrete: A* matches BFS on hop count but returns a route 1,055 miles shorter, while DFS wanders to 19 hops and 8,292 miles.",
+      "summary": "Three classic search algorithms on the same weighted graph. From Olympia to Tallahassee, A* and BFS both take 8 hops, but A*'s route is 1,055 miles shorter. DFS takes 19 hops and 8,292 miles.",
       "metrics": [
         {
           "value": "4751 mi",
@@ -494,10 +518,10 @@
         }
       ],
       "highlights": [
-        "Measured on Olympia to Tallahassee: A* 8 hops / 4751 mi, BFS 8 hops / 5806 mi, DFS 19 hops / 8292 mi",
+        "Measured on Olympia to Tallahassee: A* 8 hops / 4,751 mi, BFS 8 hops / 5,806 mi, DFS 19 hops / 8,292 mi",
         "Implemented A* with a straight-line-distance heuristic over geographic city coordinates",
         "Loaded the road network from separate city and edge data files into a shared graph structure",
-        "Designed a common search interface so BFS, DFS and A* run against identical inputs for fair comparison"
+        "Gave BFS, DFS, and A* a common search interface so they run on identical inputs"
       ]
     },
     "artifacts": [
@@ -517,7 +541,7 @@
       "JavaFX"
     ],
     "duration": "April 2024 - May 2024",
-    "description": "Developed Astros and Hoppers, an interactive Java puzzle game with custom mechanics and logic-driven challenges. Partnered to implement a BFS-based shortest-path system that powers core gameplay decisions and guarantees correct pathfinding behavior. Built the JavaFX game board UI and integrated department-provided image assets for a polished player experience, while supporting both GUI and PTUI (text-based) interaction via the command line.",
+    "description": "Two Java puzzle games, Hoppers and Astros, built with a partner for RIT's Computer Science II course. Hoppers is a frog-jumping puzzle, and in Astros you move explorers to guide an astronaut home. Both use a shared breadth-first search solver to find the shortest solution, and both can be played in a JavaFX window or as a text interface.",
     "tools": [
       "Java",
       "JavaFX",
@@ -528,7 +552,28 @@
     ],
     "githubUrl": "https://github.com/ch4ngs4n1ty/Hoppers-and-Astros-Project",
     "backgroundImage": "/images/astros-hoppers-puzzle-worlds.png",
-    "artifacts": []
+    "artifacts": [],
+    "insights": {
+      "metrics": [
+        {
+          "value": "2",
+          "label": "Puzzle games"
+        },
+        {
+          "value": "2",
+          "label": "Interfaces (GUI + text)"
+        },
+        {
+          "value": "~3.4k",
+          "label": "Lines of Java"
+        }
+      ],
+      "highlights": [
+        "Built each game with a model that notifies both a JavaFX GUI and a text interface through the Observer pattern",
+        "Solved puzzles with a shared breadth-first search that returns the shortest sequence of moves",
+        "Added hint, load, select, and reset commands so players can step through a puzzle or load a new one from a file"
+      ]
+    }
   },
   {
     "id": 10,
@@ -540,7 +585,7 @@
       "Simulation"
     ],
     "duration": "June 2025 - July 2025",
-    "description": "Built a Hawk-Dove simulation in Python to explore how Evolutionarily Stable Strategies emerge from simple encounter rules. Modeled a configurable population competing over a finite resource where hawk aggression carries a survival cost, driven through an interactive menu that supports stepping through single encounters or running batches of 1,000 to 10,000 interactions. Exposed population size, hawk percentage, resource amount and hawk cost as command-line parameters to make equilibrium conditions directly testable.",
+    "description": "A Hawk-Dove simulation in Python that shows how an evolutionarily stable strategy emerges from simple encounter rules. Hawks and doves compete over a fixed resource, and aggression has a survival cost for hawks. A menu lets you step through single encounters or run 1,000 to 10,000 at once, and population size, hawk percentage, resource amount, and hawk cost are all command-line options.",
     "tools": [
       "Python 3.12",
       "Game Theory",
@@ -552,7 +597,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/Game-Theory----ESS-Simulation",
     "backgroundImage": "",
     "insights": {
-      "summary": "A parameter-driven study of the classic Hawk-Dove game. The simulation makes the central result tangible: the stable strategy mix is governed by the ratio of hawk cost to resource value, not by how many hawks start in the population — when cost exceeds the resource, aggression collapses regardless of its initial share.",
+      "summary": "A simulation of the classic Hawk-Dove game. The main result: the stable mix of strategies depends on the hawk cost compared with the resource value, not on how many hawks there are at the start. When the cost is higher than the resource, hawks die out no matter how many there were.",
       "metrics": [
         {
           "value": "10k",
@@ -568,11 +613,11 @@
         }
       ],
       "highlights": [
-        "Verified the core ESS result at runtime: with resource 50 and hawk cost 100, hawk-hawk encounters kill both participants while dove pairs split +25 each",
-        "Modeled hawk-hawk, hawk-dove and dove-dove encounters with distinct payoff and survival outcomes",
-        "Demonstrated that hawk cost relative to resource amount drives equilibrium more than initial hawk percentage",
-        "Exposed every simulation variable as a command-line argument with sensible defaults for reproducible runs",
-        "Separated individual, simulation and entry-point concerns into distinct modules"
+        "Verified the core ESS result at runtime: with resource 50 and hawk cost 100, hawk-hawk encounters kill both hawks while dove pairs split +25 each",
+        "Modeled hawk-hawk, hawk-dove, and dove-dove encounters with different payoffs and survival outcomes",
+        "Showed that hawk cost relative to the resource drives the equilibrium more than the starting hawk percentage",
+        "Made every simulation variable a command-line argument with defaults, so runs are reproducible",
+        "Split the code into individual, simulation, and entry-point modules"
       ]
     },
     "artifacts": [
@@ -593,7 +638,7 @@
       "Rojo"
     ],
     "duration": "May 2026",
-    "description": "Developed a multiplayer reaction-time racing game for Roblox where players advance along a ten-line track by tapping within a timed window after a randomized flash. Implemented the authoritative server game loop handling countdown, intermission, flash scheduling and win detection, paired with a separate client script for input and feedback. Centralized all tuning — flash windows, cooldowns, track geometry, lane spacing and monetization IDs — into a single shared configuration module.",
+    "description": "A multiplayer Roblox racing game where you move forward on a ten-line track by tapping in time after a random flash. The server runs the game loop (intermission, countdown, flash timing, and win detection), and a client script handles input and feedback. All tuning values, from flash windows and cooldowns to track layout and game pass IDs, live in one shared config module.",
     "tools": [
       "Lua",
       "Roblox Studio",
@@ -605,7 +650,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/Reaction-Timing-Racing-Game",
     "backgroundImage": "",
     "insights": {
-      "summary": "A server-authoritative multiplayer game built with an external toolchain rather than inside Roblox Studio — Rojo syncs a real filesystem project into the engine, so the code lives in version control like any other repository. Game feel is driven entirely by a single config module, making balance changes a one-line edit.",
+      "summary": "A server-authoritative multiplayer game written outside Roblox Studio. Rojo syncs the project files into the engine, so the code lives in Git like any other repository, and balance changes are one-line edits to the config module.",
       "metrics": [
         {
           "value": "8",
@@ -621,10 +666,10 @@
         }
       ],
       "highlights": [
-        "Built a server-authoritative loop covering intermission, countdown, randomized flash timing and win detection",
-        "Split responsibilities across ServerScriptService, StarterPlayerScripts and a shared ReplicatedStorage module",
-        "Randomized flash intervals within a tuned delay range so players cannot pattern-match the timing",
-        "Designed gamepass abilities (Reflex Boost extending the tap window, Eliminator with a cooldown) around the core timing mechanic",
+        "Built a server-authoritative loop covering intermission, countdown, randomized flash timing, and win detection",
+        "Split the code across ServerScriptService, StarterPlayerScripts, and a shared ReplicatedStorage module",
+        "Randomized flash intervals within a tuned range so players cannot memorize the timing",
+        "Designed game pass abilities (Reflex Boost extends the tap window; Eliminator has a cooldown) around the timing mechanic",
         "Used Rojo and Aftman to keep the project in version control instead of inside Roblox Studio"
       ]
     },
@@ -640,7 +685,7 @@
       "Makefile"
     ],
     "duration": "October 2024 - November 2024",
-    "description": "Wrote an interpreter in C that reads postfix expressions, builds an expression tree, evaluates it and prints the equivalent infix form. Implemented a linked-list token stack, a symbol table loaded from a file for named variables, and interior and leaf tree nodes supporting arithmetic, modulo, conditional and assignment operators. Added parse and evaluation error handling and debugged the program to be free of memory leaks.",
+    "description": "An interpreter in C that reads postfix expressions, builds an expression tree, evaluates it, and prints the infix form. It uses a linked-list stack, a symbol table loaded from a file for named variables, and tree nodes for arithmetic, modulo, conditional, and assignment operators. It reports parse and evaluation errors and runs without memory leaks.",
     "tools": [
       "C",
       "GCC",
@@ -684,7 +729,7 @@
       "Matplotlib"
     ],
     "duration": "October 2025",
-    "description": "Built a decision-cascade classifier from scratch in Python and R that separates two classes using two numeric features. Wrote a recursive tree builder that searches every candidate threshold on each feature, scores splits with a custom cost function balancing node size against purity, and emits the trained model as a standalone Python classify() function. Tuned the purity weight across a range of values for the best accuracy and plotted the resulting decision boundaries.",
+    "description": "A decision-cascade classifier written from scratch in Python and R that separates two classes using two numeric features. The tree builder tries every threshold on each feature, scores splits with a cost function that balances node size against purity, and writes the trained model out as a standalone Python classify() function. I tuned the purity weight for the best accuracy and plotted the decision boundaries.",
     "tools": [
       "Python",
       "R",
@@ -694,7 +739,7 @@
     "githubUrl": "https://github.com/ch4ngs4n1ty/Better-Decision-Trees",
     "backgroundImage": "",
     "insights": {
-      "summary": "A CSCI 420 (Data Mining) project that generates code: training produces a nested if/else classifier that runs without the training program.",
+      "summary": "A CSCI 420 (Data Mining) project. Training outputs a nested if/else classifier that runs without the training program.",
       "metrics": [
         {
           "value": "2",
@@ -726,7 +771,7 @@
       "Python",
       "NumPy",
       "Pandas",
-      "Scikit-learn"
+      "scikit-learn"
     ],
     "duration": "November 2025",
     "description": "Segmented shopping-cart data across 20 product categories by computing the covariance matrix and its eigendecomposition by hand to perform PCA. Chose the number of components from a cumulative explained-variance plot, projected the data onto the top two principal components, and ran K-Means in that space. Mapped the cluster centers back to the original 20 categories to describe what each customer segment buys.",
@@ -734,7 +779,7 @@
       "Python",
       "NumPy",
       "Pandas",
-      "Scikit-learn",
+      "scikit-learn",
       "Matplotlib"
     ],
     "githubUrl": "https://github.com/ch4ngs4n1ty/PCA-and-K-Means",
@@ -805,7 +850,7 @@
       "highlights": [
         "Combined dozens of per-station CSV files into one dataset",
         "Evaluated false-positive and false-negative rates at every candidate threshold",
-        "Picked lane changes with a threshold of 2 as the lowest-error rule and shipped it as a reusable script"
+        "Picked lane changes with a threshold of 2 as the lowest-error rule and saved it as a reusable script"
       ]
     },
     "artifacts": []

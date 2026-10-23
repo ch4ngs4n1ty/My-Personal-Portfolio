@@ -14,6 +14,9 @@ import Tools from './components/Tools';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
+// The chat assistant is still being built; flip this to bring it back.
+const SHOW_CHAT = false;
+
 function useReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,7 +67,7 @@ function App() {
       <main id="main">
         <Header />
         <Constellation />
-        <PortfolioChat />
+        {SHOW_CHAT && <PortfolioChat />}
 
         <About />
 

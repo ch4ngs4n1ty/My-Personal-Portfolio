@@ -6,7 +6,7 @@
     "duration": "May 2026 - Present",
     "location": "Remote - Part-time",
     "current": true,
-    "summary": "Started as a full-time R&D intern onsite in Albuquerque for the summer, and was offered an extension to stay on as a year-round intern, now working part-time and remotely alongside my studies at RIT.",
+    "summary": "I started as a full-time R&D intern in Albuquerque for the summer and was offered an extension to stay on year-round. I now work part-time and remotely while finishing my degree at RIT.",
     "roles": [
       {
         "title": "Year-Round R&D Intern",
@@ -31,12 +31,10 @@
       "detail": "Purpose-Driven category, for my contributions during the internship"
     },
     "skills": [
-      "Research",
-      "Scientific Data",
       "Simulation",
+      "Scientific Data",
       "Software Development",
-      "Collaboration",
-      "Remote Work"
+      "Research"
     ],
     "logo": "/images/snl.png",
     "url": "https://www.sandia.gov/"
@@ -47,13 +45,13 @@
     "company": "NTID Learning Center - Rochester Institute of Technology",
     "duration": "September 2025 - Present",
     "location": "Rochester, NY - Onsite",
-    "summary": "Provide individualized and group tutoring on programming concepts across Python, Java, and Excel. Adapt teaching approaches to diverse learning styles using ASL and spoken communication to support Deaf and hard-of-hearing students, while reinforcing computational thinking and debugging strategies.",
+    "summary": "I tutor students one-on-one and in groups in Python, Java, and Excel, with a focus on debugging and computational thinking. I teach in ASL and spoken English so the material is accessible to Deaf and hard-of-hearing students.",
     "skills": [
-      "Bilingual Communication",
-      "Accessible Teaching",
-      "Instructional Adaptability",
-      "Active Listening",
-      "Confidence-Building"
+      "ASL & Spoken English",
+      "Python",
+      "Java",
+      "Excel",
+      "Debugging"
     ],
     "logo": "/images/rit.png",
     "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"
@@ -64,15 +62,15 @@
     "company": "Artificial Intelligence and Biomedical Informatics and Data Science (AIBIDS) Program - University of Pittsburgh",
     "duration": "May 2025 - July 2025",
     "location": "Pittsburgh, PA - Hybrid",
-    "summary": "Collaborated with faculty and peers on data-driven healthcare and informatics research, combining SQL, LLMs, and statistical modeling to study what predicts unplanned surgery after ACL reconstruction.",
+    "summary": "A research internship on what predicts unplanned surgery after ACL reconstruction, using SQL, LLMs, and statistical modeling on de-identified UPMC patient data.",
     "skills": [
-      "Collaboration",
-      "Communication",
-      "Data Cleaning",
-      "Data Analysis",
-      "Data Storytelling",
-      "Data Security",
-      "Adaptability"
+      "SQL",
+      "Python",
+      "scikit-learn",
+      "LLMs",
+      "Text Embeddings",
+      "Clinical Data",
+      "Research Poster"
     ],
     "logo": "/images/pitt.png",
     "url": "https://www.aibids.org/home",
@@ -90,13 +88,11 @@
     "company": "NTID Learning Center - Rochester Institute of Technology",
     "duration": "September 2024 - September 2025",
     "location": "Rochester, NY - Onsite",
-    "summary": "Supported Deaf and hard-of-hearing students in math courses, adapting teaching approaches to diverse learning styles using ASL and spoken communication.",
+    "summary": "Tutored Deaf and hard-of-hearing students in math courses, teaching in ASL and spoken English.",
     "skills": [
-      "Bilingual Communication",
-      "Accessible Teaching",
-      "Instructional Adaptability",
-      "Active Listening",
-      "Confidence-Building"
+      "ASL & Spoken English",
+      "Math",
+      "Accessible Teaching"
     ],
     "logo": "/images/rit.png",
     "url": "https://www.rit.edu/ntid/learningcenter/instructors-tutors"

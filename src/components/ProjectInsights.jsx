@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import WorkInProgress from './WorkInProgress';
 
 function ProjectInsights({ project, index, baseUrl, onViewArtifact, onClose }) {
   useEffect(() => {
@@ -51,47 +50,35 @@ function ProjectInsights({ project, index, baseUrl, onViewArtifact, onClose }) {
         </header>
 
         <div className="insights-body">
-          <section className="insights-section">
-            <h3 className="insights-label">Overview</h3>
-            {overview ? (
+          {/* sections without content are left out rather than shown empty */}
+          {overview && (
+            <section className="insights-section">
+              <h3 className="insights-label">Overview</h3>
               <p className="insights-text">{overview}</p>
-            ) : (
-              <WorkInProgress title="Overview in progress" detail="This project’s introduction hasn’t been documented yet." />
-            )}
-          </section>
-
-          {metrics.length === 0 && highlights.length === 0 ? (
-            <section className="insights-section" aria-label="Project documentation status">
-              <WorkInProgress />
             </section>
-          ) : (
-            <>
-              <section className="insights-section">
-                <h3 className="insights-label">Insights</h3>
-                {metrics.length > 0 ? (
-                  <div className="insights-metrics">
-                    {metrics.map((metric, i) => (
-                      <div className="insight-metric" key={i}>
-                        <div className="insight-metric-value">{metric.value}</div>
-                        <div className="insight-metric-label">{metric.label}</div>
-                      </div>
-                    ))}
+          )}
+
+          {metrics.length > 0 && (
+            <section className="insights-section">
+              <h3 className="insights-label">Insights</h3>
+              <div className="insights-metrics">
+                {metrics.map((metric, i) => (
+                  <div className="insight-metric" key={i}>
+                    <div className="insight-metric-value">{metric.value}</div>
+                    <div className="insight-metric-label">{metric.label}</div>
                   </div>
-                ) : (
-                  <WorkInProgress title="Insights in progress" detail="Project metrics haven’t been documented yet." />
-                )}
-              </section>
-              <section className="insights-section">
-                <h3 className="insights-label">Highlights</h3>
-                {highlights.length > 0 ? (
-                  <ul className="insights-list">
-                    {highlights.map((highlight, i) => <li key={i}>{highlight}</li>)}
-                  </ul>
-                ) : (
-                  <WorkInProgress title="Highlights in progress" detail="Outcomes and learnings haven’t been documented yet." />
-                )}
-              </section>
-            </>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {highlights.length > 0 && (
+            <section className="insights-section">
+              <h3 className="insights-label">Highlights</h3>
+              <ul className="insights-list">
+                {highlights.map((highlight, i) => <li key={i}>{highlight}</li>)}
+              </ul>
+            </section>
           )}
 
           <section className="insights-section">

@@ -585,7 +585,7 @@ function Constellation() {
   return (
     <section id="constellation" aria-label="Interactive node graph">
       <div className="constellation-head reveal">
-        <p className="constellation-kicker">// About me — charted in stars</p>
+        <p className="constellation-kicker">// My projects, roles, and tools</p>
         <h2 className="constellation-title">The Constellation</h2>
         <p className="hero-hint">
           <span><em>Drag</em> to rotate</span>

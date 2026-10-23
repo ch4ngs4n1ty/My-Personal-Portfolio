@@ -1,8 +1,8 @@
 # Personal Portfolio — Ethan Chang
 
-A fast, single-page developer portfolio built with React and Vite, featuring an
+A fast, single-page developer portfolio built with React and Vite, with an
 animated Three.js background and an AI chat widget that answers questions about
-my work in real time.
+my work (the chat is hidden on the live site while I finish it).
 
 **🌐 Live site:** https://ch4ngs4n1ty.github.io/My-Personal-Portfolio/
 
@@ -28,7 +28,8 @@ my work in real time.
   background, alongside a custom cursor, intro overlay, and image modals.
 - **"Ask Ethan" chatbot.** A Cloudflare Worker holds the Claude API key
   server-side, builds a system prompt from the real portfolio data, and streams
-  answers back to the widget — no key ever reaches the browser.
+  answers back to the widget, so the key never reaches the browser. It's
+  switched off for now with `SHOW_CHAT` in `src/App.jsx`.
 
 ## Running Locally
 

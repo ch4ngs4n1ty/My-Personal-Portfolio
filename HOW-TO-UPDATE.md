@@ -71,7 +71,14 @@ New tool card appears automatically! ✅
 
 ## 📄 Update Your Resume
 
-Don't upload a PDF: edit `resume/resume.tex` and push to `main`.
+`resume/resume.tex` is a copy of the master résumé, `resume.tex` in the
+Resume-Tailoring repo. Make changes there first, then copy it over and push to `main`:
+
+```bash
+cp ../Resume-Tailoring/resume.tex resume/resume.tex
+```
+
+Don't upload a PDF.
 
 GitHub Actions (`.github/workflows/deploy.yml`) compiles it, commits the new
 `public/Chang_Ethan_Resume.pdf` back to the repo, rebuilds the site and redeploys it. Run

@@ -1,4 +1,4 @@
-// Unfinished-note card shared by project write-ups and the portfolio chat
+// Unfinished-note card used by the portfolio chat
 function WorkInProgress({ title = 'Write-up in progress', detail = 'Project insights and highlights haven’t been documented yet.' }) {
   return (
     <div className="project-wip">

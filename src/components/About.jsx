@@ -3,9 +3,9 @@ import toolsData from '../data/tools.json';
 
 const STATS = (projects, tools) => [
   { num: '4', suffix: 'th', label: 'Year, B.S. CS' },
-  { num: String(projects), label: 'Projects Shipped' },
+  { num: String(projects), label: 'Projects' },
   { num: String(tools), label: 'Tools & Tech' },
-  { num: '∞', label: 'Problems Solved' },
+  { num: '3.6', label: 'GPA' },
 ];
 
 function About() {
@@ -32,20 +32,20 @@ function About() {
             <span className="about-gem" aria-hidden="true"></span>About Me
           </div>
           <h2 className="about-heading">
-            Building at the<br />edge of <em>data &amp; code</em>
+            I build with<br /><em>data &amp; code</em>
           </h2>
           <div className="about-body">
             <p className="about-lead">
               I'm a <strong>fourth-year Computer Science student</strong> at the{' '}
-              <strong>Rochester Institute of Technology</strong>. I came in curious about how software actually gets
-              built, and over the past few years that curiosity has turned into a real interest in{' '}
-              <em>data science, machine learning, and AI</em>.
+              <strong>Rochester Institute of Technology</strong>. Most of my recent work has been in{' '}
+              <em>data science, machine learning, and AI</em>, including predicting surgery outcomes at the
+              University of Pittsburgh's AIBIDS program. I'm also an R&amp;D intern at Sandia National Laboratories,
+              where I built a training tool that simulates data from hypothetical radioactive material releases.
             </p>
             <p>
-              When I graduate in May 2027, I'm aiming to start full-time as a <em>well-rounded engineer</em> who can
-              adapt to just about any technology a problem calls for. I care less about mastering one specific tool
-              and more about learning quickly, thinking through the data, and building solutions that actually hold
-              up in the real world.
+              I graduate in May 2027 and I'm looking for a full-time role in <em>software engineering, data, or
+              AI</em>. I also tutor programming at RIT's NTID Learning Center, where I teach in ASL and spoken
+              English.
             </p>
           </div>
           <div className="about-focus">
