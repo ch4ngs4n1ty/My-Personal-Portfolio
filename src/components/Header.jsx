@@ -12,7 +12,8 @@ function Header() {
         <h1 className="hero-name">Ethan<br /><span>Chang</span></h1>
         <p className="hero-statement">
           Hi, I'm Ethan, a computer science student at RIT graduating in May 2027.
-          I like turning messy data into <strong>things people can actually use</strong>.
+          I work in software engineering and data science, currently as an R&amp;D intern at{' '}
+          <strong>Sandia National Laboratories</strong>.
         </p>
 
         <div className="hero-actions">
