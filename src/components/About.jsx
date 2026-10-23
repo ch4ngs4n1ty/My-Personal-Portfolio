@@ -44,8 +44,8 @@ function About() {
             </p>
             <p>
               I graduate in May 2027 and I'm looking for a full-time role in <em>software engineering, data, or
-              AI</em>. I also tutor programming at RIT's NTID Learning Center, where I teach in ASL and spoken
-              English.
+              AI</em>. Before Sandia, I tutored programming at RIT's NTID Learning Center, teaching in ASL and
+              spoken English.
             </p>
           </div>
           <div className="about-focus">
