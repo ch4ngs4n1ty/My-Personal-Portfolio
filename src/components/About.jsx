@@ -1,28 +1,6 @@
-import projectsData from '../data/projects.json';
-import toolsData from '../data/tools.json';
-
-const STATS = (projects, tools) => [
-  { num: '4', suffix: 'th', label: 'Year, B.S. CS' },
-  { num: String(projects), label: 'Projects' },
-  { num: String(tools), label: 'Tools & Tech' },
-  { num: '3.6', label: 'GPA' },
-];
-
 function About() {
-  const stats = STATS(projectsData.length, toolsData.length);
-
   return (
     <section id="about">
-      <div className="about-stats reveal">
-        {stats.map((s) => (
-          <div className="stat-item" key={s.label}>
-            <div className="stat-num">
-              {s.num}{s.suffix && <span>{s.suffix}</span>}
-            </div>
-            <div className="stat-label">{s.label}</div>
-          </div>
-        ))}
-      </div>
 
       <article className="about-panel reveal">
         <div className="about-watermark" aria-hidden="true">01</div>

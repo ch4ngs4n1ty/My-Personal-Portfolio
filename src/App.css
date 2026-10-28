@@ -1012,58 +1012,6 @@ section { position: relative; z-index: 1; }
 /* ── ABOUT ────────────────────────────────────────────────────────────────── */
 #about { padding: var(--s-9) var(--gutter); max-width: 1320px; margin: 0 auto; }
 
-/* ── Stat bar (top) — mosaic tiles matching the tool grid ─────────────── */
-.about-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  margin-bottom: 56px;
-}
-.stat-item {
-  position: relative;
-  overflow: hidden;
-  padding: 30px 26px;
-  background: linear-gradient(165deg, var(--black3) 0%, var(--black) 100%);
-  transition: background .35s;
-}
-.stat-item::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 2px;
-  background: linear-gradient(to right, var(--gold), transparent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .45s cubic-bezier(.2,.8,.2,1);
-}
-.stat-item:hover::after { transform: scaleX(1); }
-.stat-item:hover { background: linear-gradient(165deg, #161616 0%, var(--black) 100%); }
-.stat-num {
-  font-family: var(--serif);
-  font-size: var(--t-xl);
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1;
-  font-variant-numeric: tabular-nums lining;
-  letter-spacing: -0.02em;
-}
-.stat-num span {
-  color: var(--gold);
-  font-size: 0.42em;
-  font-weight: 600;
-  margin-left: 2px;
-  vertical-align: super;
-  line-height: 0;
-}
-.stat-label {
-  font-family: var(--mono);
-  font-size: var(--t-xs);
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--white-faint);
-  margin-top: var(--s-3);
-}
-
 /* ── About panel — designed container with watermark + accent edge ───── */
 .about-panel {
   position: relative;
@@ -3188,8 +3136,6 @@ section { position: relative; z-index: 1; }
   .nav-links { gap: 22px; }
   .nav-links a { font-size: 10px; letter-spacing: 0.12em; }
   #hero { padding: var(--s-9) var(--gutter) var(--s-8); min-height: 92svh; }
-  #constellation { height: 86vh; min-height: 600px; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; gap: var(--s-8); }
   .projects-grid { grid-template-columns: 1fr 1fr; }
   .project-card:nth-child(n) { grid-column: span 1; }
@@ -3211,7 +3157,6 @@ section { position: relative; z-index: 1; }
   .project-card:nth-child(n) { grid-column: span 1; }
   .contact-form { grid-template-columns: 1fr; }
   .form-field.full, .form-submit { grid-column: span 1; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
   .nav-wordmark { display: none; }
   .nav-links { gap: 18px; }
   .nav-links .nav-secondary { display: none; }
@@ -3225,7 +3170,6 @@ section { position: relative; z-index: 1; }
 
 /* very small phones — protect the reading experience */
 @media (max-width: 380px) {
-  .about-stats { grid-template-columns: 1fr; }
   .tools-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
 }
 
