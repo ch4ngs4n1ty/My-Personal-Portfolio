@@ -3,7 +3,7 @@ import experiencesData from '../data/experiences.json';
 import SectionHeader from './SectionHeader';
 
 // one header row: logo plate · title + company · dates + location
-function RoleRow({ exp, logo, title, current, duration, location, muted }) {
+function RoleRow({ exp, url, logo, title, current, duration, location, muted }) {
   return (
     <div className={`timeline-row${muted ? ' is-past' : ''}`}>
       {logo && (
@@ -14,8 +14,8 @@ function RoleRow({ exp, logo, title, current, duration, location, muted }) {
 
       <div className="timeline-identity">
         <h3 className="timeline-role">
-          {exp.url ? (
-            <a href={exp.url} target="_blank" rel="noopener noreferrer">
+          {url ? (
+            <a href={url} target="_blank" rel="noopener noreferrer">
               {title}
               <span className="timeline-arrow" aria-hidden="true">↗</span>
             </a>
@@ -82,8 +82,10 @@ function Experiences() {
                           <span>{exp.roles[r - 1].transition}</span>
                         </div>
                       )}
+                      {/* one employer link per card, on the newest role */}
                       <RoleRow
                         exp={exp}
+                        url={r === 0 ? exp.url : null}
                         logo={baseUrl + exp.logo}
                         title={role.title}
                         current={role.current}
@@ -98,6 +100,7 @@ function Experiences() {
                 <header className="timeline-head">
                   <RoleRow
                     exp={exp}
+                    url={exp.url}
                     logo={exp.logo && baseUrl + exp.logo}
                     title={exp.title}
                     current={exp.current}
@@ -120,7 +123,16 @@ function Experiences() {
                   <div className="timeline-award">
                     <span className="timeline-award-mark" aria-hidden="true">✦</span>
                     <div>
-                      <div className="timeline-award-name">{exp.award.name}</div>
+                      <div className="timeline-award-name">
+                        {exp.award.url ? (
+                          <a href={exp.award.url} target="_blank" rel="noopener noreferrer">
+                            {exp.award.name}
+                            <span className="timeline-arrow" aria-hidden="true">↗</span>
+                          </a>
+                        ) : (
+                          exp.award.name
+                        )}
+                      </div>
                       <div className="timeline-award-detail">{exp.award.detail}</div>
                     </div>
                   </div>

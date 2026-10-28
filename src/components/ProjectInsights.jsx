@@ -111,6 +111,16 @@ function ProjectInsights({ project, index, baseUrl, onViewArtifact, onClose }) {
         </div>
 
         <footer className="insights-foot">
+          {project.demoUrl && (
+            <a
+              className="insights-action is-primary"
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live demo ↗
+            </a>
+          )}
           {project.githubUrl ? (
             <a
               className="insights-action"

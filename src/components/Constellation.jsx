@@ -50,8 +50,15 @@ function fibSphere(n, radius) {
   return pts;
 }
 
-function Constellation() {
+// Canvas only; ConstellationDock supplies the full-screen frame around it.
+// onNavigate(sectionId) is called when a node that maps to a section is clicked.
+function Constellation({ onNavigate }) {
   const canvasRef = useRef(null);
+  const navigateRef = useRef(onNavigate);
+
+  useEffect(() => {
+    navigateRef.current = onNavigate;
+  }, [onNavigate]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -164,24 +171,21 @@ function Constellation() {
       const node = nodes[hoveredNode];
       const proj = projected[hoveredNode];
       if (proj) spawnFlash(proj.sx, proj.sy, node.type === 'project' || node.type === 'exp');
-      if (node && node.link) {
-        setTimeout(() => {
-          const target = document.getElementById(node.link);
-          if (target) {
-            const top = target.getBoundingClientRect().top + window.scrollY - 80;
-            window.scrollTo({ top, behavior: 'smooth' });
-          }
-        }, 220);
-      }
+      // short delay so the flash is visible before the view closes
+      if (node && node.link) setTimeout(() => navigateRef.current?.(node.link), 220);
     };
 
+    // only a press that started on the canvas counts as a node click, so
+    // releasing over the close button or the title never jumps anywhere
+    let pressedOnCanvas = false;
     const onMouseDown = (e) => {
-      isDragging = true; didDrag = false;
+      isDragging = true; didDrag = false; pressedOnCanvas = true;
       lastDragX = e.clientX; lastDragY = e.clientY;
       canvas.style.cursor = 'grabbing';
     };
     const onMouseUp = () => {
-      handleNodeClick();
+      if (pressedOnCanvas) handleNodeClick();
+      pressedOnCanvas = false;
       isDragging = false;
       canvas.style.cursor = hoveredNode >= 0 ? 'pointer' : 'grab';
     };
@@ -582,20 +586,7 @@ function Constellation() {
     };
   }, []);
 
-  return (
-    <section id="constellation" aria-label="Interactive node graph">
-      <div className="constellation-head reveal">
-        <p className="constellation-kicker">// My projects, roles, and tools</p>
-        <h2 className="constellation-title">The Constellation</h2>
-        <p className="hero-hint">
-          <span><em>Drag</em> to rotate</span>
-          <i className="hint-sep" aria-hidden="true"></i>
-          <span><em>Click</em> any node to explore</span>
-        </p>
-      </div>
-      <canvas ref={canvasRef} className="constellation-canvas" />
-    </section>
-  );
+  return <canvas ref={canvasRef} className="constellation-canvas" />;
 }
 
 export default Constellation;

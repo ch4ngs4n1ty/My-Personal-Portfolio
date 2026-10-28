@@ -105,6 +105,7 @@ experiences, run `cd worker && npx wrangler deploy` so the chatbot knows about t
 - `description`: Full project description
 - `tools`: Array of ALL tools used (shows in highlighted box)
 - `githubUrl`: GitHub link (use `null` if no link yet)
+- `demoUrl`: (Optional) Live site. Shows a "Live demo" link on the card and in the project popup
 - `backgroundImage`: Path to background image
 - `glyph`: (Collection projects) line-art motif for the archive plate — one of `dip`, `schema`, `secure`, `hand`, `race`, `fire`, `path`, `hop`, `ess`, `racing`, `stack`, `tree`, `cluster`, `threshold` (see `src/components/ProjectGlyph.jsx`). Omit it and a constellation is drawn from the title.
 - `artifacts`: Array of images/diagrams (optional)

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import IntroOverlay from './components/IntroOverlay';
-import CustomCursor from './components/CustomCursor';
 import BackgroundCanvas from './components/BackgroundCanvas';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
-import Constellation from './components/Constellation';
+import ConstellationDock from './components/ConstellationDock';
 import PortfolioChat from './components/PortfolioChat';
 import About from './components/About';
 import Experiences from './components/Experiences';
@@ -60,13 +59,11 @@ function App() {
 
       <a className="skip-link" href="#main">Skip to content</a>
 
-      <CustomCursor />
       <BackgroundCanvas />
       <Navigation />
 
       <main id="main">
         <Header />
-        <Constellation />
         {SHOW_CHAT && <PortfolioChat />}
 
         <About />
@@ -81,6 +78,8 @@ function App() {
       </main>
 
       <Footer />
+
+      <ConstellationDock />
     </>
   );
 }

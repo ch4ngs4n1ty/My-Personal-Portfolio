@@ -138,16 +138,15 @@ body::after {
 }
 
 
-@media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
-  a, button, [role="button"] { cursor: none; }
-}
-
 img { max-width: 100%; display: block; }
 
 a { color: inherit; text-decoration: none; }
 
 button { font: inherit; }
+
+/* standard system cursor; just make clickable things look clickable */
+button, [role="button"], summary, label[for] { cursor: pointer; }
+button:disabled { cursor: default; }
 
 /* ── INTRO OVERLAY ────────────────────────────────────────────────────────── */
 .intro-overlay {
@@ -211,34 +210,6 @@ button { font: inherit; }
   transition: opacity .4s .8s;
 }
 .intro-line3.show { opacity: 1; }
-
-/* ── CUSTOM CURSOR ────────────────────────────────────────────────────────── */
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  pointer-events: none;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  display: none;
-}
-.cursor-dot {
-  width: 12px; height: 12px;
-  background: var(--red);
-  transition: width .15s, height .15s, background .15s;
-  mix-blend-mode: screen;
-}
-.cursor-ring {
-  width: 40px; height: 40px;
-  border: 1px solid rgba(192,57,43,0.5);
-  z-index: 9998;
-  transition: transform .08s ease-out, width .2s, height .2s, opacity .2s, border-color .2s;
-}
-@media (hover: hover) and (pointer: fine) {
-  .cursor-dot, .cursor-ring { display: block; }
-}
-body.cursor-hover .cursor-dot { width: 20px; height: 20px; background: var(--gold); }
-body.cursor-hover .cursor-ring { width: 60px; height: 60px; border-color: rgba(201,168,76,0.5); }
 
 /* ── BG CANVAS ────────────────────────────────────────────────────────────── */
 .bg-canvas {
@@ -655,13 +626,105 @@ section { position: relative; z-index: 1; }
 }
 
 /* ── CONSTELLATION ────────────────────────────────────────────────────────── */
-#constellation {
-  height: 100vh;
-  min-height: 820px;
-  position: relative;
+/* Corner launcher: a small glowing star map that widens to show its label
+   on hover or keyboard focus. */
+.constellation-launcher {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 52px;
+  padding: 0;
+  background: rgba(12,10,9,0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 999px;
+  color: var(--gold-bright);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 22px rgba(201,168,76,0.12);
+  transition: border-color .3s, box-shadow .3s, gap .35s var(--ease);
+}
+.constellation-launcher-orb {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+.constellation-launcher-orb svg {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 4px rgba(240,192,96,0.6));
+  animation: launcherTwinkle 3.2s ease-in-out infinite;
+}
+@keyframes launcherTwinkle {
+  0%, 100% { opacity: 0.75; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(8deg) scale(1.06); }
+}
+.constellation-launcher-label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+  transition: max-width .35s var(--ease), padding .35s var(--ease);
+}
+.constellation-launcher:hover,
+.constellation-launcher:focus-visible {
+  border-color: var(--gold-bright);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px rgba(240,192,96,0.28);
+}
+.constellation-launcher:hover .constellation-launcher-label,
+.constellation-launcher:focus-visible .constellation-launcher-label {
+  max-width: 200px;
+  padding-right: 20px;
+}
+.constellation-launcher:focus-visible { border-radius: 999px; }
+@media (max-width: 640px) {
+  .constellation-launcher { height: 46px; }
+  .constellation-launcher-orb { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .constellation-launcher-orb svg { animation: none; }
+}
+
+/* Full-screen view the launcher opens */
+.constellation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 8600;
   display: flex;
   flex-direction: column;
-  margin-bottom: 80px;
+  background:
+    radial-gradient(70% 60% at 50% 55%, rgba(192,57,43,0.08) 0%, transparent 70%),
+    rgba(5,5,5,0.96);
+  backdrop-filter: blur(12px);
+  animation: insightsFade .3s ease;
+}
+.constellation-close {
+  position: absolute;
+  top: 18px; right: 22px;
+  z-index: 3;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.16);
+  color: var(--white);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .25s, border-color .25s, background .25s;
+}
+.constellation-close:hover {
+  color: var(--black);
+  background: var(--gold);
+  border-color: var(--gold);
 }
 .constellation-canvas {
   position: relative;
@@ -691,7 +754,7 @@ section { position: relative; z-index: 1; }
   gap: 16px;
   text-align: center;
   pointer-events: none;
-  padding: 52px 24px 0;
+  padding: 40px 72px 0;
 }
 .constellation-kicker {
   font-size: 10px;
@@ -713,6 +776,14 @@ section { position: relative; z-index: 1; }
 }
 .constellation-head .hero-hint {
   margin-top: 4px;
+  animation-delay: .2s;
+}
+/* phones: drop the title below the close button instead of beside it */
+@media (max-width: 640px) {
+  .constellation-head { padding: 68px 20px 0; }
+  /* stack the two hints rather than leave the separator dangling */
+  .constellation-head .hero-hint { flex-direction: column; gap: 8px; }
+  .constellation-head .hint-sep { display: none; }
 }
 
 /* ── ASK / PORTFOLIO CHAT ─────────────────────────────────────────────────── */
@@ -1381,6 +1452,14 @@ section { position: relative; z-index: 1; }
   transition: transform var(--dur) var(--ease);
 }
 .timeline-role a:hover .timeline-arrow { transform: translate(3px, -3px); }
+.timeline-award-name a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color var(--dur) var(--ease);
+}
+.timeline-award-name a:hover { color: var(--white); }
+.timeline-award-name a:hover .timeline-arrow { transform: translate(3px, -3px); }
 
 .timeline-company {
   font-family: var(--mono);
@@ -1608,14 +1687,13 @@ section { position: relative; z-index: 1; }
 .project-card:nth-child(even) .project-content { grid-column: 1; grid-row: 1; }
 
 .project-card:hover,
-.project-card:focus-visible {
+.project-card:has(:focus-visible) {
   border-color: color-mix(in srgb, var(--accent) 45%, transparent);
   transform: translateY(-3px);
   box-shadow:
     0 18px 50px -24px rgba(0,0,0,0.9),
     0 0 0 1px color-mix(in srgb, var(--accent) 16%, transparent);
 }
-.project-card:focus-visible { outline: none; }
 
 /* hairline dividing the two halves, tinted by the card's accent */
 .project-card::after {
@@ -1788,11 +1866,21 @@ section { position: relative; z-index: 1; }
   border-color: color-mix(in srgb, var(--accent) 48%, transparent);
 }
 
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-5);
+  margin-top: var(--s-4);
+}
 .project-cue {
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  margin-top: var(--s-4);
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
   font-family: var(--mono);
   font-size: var(--t-xs);
   letter-spacing: 0.16em;
@@ -1800,7 +1888,27 @@ section { position: relative; z-index: 1; }
   color: var(--white-faint);
   transition: color var(--dur) var(--ease);
 }
-.project-card:hover .project-cue { color: var(--accent-bright); }
+.project-card:hover .project-cue,
+.project-cue:focus-visible { color: var(--accent-bright); }
+.project-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 9px 16px;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.project-demo:hover,
+.project-demo:focus-visible {
+  background: var(--accent-bright);
+  color: var(--black);
+}
+.project-card { cursor: pointer; }
 .project-cue-arrow { transition: transform var(--dur) var(--ease); }
 .project-card:hover .project-cue-arrow { transform: translateX(5px); }
 
@@ -2594,6 +2702,9 @@ section { position: relative; z-index: 1; }
 .insights-foot {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 8px;
   padding-top: 26px;
   border-top: 1px solid rgba(255,255,255,0.07);
@@ -2610,6 +2721,8 @@ section { position: relative; z-index: 1; }
   transition: background .25s, color .25s;
 }
 .insights-action:hover { background: var(--gold); color: var(--black); }
+.insights-action.is-primary { background: var(--gold); color: var(--black); }
+.insights-action.is-primary:hover { background: var(--gold-bright); border-color: var(--gold-bright); }
 .insights-action.is-disabled {
   border-color: rgba(255,255,255,0.15);
   color: var(--white-dim);
@@ -3035,8 +3148,7 @@ section { position: relative; z-index: 1; }
 .projects-grid .project-card { transition-delay: calc(var(--idx, 0) * 70ms); }
 
 /* ── ACCESSIBILITY ────────────────────────────────────────────────────────
-   Every interactive element needs a visible keyboard focus ring. The custom
-   cursor hides the pointer, so keyboard affordance matters more than usual. */
+   Every interactive element needs a visible keyboard focus ring. */
 :where(a, button, [role="button"], input, textarea, summary):focus-visible {
   outline: 2px solid var(--gold-bright);
   outline-offset: 3px;

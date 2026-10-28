@@ -23,6 +23,7 @@
       "MLB/ESPN APIs"
     ],
     "githubUrl": "https://github.com/ch4ngs4n1ty/Sports-Data-Visualization",
+    "demoUrl": "https://sports-data-visualization.vercel.app/",
     "backgroundImage": "/images/playiq-data-editorial.png",
     "insights": {
       "summary": "A sports analytics dashboard with no build step: React 18 and Babel Standalone load from a CDN, and the backend uses only Node's built-in http/https modules, with no npm dependencies. Apart from one XGBoost model, every projection is plain arithmetic, and each one shows where its number came from.",

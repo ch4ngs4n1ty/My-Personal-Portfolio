@@ -82,14 +82,12 @@ function ProjectCard({ project, index }) {
 
   return (
     <>
+      {/* The whole card opens the insights on click; keyboard users get the
+          real button and demo link inside it instead of a nested button. */}
       <article
         className={`project-card reveal${hasArt ? '' : ' no-art'}`}
         style={{ '--idx': index }}
-        role="button"
-        tabIndex={0}
-        aria-label={`View insights for ${project.title}`}
         onClick={open}
-        onKeyDown={openKeys(open)}
       >
         {/* ── visual half ── */}
         <div className="project-visual" aria-hidden="true">
@@ -134,10 +132,32 @@ function ProjectCard({ project, index }) {
             ))}
           </div>
 
-          <span className="project-cue">
-            View insights
-            <span className="project-cue-arrow" aria-hidden="true">→</span>
-          </span>
+          <div className="project-actions">
+            {project.demoUrl && (
+              <a
+                className="project-demo"
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Live demo
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
+            <button
+              type="button"
+              className="project-cue"
+              aria-label={`View insights for ${project.title}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                open();
+              }}
+            >
+              View insights
+              <span className="project-cue-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
       </article>
 

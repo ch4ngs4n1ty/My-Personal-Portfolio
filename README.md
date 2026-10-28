@@ -13,7 +13,7 @@ my work (the chat is hidden on the live site while I finish it).
 | Layer    | Technology                                               |
 | -------- | -------------------------------------------------------- |
 | Frontend | React 19, Vite 7                                         |
-| Graphics | Three.js (animated constellation / starfield background) |
+| Graphics | HTML canvas (animated background, constellation view)   |
 | Content  | JSON-driven data (projects, experiences, tools)          |
 | AI chat  | Cloudflare Worker → Anthropic Claude API                 |
 | Hosting  | GitHub Pages (site) + Cloudflare Workers (chat backend)  |
@@ -24,8 +24,9 @@ my work (the chat is hidden on the live site while I finish it).
   reusable React components rendered from JSON, so content updates never touch
   markup — edit the data files in [`src/data/`](src/data/) and the cards
   regenerate.
-- **Custom visuals.** A Three.js canvas renders an animated constellation
-  background, alongside a custom cursor, intro overlay, and image modals.
+- **Custom visuals.** Canvas-drawn animated background, an intro overlay, and
+  image modals. A button in the bottom-right corner opens the constellation, a
+  3D map of every project, role, and tool; clicking a node jumps to its section.
 - **"Ask Ethan" chatbot.** A Cloudflare Worker holds the Claude API key
   server-side, builds a system prompt from the real portfolio data, and streams
   answers back to the widget, so the key never reaches the browser. It's

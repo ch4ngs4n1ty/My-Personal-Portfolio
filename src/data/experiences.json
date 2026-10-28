@@ -28,7 +28,8 @@
     ],
     "award": {
       "name": "Thunderbird Award",
-      "detail": "Purpose-Driven category, for my contributions during the internship"
+      "detail": "Purpose-Driven category, for my contributions during the internship",
+      "url": "https://www.sandia.gov/labnews/2020/04/23/kudos/"
     },
     "skills": [
       "Simulation",
